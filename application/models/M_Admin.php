@@ -29,7 +29,7 @@
 		{
 			$this->db->insert($this->tb,$data);
 		}	
-		function delete($key) // hapus data data
+		function hapus($key) // hapus data data
 		{
 			$this->db->delete($this->tb, array($this->id => $key)); 
 		}

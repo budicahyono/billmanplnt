@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="<?=base_url();?>plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="<?=base_url();?>plugins/summernote/summernote-bs4.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?=base_url();?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?=base_url();?>plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?=base_url();?>plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -116,7 +120,7 @@
           </li>
 		  
 		  
-		   <li class="nav-item menu <?php if ($title == "Admin") echo 'menu-is-opening menu-open' ; ?>" >
+		   <li class="nav-item menu <?php if ($title == "Admin" || $title == "Unit" || $title == "Petugas" || $title == "Jenis Kendala" || $title == "Rp Kategori" ) echo 'menu-is-opening menu-open' ; ?>" >
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
@@ -132,25 +136,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=base_url()?>unit" class="nav-link">
+                <a href="<?=base_url()?>unit" class="nav-link <?php if ($title == "Unit") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Data Unit</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=base_url()?>petugas" class="nav-link">
+                <a href="<?=base_url()?>petugas" class="nav-link <?php if ($title == "Petugas") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Data Petugas</p>
                 </a>
               </li>
 			  <li class="nav-item">
-                <a href="<?=base_url()?>jeniskendala" class="nav-link">
+                <a href="<?=base_url()?>jenis_kendala" class="nav-link <?php if ($title == "Jenis Kendala") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Data Jenis Kendala</p>
                 </a>
               </li>
-			  <li class="nav-item">
-                <a href="<?=base_url()?>rpkategori" class="nav-link">
+			  <li class="nav-item"> 
+                <a href="<?=base_url()?>rp_kategori" class="nav-link <?php if ($title == "Rp Kategori") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                    <p>Data Rp Kategori</p>
                 </a>
@@ -305,6 +309,44 @@
 <script src="<?=base_url();?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=base_url();?>dist/js/adminlte.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="<?=base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?=base_url();?>plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?=base_url();?>plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?=base_url();?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?=base_url();?>plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="<?=base_url();?>plugins/jszip/jszip.min.js"></script>
+<script src="<?=base_url();?>plugins/pdfmake/pdfmake.min.js"></script>
+<script src="<?=base_url();?>plugins/pdfmake/vfs_fonts.js"></script>
+<script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+   
+    $('#datatable').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+    
+     $('#datatable2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
 
 <!-- alert -->
 <script>
