@@ -15,7 +15,10 @@ class Admin extends CI_Controller {
 					$tahun = substr($date, 0, 4);
 					$bulan = substr($date, 5, 2);
 					$tgl   = substr($date, 8, 2);
-					$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;		
+					$j   = substr($date, 11, 2);
+					$m   = substr($date, 14, 2);
+					$d   = substr($date, 17, 2);
+					$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun . " " . $j.":".$m.":".$d ;		
 					return $result;
 				}
 				

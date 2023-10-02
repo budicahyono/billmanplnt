@@ -43,7 +43,7 @@
                     <td><?=$r->nama_admin?></td>
                     <td><?=$r->username?></td>
                     <td><?=$r->level?></td>
-                    <td ><?=$r->last_login?></td>
+                    <td ><?=tgl_indo($r->last_login)?></td>
                     <td style="width:200px">
                       <a  href="admin/edit/<?php echo $r->id_admin ?>" class="btn btn-info "><i class="fa fa-edit"></i> Edit</a>
                       <a  onclick="return confirm('Apa anda yakin ingin menghapusnya?')" href="admin/hapus/<?php echo $r->id_admin ?>" class="btn btn-danger "><i class="fa fa-trash"></i> Hapus</a>  

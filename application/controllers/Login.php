@@ -39,15 +39,28 @@ class Login extends CI_Controller {
 			
 				foreach ($data_admin->result() as $r) {
 					$data_session = array(
-					'nama_admin' 		=> $r->nama_admin,
+					'nama_admin' 	=> $r->nama_admin,
 					'username' 		=> $r->username,
 					'level' 		=> $r->level,
 					'id_admin' 		=> $r->id_admin,
 					'is_admin_unit' => $r->is_admin_unit,
 					'id_unit' 		=> $r->id_unit,
-					'last_login' 	=> $r->last_login,
 					);
-				}	
+				
+					$last_login = date("Y-m-d H:i:s");
+					$edit = $this->M_Admin->edit(array('last_login' => $last_login), $r->id_admin);	
+					/*
+					if ($edit) {
+						echo "terinput";
+					} else {
+						echo "belum";
+					}
+					echo $r->id_admin."<br>";
+					echo $last_login;
+					*/
+				}
+				
+				
 				$this->session->set_userdata($data_session);
 				$this->session->set_flashdata('success', 'Username dan Password benar, Anda berhasil login!!');
 				redirect("dashboard");
