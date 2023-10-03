@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2023 at 11:10 AM
+-- Generation Time: Oct 04, 2023 at 01:38 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -43,9 +43,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nama_admin`, `username`, `password`, `level`, `is_admin_unit`, `id_unit`, `last_login`) VALUES
-(1, 'Admin Salam', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'superadmin', 0, 0, '2023-09-24 14:21:12'),
-(2, 'Manajer', 'manajer', '69b731ea8f289cf16a192ce78a37b4f0', 'manajer', 0, 0, '2023-09-24 14:22:12'),
-(3, 'Admin Manokwari', 'adminmkw', 'd00f6bab26feb49c41feae1a14c7506b', 'admin', 1, 1, '2023-09-24 14:23:57');
+(1, 'Admin Utama', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'superadmin', 0, 0, '2023-10-04 01:33:36'),
+(2, 'Manager', 'manager', '1d0258c2440a8d19e716292b231e3190', 'manager', 0, 0, '2023-10-02 21:17:40'),
+(8, 'Admin Tes', 'tes', '28b662d883b6d76fd96e4ddc5e9ba780', 'admin', 0, 0, '2023-10-02 21:10:53'),
+(9, 'tess', 'tess', 'tess', 'tess', 0, 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -240,6 +241,7 @@ INSERT INTO `unit` (`id_unit`, `nama_unit`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`),
+  ADD UNIQUE KEY `username` (`username`),
   ADD KEY `fk_id_unit_admin` (`id_unit`) USING BTREE;
 
 --
@@ -308,7 +310,7 @@ ALTER TABLE `unit`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `jenis_kendala`
