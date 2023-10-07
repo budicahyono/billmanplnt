@@ -20,8 +20,60 @@
               </div>
               <div class="card-body">
 
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="form-group">
+                  <a href="petugas/tambah" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Petugas</a>
+                </div>
+                <table id="datatable" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Petugas</th>
+                    <th>Username</th>
+                    <th>Level</th>
+                    <th>Petugas Khusus?</th>
+                    <th>Unit</th>
+                    <th>Last Login</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                  <?php  $no=1;
+                    foreach ($petugas->result() as $r) {
+                  ?>	
+                    <td><?=$no?></td>
+                    <td><?=$r->nama_petugas?></td>
+                    <td><?=$r->username?></td>
+                    <td><?=$r->level?></td>
+                    <td><?php if ($r->is_petugas_khusus == 1) { ?>
+                      <span class="badge badge-success">Ya</span>
+                    <?php } ?>
+                      
+                    </td>
+                    <td><?=$r->nama_unit ?></td>
+                   <td ><?php 
+                        if ($r->last_login != "0000-00-00 00:00:00") {
+                          echo tgl_indo($r->last_login);
+                        } else {
+                          echo "Belum Login";
+                        }
+                        ?>
+                        </td>
+                    <td style="width:200px">
+                      <a  href="petugas/edit/<?php echo $r->id_petugas ?>" class="btn btn-info "><i class="fa fa-edit"></i> Edit</a>
+                      <a  onclick="return confirm('Apa anda yakin ingin menghapusnya?')" href="petugas/hapus/<?php echo $r->id_petugas ?>" class="btn btn-danger "><i class="fa fa-trash"></i> Hapus</a>  
+                        
+                    </td>
+                  </tr>
+                  <?php 
+$no++;
+} if (count($petugas->result()) == 0) { ?>
+<tr>
+<td colspan="6" class="text-center"><b>TIDAK ADA DATA</b></td>
+</tr>	
+<?php } ?>	
+                  </tbody>
+                </table>  
               </div>
             </div>
           </div>

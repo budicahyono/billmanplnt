@@ -20,8 +20,39 @@
               </div>
               <div class="card-body">
 
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="form-group">
+                  <a href="rp_kategori/tambah" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah rp_kategori</a>
+                </div>
+                <table id="datatable" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Rp Kategori</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                  <?php  $no=1;
+                    foreach ($rp_kategori->result() as $r) {
+                  ?>	
+                    <td><?=$no?></td>
+                    <td><?=$r->nama_rp_kategori?></td>
+                    <td style="width:200px">
+                      <a  href="rp_kategori/edit/<?php echo $r->id_rp_kategori ?>" class="btn btn-info "><i class="fa fa-edit"></i> Edit</a>
+                      <a  onclick="return confirm('Apa anda yakin ingin menghapusnya?')" href="rp_kategori/hapus/<?php echo $r->id_rp_kategori ?>" class="btn btn-danger "><i class="fa fa-trash"></i> Hapus</a>  
+                        
+                    </td>
+                  </tr>
+                  <?php 
+$no++;
+} if (count($rp_kategori->result()) == 0) { ?>
+<tr>
+<td colspan="6" class="text-center"><b>TIDAK ADA DATA</b></td>
+</tr>	
+<?php } ?>	
+                  </tbody>
+                </table>  
               </div>
             </div>
           </div>
