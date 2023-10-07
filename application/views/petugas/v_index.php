@@ -21,19 +21,28 @@
               <div class="card-body">
 
                 <div class="form-group">
-                  <a href="petugas/tambah" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Petugas</a>
+                  <a href="<?=base_url('petugas/tambah')?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Petugas</a>
                 </div>
-                <table id="datatable" class="table table-bordered table-hover">
+                <table id="data_paging" class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Nama Petugas</th>
-                    <th>Username</th>
-                    <th>Level</th>
-                    <th>Petugas Khusus?</th>
-                    <th>Unit</th>
-                    <th>Last Login</th>
-                    <th>Action</th>
+                  <tr >
+                    <th >No</th> 
+                    <th >Nama Petugas</th>
+                    <th >Username</th>
+                    <th >Petugas Khusus?</th>
+                    <th > <select class="form-control mini" name="id_unit" id="id_unit">
+                     <?php foreach ($unit->result() as $r) {  ?>
+                        <option value="<?=$r->id_unit?>" 
+                        <?php
+                        if (isset($id_unit)) {
+                          if ($id_unit == $r->id_unit) echo "selected";
+                        }
+                        ?>
+                        >UNIT <?=$r->nama_unit?></option>
+                     <?php } ?>
+                 </select></th>
+                    <th >Last Login</th>
+                    <th >Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -44,9 +53,8 @@
                     <td><?=$no?></td>
                     <td><?=$r->nama_petugas?></td>
                     <td><?=$r->username?></td>
-                    <td><?=$r->level?></td>
                     <td><?php if ($r->is_petugas_khusus == 1) { ?>
-                      <span class="badge badge-success">Ya</span>
+                      <h4><span class="badge badge-success ">Petugas Khusus</span></h4>
                     <?php } ?>
                       
                     </td>

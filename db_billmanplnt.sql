@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2023 at 11:22 AM
+-- Generation Time: Oct 08, 2023 at 12:46 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -43,10 +43,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nama_admin`, `username`, `password`, `level`, `is_admin_unit`, `id_unit`, `last_login`) VALUES
-(1, 'Admin Utama', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'superadmin', 0, 0, '2023-10-07 08:43:28'),
+(1, 'Admin Utama', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'superadmin', 0, 0, '2023-10-07 19:44:20'),
 (2, 'Manager', 'manager', '1d0258c2440a8d19e716292b231e3190', 'manager', 0, 0, '2023-10-02 21:17:40'),
 (8, 'Admin Tes', 'tes', '28b662d883b6d76fd96e4ddc5e9ba780', 'admin', 0, 0, '2023-10-02 21:10:53'),
-(9, 'tess', 'tess', 'tess', 'tess', 0, 0, '0000-00-00 00:00:00');
+(9, 'Admin S', 'tess', '836f7cd7ea33b9b869dcf2973bd00505', 'admin', 0, 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -64,11 +64,33 @@ CREATE TABLE `jenis_kendala` (
 --
 
 INSERT INTO `jenis_kendala` (`id_jenis_kendala`, `nama_jenis_kendala`) VALUES
-(1, 'Putus Fuding'),
-(2, 'Janji Bayar'),
+(1, 'Janji Bayar'),
+(2, 'Pagar Terkunci'),
 (3, ' '),
-(4, 'Lunas'),
-(5, 'putus sambung');
+(5, 'Via WA'),
+(6, 'Tidak Ada Orang'),
+(7, 'Rumah Tutup'),
+(8, 'Pelanggan Marah'),
+(9, 'Titip Lunas'),
+(10, 'Putus'),
+(11, 'Putus Fuding'),
+(12, 'Meter Bongkar'),
+(13, 'Migrasi'),
+(14, 'Digusur'),
+(15, 'K3 Tidak Dapat'),
+(16, 'Segel'),
+(17, 'Rumah Kosong'),
+(18, 'Putus SR'),
+(19, 'Meter Tinggi'),
+(20, 'Meter Dalam Bangunan'),
+(21, 'Uang Kurang'),
+(22, 'Masih Koordinasi'),
+(23, 'Pelanggan Opname'),
+(24, 'Pelanggan Komplain'),
+(25, 'Meter Tidak Ketemu'),
+(26, 'Rumah Gusur'),
+(27, 'Meter Terbakar'),
+(28, 'Lunas');
 
 -- --------------------------------------------------------
 
@@ -139,11 +161,23 @@ CREATE TABLE `petugas` (
 --
 
 INSERT INTO `petugas` (`id_petugas`, `nama_petugas`, `username`, `password`, `level`, `is_petugas_khusus`, `id_unit`, `last_login`) VALUES
-(1, 'Samsul', 'samsul', '00161aa5a5fc922918e4fcc155f6043d', 'petugas', 0, 1, '2023-09-24 14:46:32'),
-(2, 'Arman', 'arman', '89dfdb53b820990c2663317dffea8a4c', 'petugas', 0, 1, '2023-09-24 14:46:32'),
-(3, 'Marcel', 'marcel', '41c2fe9c8f8f015d08f9dc41f69d5a2a', 'petugas', 1, 1, '2023-09-24 14:46:32'),
-(4, 'Satar', 'satar', 'ba4ed8aab0f900feb58811c980d43dac', 'petugas', 1, 1, '2023-09-24 14:46:32'),
-(5, 'tes', '', '', '', 0, 0, '0000-00-00 00:00:00');
+(1, 'SAMSUL', 'samsul', '00161aa5a5fc922918e4fcc155f6043d', '', 0, 1, '0000-00-00 00:00:00'),
+(2, 'ARMAN', 'arman', '89dfdb53b820990c2663317dffea8a4c', '', 0, 1, '0000-00-00 00:00:00'),
+(8, 'YOSEP', 'yosep', 'yosep', '', 0, 1, '0000-00-00 00:00:00'),
+(9, 'JHON', 'jhon', 'jhon', '', 0, 1, '0000-00-00 00:00:00'),
+(10, 'SAMSUDIN', 'samsudin', 'samsudin', '', 0, 1, '0000-00-00 00:00:00'),
+(11, 'MORIS', 'moris', 'moris', '', 0, 1, '0000-00-00 00:00:00'),
+(12, 'UMAR', 'umar', 'umar', '', 0, 1, '0000-00-00 00:00:00'),
+(13, 'ALAN', 'alan', 'alan', '', 0, 1, '0000-00-00 00:00:00'),
+(14, 'MARWAN', 'marwan', 'marwan', '', 0, 1, '0000-00-00 00:00:00'),
+(15, 'MARCEL', 'marcel', 'marcel', '', 1, 1, '0000-00-00 00:00:00'),
+(16, 'SATAR', 'satar', 'satar', '', 1, 1, '0000-00-00 00:00:00'),
+(17, 'BADRULLAH', 'badrullah', 'badrullah', '', 0, 2, '0000-00-00 00:00:00'),
+(18, 'RONALD', 'ronald', 'ronald', '', 0, 2, '0000-00-00 00:00:00'),
+(19, 'ADI', 'adi', 'adi', '', 0, 3, '0000-00-00 00:00:00'),
+(20, 'ALVIN', 'alvin', 'alvin', '', 0, 3, '0000-00-00 00:00:00'),
+(21, 'RICKY', 'ricky', 'ricky', '', 0, 4, '0000-00-00 00:00:00'),
+(22, 'LISDES', 'lisdes', 'lisdes', '', 0, 4, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -161,8 +195,10 @@ CREATE TABLE `rp_kategori` (
 --
 
 INSERT INTO `rp_kategori` (`id_rp_kategori`, `nama_rp_kategori`) VALUES
-(1, '1 to 200 ribu'),
-(2, 'Rupiah Besar');
+(1, '1-200 Ribu'),
+(2, '200-500 Ribu'),
+(3, '500-1 Juta'),
+(4, 'Rupiah Besar');
 
 -- --------------------------------------------------------
 
@@ -228,12 +264,11 @@ CREATE TABLE `unit` (
 --
 
 INSERT INTO `unit` (`id_unit`, `nama_unit`) VALUES
-(0, 'All'),
-(1, 'Manokwari'),
-(2, 'Bintuni'),
-(3, 'Prafi'),
-(4, 'Wasior'),
-(6, 'Sorong');
+(0, 'ALL'),
+(1, 'MANOKWARI'),
+(2, 'BINTUNI'),
+(3, 'PRAFI'),
+(4, 'WASIOR');
 
 --
 -- Indexes for dumped tables
@@ -319,7 +354,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `jenis_kendala`
 --
 ALTER TABLE `jenis_kendala`
-  MODIFY `id_jenis_kendala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_jenis_kendala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `kendala_harian`
@@ -331,13 +366,13 @@ ALTER TABLE `kendala_harian`
 -- AUTO_INCREMENT for table `petugas`
 --
 ALTER TABLE `petugas`
-  MODIFY `id_petugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_petugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `rp_kategori`
 --
 ALTER TABLE `rp_kategori`
-  MODIFY `id_rp_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_rp_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tusbung_harian`
@@ -355,7 +390,7 @@ ALTER TABLE `tusbung_kumulatif`
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-  MODIFY `id_unit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_unit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

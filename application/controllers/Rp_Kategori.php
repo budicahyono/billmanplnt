@@ -50,9 +50,15 @@ class Rp_Kategori extends CI_Controller {
 	{	
 		if(isset($_POST['submit'])){
 			$nama_rp_kategori	=  $this->input->post('nama_rp_kategori');
-			$data  		=  array('nama_rp_kategori'=>$nama_rp_kategori);
-				$this->M_Rp_Kategori->post($data);	
-				$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  disimpan");
+			$data  		=  array('nama_rp_kategori'=>ucwords($nama_rp_kategori));
+				$rp_kategori = $this->M_Rp_Kategori->post($data);	
+				$error = $this->db->error();
+				if ($rp_kategori) {
+					$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  disimpan");
+				} else {
+					$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> disimpan. <br>Error:".$error['message']);
+				}	
+				
 				redirect('rp_kategori');
 			
 		}	
@@ -60,12 +66,19 @@ class Rp_Kategori extends CI_Controller {
 	
 	public function edit($id)
 	{
-		$data = array(
-			'app' 	=> 'Billman PLN-T',
-			'title' => 'Rp Kategori',
-			'rp_kategori'	=>	$this->M_Rp_Kategori->get_one($id),
-		);
-		$this->template->load('template','rp_kategori/v_edit',$data);
+		$rp_kategori = $this->M_Rp_Kategori->get_one($id);
+		$cek = $rp_kategori->num_rows();
+		if ($cek > 0) {
+			$data = array(
+				'app' 	=> 'Billman PLN-T',
+				'title' => 'Rp Kategori',
+				'rp_kategori'	=>	$rp_kategori,
+			);
+			$this->template->load('template','rp_kategori/v_edit',$data);
+		} else {
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			redirect('rp_kategori');
+		}	
 	}
 	
 	public function proses_edit()
@@ -76,9 +89,15 @@ class Rp_Kategori extends CI_Controller {
 			$id_rp_kategori    =  $this->input->post('id_rp_kategori');
 			$nama_rp_kategori	=  $this->input->post('nama_rp_kategori');
 			
-			$data       =  array('nama_rp_kategori'=>$nama_rp_kategori);
-			$this->M_Rp_Kategori->edit($data, $id_rp_kategori);	
-			$this->session->set_flashdata('status', "Data Rp Kategori <b>Berhasil</b>  diedit");
+			$data       =  array('nama_rp_kategori'=>ucwords($nama_rp_kategori));
+			$rp_kategori = $this->M_Rp_Kategori->edit($data, $id_rp_kategori);	
+			$error = $this->db->error();
+			if ($rp_kategori) {
+				$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  diedit");
+			} else {
+				$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> diedit. <br>Error:".$error['message']);
+			}	
+			
 			redirect('rp_kategori');
 		}	
 	}
@@ -86,8 +105,14 @@ class Rp_Kategori extends CI_Controller {
 	public function hapus($id)
 	{
 		
-		$this->M_Rp_Kategori->hapus($id);
-		$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  dihapus");
+		$rp_kategori = $this->M_Rp_Kategori->hapus($id);
+		$error = $this->db->error();
+		if ($rp_kategori) {
+			$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  dihapus");
+		} else {
+			$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+		}
+		
 		redirect('rp_kategori');
 	}
 	

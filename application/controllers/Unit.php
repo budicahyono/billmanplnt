@@ -50,22 +50,36 @@ class Unit extends CI_Controller {
 	{	
 		if(isset($_POST['submit'])){
 			$nama_unit	=  $this->input->post('nama_unit');
-			$data  		=  array('nama_unit'=>$nama_unit);
-				$this->M_Unit->post($data);	
-				$this->session->set_flashdata('success', "Data unit <b>Berhasil</b>  disimpan");
+			$data  		=  array('nama_unit'=>strtoupper($nama_unit));
+				$unit = $this->M_Unit->post($data);	
+				$error = $this->db->error();
+				if ($unit) {
+					$this->session->set_flashdata('success', "Data Unit <b>Berhasil</b>  disimpan");
+				} else {
+					$this->session->set_flashdata('error', "Data Unit <b>Gagal</b> disimpan. <br>Error:".$error['message']);
+				}	
 				redirect('unit');
 			
 		}	
 	}
 	
+	
+	
 	public function edit($id)
 	{
-		$data = array(
-			'app' 	=> 'Billman PLN-T',
-			'title' =>	ucfirst($this->uri->segment(1)),
-			'unit'	=>	$this->M_Unit->get_one($id),
-		);
-		$this->template->load('template','unit/v_edit',$data);
+		$unit = $this->M_Unit->get_one($id);
+		$cek = $unit->num_rows();
+		if ($cek > 0) {
+			$data = array(
+				'app' 	=> 'Billman PLN-T',
+				'title' =>	ucfirst($this->uri->segment(1)),
+				'unit'	=>	$unit,
+			);
+			$this->template->load('template','unit/v_edit',$data);
+		} else {
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			redirect('unit');
+		}	
 	}
 	
 	public function proses_edit()
@@ -76,9 +90,14 @@ class Unit extends CI_Controller {
 			$id_unit    =  $this->input->post('id_unit');
 			$nama_unit	=  $this->input->post('nama_unit');
 			
-			$data       =  array('nama_unit'=>$nama_unit);
-			$this->M_Unit->edit($data, $id_unit);	
-			$this->session->set_flashdata('status', "Data unit <b>Berhasil</b>  diedit");
+			$data       =  array('nama_unit'=>strtoupper($nama_unit));
+			$unit = $this->M_Unit->edit($data, $id_unit);	
+			$error = $this->db->error();
+			if ($unit) {
+				$this->session->set_flashdata('success', "Data Unit <b>Berhasil</b>  diedit");
+			} else {
+				$this->session->set_flashdata('error', "Data Unit <b>Gagal</b> diedit. <br>Error:".$error['message']);
+			}	
 			redirect('unit');
 		}	
 	}
@@ -86,8 +105,14 @@ class Unit extends CI_Controller {
 	public function hapus($id)
 	{
 		
-		$this->M_Unit->hapus($id);
-		$this->session->set_flashdata('success', "Data unit <b>Berhasil</b>  dihapus");
+		$unit = $this->M_Unit->hapus($id);
+		$error = $this->db->error();
+
+		if ($unit) {
+			$this->session->set_flashdata('success', "Data Unit <b>Berhasil</b>  dihapus");
+		} else {
+			$this->session->set_flashdata('error', "Data Unit <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+		}
 		redirect('unit');
 	}
 	

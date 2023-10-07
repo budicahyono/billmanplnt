@@ -38,6 +38,7 @@
                 <div class="form-group">
                 <label>Password</label>
                 <input  name="password" type="password" class="form-control" maxlength="10">
+                <input  name="password_old" type="hidden" class="form-control" value="<?=$r->password?>">
 				<small>Jika ingin ubah password silakan diinput, jika tidak diubah bisa kosongkan ini</small>
                 </div>
                 <div class="form-group">

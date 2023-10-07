@@ -50,9 +50,15 @@ class Jenis_kendala extends CI_Controller {
 	{	
 		if(isset($_POST['submit'])){
 			$nama_jenis_kendala	=  $this->input->post('nama_jenis_kendala');
-			$data  		=  array('nama_jenis_kendala'=>$nama_jenis_kendala);
-				$this->M_Jenis_Kendala->post($data);	
-				$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  disimpan");
+			$data  		=  array('nama_jenis_kendala'=> ucwords($nama_jenis_kendala));
+				$jenis_kendala = $this->M_Jenis_Kendala->post($data);	
+				$error = $this->db->error();
+				if ($jenis_kendala) {
+					$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  disimpan");
+				} else {
+					$this->session->set_flashdata('error', "Data Jenis Kendala <b>Gagal</b> disimpan. <br>Error:".$error['message']);
+				}	
+				
 				redirect('jenis_kendala');
 			
 		}	
@@ -60,12 +66,19 @@ class Jenis_kendala extends CI_Controller {
 	
 	public function edit($id)
 	{
-		$data = array(
-			'app' 	=> 'Billman PLN-T',
-			'title' => 'Jenis Kendala',
-			'jenis_kendala'	=>	$this->M_Jenis_Kendala->get_one($id),
-		);
-		$this->template->load('template','jenis_kendala/v_edit',$data);
+		$jenis_kendala = $this->M_Jenis_Kendala->get_one($id);
+		$cek = $jenis_kendala->num_rows();
+		if ($cek > 0) {
+			$data = array(
+				'app' 	=> 'Billman PLN-T',
+				'title' => 'Jenis Kendala',
+				'jenis_kendala'	=>	$jenis_kendala,
+			);
+			$this->template->load('template','jenis_kendala/v_edit',$data);
+		} else {
+			$this->session->set_flashdata('error', "Data Jenis Kendala <b>$id</b> tidak ada.");
+			redirect('jenis_kendala');
+		}	
 	}
 	
 	public function proses_edit()
@@ -76,9 +89,15 @@ class Jenis_kendala extends CI_Controller {
 			$id_jenis_kendala    =  $this->input->post('id_jenis_kendala');
 			$nama_jenis_kendala	=  $this->input->post('nama_jenis_kendala');
 			
-			$data       =  array('nama_jenis_kendala'=>$nama_jenis_kendala);
-			$this->M_Jenis_Kendala->edit($data, $id_jenis_kendala);	
-			$this->session->set_flashdata('status', "Data Jenis Kendala <b>Berhasil</b>  diedit");
+			$data       =  array('nama_jenis_kendala'=>ucwords($nama_jenis_kendala));
+			$jenis_kendala = $this->M_Jenis_Kendala->edit($data, $id_jenis_kendala);	
+			$error = $this->db->error();
+			if ($jenis_kendala) {
+				$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  diedit");
+			} else {
+				$this->session->set_flashdata('error', "Data Jenis Kendala <b>Gagal</b> diedit. <br>Error:".$error['message']);
+			}	
+			
 			redirect('jenis_kendala');
 		}	
 	}
@@ -86,8 +105,14 @@ class Jenis_kendala extends CI_Controller {
 	public function hapus($id)
 	{
 		
-		$this->M_Jenis_Kendala->hapus($id);
-		$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  dihapus");
+		$jenis_kendala = $this->M_Jenis_Kendala->hapus($id);
+		$error = $this->db->error();
+		if ($jenis_kendala) {
+			$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  dihapus");
+		} else {
+			$this->session->set_flashdata('error', "Data Jenis Kendala <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+		}
+		
 		redirect('jenis_kendala');
 	}
 	

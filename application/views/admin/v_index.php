@@ -21,7 +21,7 @@
               <div class="card-body">
 
                <div class="form-group">
-                  <a href="admin/tambah" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Admin</a>
+                  <a href="<?=base_url('admin/tambah')?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Admin</a>
                 </div>
                 <table id="datatable" class="table table-bordered table-hover">
                   <thead>

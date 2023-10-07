@@ -21,7 +21,7 @@
               <div class="card-body">
 
                 <div class="form-group">
-                  <a href="jenis_kendala/tambah" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah jenis kendala</a>
+                  <a href="<?=base_url('jenis_kendala/tambah')?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah jenis kendala</a>
                 </div>
                 <table id="datatable" class="table table-bordered table-hover">
                   <thead>
@@ -39,8 +39,8 @@
                     <td><?=$no?></td>
                     <td><?=$r->nama_jenis_kendala?></td>
                     <td style="width:200px">
-                      <a  href="jenis kendala/edit/<?php echo $r->id_jenis_kendala ?>" class="btn btn-info "><i class="fa fa-edit"></i> Edit</a>
-                      <a  onclick="return confirm('Apa anda yakin ingin menghapusnya?')" href="jenis kendala/hapus/<?php echo $r->id_jenis_kendala ?>" class="btn btn-danger "><i class="fa fa-trash"></i> Hapus</a>  
+                      <a  href="jenis_kendala/edit/<?php echo $r->id_jenis_kendala ?>" class="btn btn-info "><i class="fa fa-edit"></i> Edit</a>
+                      <a  onclick="return confirm('Apa anda yakin ingin menghapusnya?')" href="jenis_kendala/hapus/<?php echo $r->id_jenis_kendala ?>" class="btn btn-danger "><i class="fa fa-trash"></i> Hapus</a>  
                         
                     </td>
                   </tr>

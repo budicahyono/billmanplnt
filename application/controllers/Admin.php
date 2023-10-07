@@ -51,13 +51,13 @@ class Admin extends CI_Controller {
 			'app' 	=> 'Billman PLN-T',
 			'title' =>	ucfirst($this->uri->segment(1)),
 			'admin'	=>	$this->M_Admin->get_all(),
-		);
+			);
 		$this->template->load('template','admin/v_tambah',$data);
 	}
 	
 	public function post()
 	{	
-
+ 
 		if(isset($_POST['submit'])){
 			$nama_admin   			=  $this->input->post('nama_admin');
 			$username   			=  $this->input->post('username');
@@ -68,16 +68,21 @@ class Admin extends CI_Controller {
 			if($password != $password_again) {
 				$this->session->set_flashdata('error', "Password tidak sama");
 				redirect('admin/tambah');
-				} else if($cek_admin > 0) {
+			} else if($cek_admin > 0) {
 				$this->session->set_flashdata('error', "Username sudah ada, Ganti username lain");
 				redirect("admin/tambah");	
-				}  else {		
+			}  else {		
 				$data           		=  array('level'       =>$level,
-				'nama_admin'    =>$nama_admin,
-				'username'    =>$username,
-				'password'    =>md5($password));
-				$this->M_Admin->post($data);	
-				$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  disimpan");
+												 'nama_admin'   =>ucwords($nama_admin),
+												 'username'    =>$username,
+												 'password'    =>md5($password));
+				$admin = $this->M_Admin->post($data);
+				$error = $this->db->error();
+				if ($admin) {
+					$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  disimpan");
+				} else {
+					$this->session->set_flashdata('error', "Data Admin <b>Gagal</b> disimpan. <br>Error:".$error['message']);
+				}	
 				redirect('admin');
 			}
 		}	
@@ -85,12 +90,19 @@ class Admin extends CI_Controller {
 	
 	public function edit($id)
 	{
-		$data = array(
-			'app' 	=> 'Billman PLN-T',
-			'title' =>	ucfirst($this->uri->segment(1)),
-			'admin'	=>	$this->M_Admin->get_one($id),
-		);
-		$this->template->load('template','admin/v_edit',$data);
+		$admin = $this->M_Admin->get_one($id);
+		$cek = $admin->num_rows();
+		if ($cek > 0) {
+			$data = array(
+				'app' 	=> 'Billman PLN-T',
+				'title' =>	ucfirst($this->uri->segment(1)),
+				'admin'	=>	$admin,
+			);
+			$this->template->load('template','admin/v_edit',$data);
+		} else {
+			$this->session->set_flashdata('error', "Data Admin <b>$id</b> tidak ada.");
+			redirect('admin');
+		}	
 	}
 	
 	public function proses_edit()
@@ -104,36 +116,31 @@ class Admin extends CI_Controller {
 			$level   			 	=  $this->input->post('level');
 			$password        		=  $this->input->post('password');
 			$password_again        	=  $this->input->post('password_again');
+			$password_old			=  $this->input->post('password_old'); //ambil password lama
 			$cek_admin = $this->db->query("SELECT * FROM admin WHERE username = '$username' and id_admin NOT IN(SELECT id_admin FROM admin WHERE id_admin = '$id_admin') ")->num_rows();
-			if ($password == "" || $password_again == "") {
-				if($cek_admin > 0) {
-					$this->session->set_flashdata('error', "username sudah ada, Ganti username lain");
-					redirect("admin/edit/$id_admin");
-				} else {	
-					$data           =  array('level'       =>$level,
-					'nama_admin'       =>$nama_admin,
-					'username'       =>$username,
-					'password'       =>md5($password));
-					$this->M_Admin->edit($data, $id_admin);	
-					$this->session->set_flashdata('status', "Data Admin <b>Berhasil</b>  diedit");
-					redirect('admin');
+			if ($password == "" && $password_again == "") { //jika password tidak diubah
+				$password = $password_old;
+				$password_again = $password_old;
+			} 
+			if($password != $password_again) {
+				$this->session->set_flashdata('error', "Password tidak sama");
+				redirect("admin/edit/$id_admin");
+			} else if($cek_admin > 0) {
+				$this->session->set_flashdata('error', "username sudah ada, Ganti username lain");
+				redirect("admin/edit/$id_admin");
+			} else {	
+				$data           =  array('level'       =>$level,
+										 'nama_admin'  =>ucwords($nama_admin),
+										 'username'    =>$username,
+										 'password'    =>md5($password));
+				$admin = $this->M_Admin->edit($data, $id_admin);	
+				$error = $this->db->error();
+				if ($admin) {
+					$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  diedit");
+				} else {
+					$this->session->set_flashdata('error', "Data Admin <b>Gagal</b> diedit. <br>Error:".$error['message']);
 				}	
-			} else {
-				if($password != $password_again) {
-					$this->session->set_flashdata('error', "Password tidak sama");
-					redirect("admin/edit/$id_admin");
-				} else if($cek_admin > 0) {
-					$this->session->set_flashdata('error', "username sudah ada, Ganti username lain");
-					redirect("admin/edit/$id_admin");
-				} else {	
-					$data           =  array('level'       =>$level,
-					'nama_admin'       =>$nama_admin,
-					'username'       =>$username,
-					'password'       =>md5($password));
-					$this->M_Admin->edit($data, $id_admin);	
-					$this->session->set_flashdata('status', "Data Admin <b>Berhasil</b>  diedit");
-					redirect('admin');
-				}
+				redirect('admin');
 			}
 			
 		}	
@@ -142,8 +149,14 @@ class Admin extends CI_Controller {
 	public function hapus($id)
 	{
 		
-		$this->M_Admin->hapus($id);
-		$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  dihapus");
+		$admin = $this->M_Admin->hapus($id);
+		$error = $this->db->error();
+		if ($admin) {
+			$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  dihapus");
+		} else {
+			$this->session->set_flashdata('error', "Data Admin <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+		}	
+		
 		redirect('admin');
 	}
 	

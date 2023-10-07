@@ -8,7 +8,9 @@
 		
 		function get_all() // ambil semua data jenis_kendala 
 		{
+			$this->db->where('nama_jenis_kendala !=', ""); //mengambil jenis kendala selain yang namanya kosong,
 			return $this->db->get($this->tb);
+			//nama kosong itu tidak boleh dihapus, karena itu adalah pilihan ketika belum ada kendala / evidence 0
 		}
 		
 		

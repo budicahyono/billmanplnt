@@ -29,6 +29,37 @@
                 <input required name="nama_petugas" type="text" class="form-control" >
                 </div>
                 
+                <div class="form-group">
+                <label>Username</label>
+                <input required name="username" type="text" class="form-control" >
+                </div>
+                <div class="form-group">
+                <label>Password</label>
+                <input required name="password" type="password" class="form-control" maxlength="10">
+                </div>
+                <div class="form-group">
+                <label>Ketik Ulang Password</label>
+                <input required name="password_again" type="password" class="form-control" maxlength="10">
+                </div>
+                <div class="form-group">
+                <label>Petugas Khusus?</label>
+                  <div class="custom-control custom-checkbox">
+                    <input name="is_petugas_khusus" class="custom-control-input" type="checkbox" id="is_petugas_khusus" value="1">
+                    <label for="is_petugas_khusus" class="custom-control-label">Ya Petugas Khusus</label>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                <label>Unit</label>
+                <select class="form-control" name="id_unit">
+                 <?php foreach ($unit->result() as $r) {  ?>
+                    <option value="<?=$r->id_unit?>"><?=$r->nama_unit?></option>
+                 <?php } ?>
+                 </select>
+               </div>
+               
+               
+                
                 <button name="submit" type="submit" class="btn btn-primary "><i class="fa fa-check"></i> Simpan</button>
                 <button type="reset" class="btn btn-warning "><i class="fa fa-times"></i> Reset</button>
                 </form>

@@ -18,7 +18,7 @@
   <!-- JQVMap -->
   <link rel="stylesheet" href="<?=base_url();?>plugins/jqvmap/jqvmap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?=base_url();?>dist/css/adminlte.css">
+  <link rel="stylesheet" href="<?=base_url();?>dist/css/adminlte.css?v=<?php echo time() ?>">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="<?=base_url();?>plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
@@ -268,10 +268,9 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
+    <strong>Aplikasi ini dibuat oleh Tim Developer dari <a href="#"><?=$app?></a> UP3 Manokwari</strong>
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      <b>Version</b> 1.0
     </div>
   </footer>
 
@@ -322,24 +321,41 @@
 <script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<!-- Page specific script -->
+<!-- datatable -->
 <script>
   $(function () {
-   
+  //datatable standar
     $('#datatable').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
       "ordering": true,
+      columnDefs: [
+        { orderable: false, targets: -1}
+      ],
       "info": true,
       "autoWidth": false,
       "responsive": true,
     });
-    
-     $('#datatable2').DataTable({
+  //datatable pilihan pagination  
+    $('#data_paging').DataTable({
+      "paging": true,
+      "lengthMenu": [[20, 50, 100], [20, 50, 100]],
+      "searching": false,
+      "ordering": true,
+      columnDefs: [
+        { orderable: false, targets: -1},
+        { orderable: false, targets: 4},
+      ],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  //datatable pencarian  
+     $('#data_search').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
@@ -390,6 +406,14 @@
        return false
     }
 });
+</script>
+
+<!-- ajax pilih unit di petugas  -->
+<script>
+ $('#id_unit').change(function () {
+    var id_unit = $(this).val();
+    window.location.replace("<?=base_url()?>petugas/unit/" + id_unit);
+ });  
 </script>
 
 

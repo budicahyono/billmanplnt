@@ -21,7 +21,7 @@
               <div class="card-body">
 
                 <div class="form-group">
-                  <a href="rp_kategori/tambah" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah rp_kategori</a>
+                  <a href="<?=base_url('rp_kategori/tambah')?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Rp Kategori</a>
                 </div>
                 <table id="datatable" class="table table-bordered table-hover">
                   <thead>

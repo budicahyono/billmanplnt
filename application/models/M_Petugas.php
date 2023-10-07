@@ -27,6 +27,12 @@
 		{
 			return $this->db->get_where($this->tb, array($this->id => $key));
 		}
+		
+		function by_unit($key)
+		{
+			$this->db->join('unit', 'unit.id_unit = petugas.id_unit');
+			return $this->db->get_where($this->tb, array("unit.id_unit" => $key));
+		}
 		function edit($data, $key)
 		{
 			$this->db->where($this->id, $key);

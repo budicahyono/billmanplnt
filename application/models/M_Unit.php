@@ -18,7 +18,8 @@
 		}	
 		function hapus($key) // hapus data data
 		{
-			$this->db->delete($this->tb, array($this->id => $key)); 
+			return $this->db->delete($this->tb, array($this->id => $key)); 
+			
 		}
 		
 		
