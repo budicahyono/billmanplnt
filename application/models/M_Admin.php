@@ -33,10 +33,7 @@
 		{
 			$this->db->delete($this->tb, array($this->id => $key)); 
 		}
-		function del_verif($key)
-		{
-			$this->db->delete("verifikasi", array("id_register" => $key)); 
-		}
+		
 		function get_one($key)
 		{
 			return $this->db->get_where($this->tb, array($this->id => $key));
@@ -48,9 +45,5 @@
 		}
 		
 		
-		function ganti($data, $key)
-		{
-			$this->db->where($this->id, $key);
-			$this->db->update($this->tb, $data);
-		}	
+			
 	}	
