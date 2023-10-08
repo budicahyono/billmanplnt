@@ -53,7 +53,7 @@ class Rp_Kategori extends CI_Controller {
 			$data  		=  array('nama_rp_kategori'=>ucwords($nama_rp_kategori));
 				$rp_kategori = $this->M_Rp_Kategori->post($data);	
 				$error = $this->db->error();
-				if ($rp_kategori) {
+				if ($error['code'] == null) {
 					$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  disimpan");
 				} else {
 					$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> disimpan. <br>Error:".$error['message']);
@@ -92,7 +92,7 @@ class Rp_Kategori extends CI_Controller {
 			$data       =  array('nama_rp_kategori'=>ucwords($nama_rp_kategori));
 			$rp_kategori = $this->M_Rp_Kategori->edit($data, $id_rp_kategori);	
 			$error = $this->db->error();
-			if ($rp_kategori) {
+			if ($error['code'] == null) {
 				$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  diedit");
 			} else {
 				$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> diedit. <br>Error:".$error['message']);
@@ -104,16 +104,22 @@ class Rp_Kategori extends CI_Controller {
 	
 	public function hapus($id)
 	{
-		
-		$rp_kategori = $this->M_Rp_Kategori->hapus($id);
-		$error = $this->db->error();
-		if ($rp_kategori) {
-			$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  dihapus");
+		$cek = $this->M_Rp_Kategori->get_one($id)->num_rows();
+		if ($cek > 0) {
+			$rp_kategori = $this->M_Rp_Kategori->hapus($id);
+			$error = $this->db->error();
+			if ($error['code'] == null) {
+				$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  dihapus");
+			} else {
+				$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+			}
+			
+			redirect('rp_kategori');
 		} else {
-			$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> dihapus. <br>Error:".$error['message']);
-		}
-		
-		redirect('rp_kategori');
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			echo "error";
+			redirect('rp_kategori');
+		}		
 	}
 	
 }

@@ -1,7 +1,7 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pelanggan extends CI_Controller {
+class Tusbung extends CI_Controller {
 	function __construct(){
 				parent::__construct();
 						
@@ -29,16 +29,34 @@ class Pelanggan extends CI_Controller {
 			'app' => 'Billman PLN-T',
 			'title' => ucfirst($this->uri->segment(1)),
 		);
-		$this->template->load('template','pelanggan/v_index',$data);
+		$this->template->load('template','tusbung/v_index',$data);
 	}
 	
-	public function profil()
+	public function import()
 	{
 		$data = array(
 			'app' => 'Billman PLN-T',
-			'title' => ucfirst($this->uri->segment(1)),
+			'title' => "Import Tusbung",
 		);
-		$this->template->load('template','v_profil',$data);
+		$this->template->load('template','tusbung/v_import',$data);
+	}
+	
+	public function jadwal()
+	{
+		$data = array(
+			'app' => 'Billman PLN-T',
+			'title' => "Jadwal Tusbung",
+		);
+		$this->template->load('template','tusbung/v_jadwal',$data);
+	}
+	
+	public function kendala()
+	{
+		$data = array(
+			'app' => 'Billman PLN-T',
+			'title' => "Kendala",
+		);
+		$this->template->load('template','tusbung/v_kendala',$data);
 	}
 	
 	

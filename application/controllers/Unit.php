@@ -53,8 +53,9 @@ class Unit extends CI_Controller {
 			$data  		=  array('nama_unit'=>strtoupper($nama_unit));
 				$unit = $this->M_Unit->post($data);	
 				$error = $this->db->error();
-				if ($unit) {
+				if ($error['code'] == null) {
 					$this->session->set_flashdata('success', "Data Unit <b>Berhasil</b>  disimpan");
+					
 				} else {
 					$this->session->set_flashdata('error', "Data Unit <b>Gagal</b> disimpan. <br>Error:".$error['message']);
 				}	
@@ -93,7 +94,7 @@ class Unit extends CI_Controller {
 			$data       =  array('nama_unit'=>strtoupper($nama_unit));
 			$unit = $this->M_Unit->edit($data, $id_unit);	
 			$error = $this->db->error();
-			if ($unit) {
+			if ($error['code'] == null) {
 				$this->session->set_flashdata('success', "Data Unit <b>Berhasil</b>  diedit");
 			} else {
 				$this->session->set_flashdata('error', "Data Unit <b>Gagal</b> diedit. <br>Error:".$error['message']);
@@ -104,16 +105,23 @@ class Unit extends CI_Controller {
 	
 	public function hapus($id)
 	{
-		
-		$unit = $this->M_Unit->hapus($id);
-		$error = $this->db->error();
-
-		if ($unit) {
-			$this->session->set_flashdata('success', "Data Unit <b>Berhasil</b>  dihapus");
+		$cek = $this->M_Unit->get_one($id)->num_rows();
+		if ($cek > 0) {
+			$unit = $this->M_Unit->hapus($id);
+			$error = $this->db->error();
+			
+			if ($error['code'] == null) {
+				$this->session->set_flashdata('success', "Data Unit <b>Berhasil</b>  dihapus");
+			} else {
+				$this->session->set_flashdata('error', "Data Unit <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+			}
+			redirect('unit');
+			
 		} else {
-			$this->session->set_flashdata('error', "Data Unit <b>Gagal</b> dihapus. <br>Error:".$error['message']);
-		}
-		redirect('unit');
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			echo "error";
+			redirect('unit');
+		}	
 	}
 	
 	

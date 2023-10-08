@@ -27,18 +27,18 @@ class TusbungHarian extends CI_Controller {
 	{
 		$data = array(
 			'app' => 'Billman PLN-T',
-			'title' => ucfirst($this->uri->segment(1)),
+			'title' => "Tusbung Harian",
 		);
 		$this->template->load('template','tusbung_harian/v_index',$data);
 	}
 	
-	public function profil()
+	public function Update()
 	{
 		$data = array(
 			'app' => 'Billman PLN-T',
-			'title' => ucfirst($this->uri->segment(1)),
+			'title' => "Update Kendala",
 		);
-		$this->template->load('template','v_profil',$data);
+		$this->template->load('template','tusbung_harian/v_update',$data);
 	}
 	
 	

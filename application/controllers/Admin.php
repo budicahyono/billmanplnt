@@ -78,7 +78,7 @@ class Admin extends CI_Controller {
 												 'password'    =>md5($password));
 				$admin = $this->M_Admin->post($data);
 				$error = $this->db->error();
-				if ($admin) {
+				if ($error['code'] == null) {
 					$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  disimpan");
 				} else {
 					$this->session->set_flashdata('error', "Data Admin <b>Gagal</b> disimpan. <br>Error:".$error['message']);
@@ -135,7 +135,7 @@ class Admin extends CI_Controller {
 										 'password'    =>md5($password));
 				$admin = $this->M_Admin->edit($data, $id_admin);	
 				$error = $this->db->error();
-				if ($admin) {
+				if ($error['code'] == null) {
 					$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  diedit");
 				} else {
 					$this->session->set_flashdata('error', "Data Admin <b>Gagal</b> diedit. <br>Error:".$error['message']);
@@ -148,16 +148,22 @@ class Admin extends CI_Controller {
 	
 	public function hapus($id)
 	{
-		
-		$admin = $this->M_Admin->hapus($id);
-		$error = $this->db->error();
-		if ($admin) {
-			$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  dihapus");
+		$cek = $this->M_Admin->get_one($id)->num_rows();
+		if ($cek > 0) {
+			$admin = $this->M_Admin->hapus($id);
+			$error = $this->db->error();
+			if ($error['code'] == null) {
+				$this->session->set_flashdata('success', "Data Admin <b>Berhasil</b>  dihapus");
+			} else {
+				$this->session->set_flashdata('error', "Data Admin <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+			}	
+			
+			redirect('admin');
 		} else {
-			$this->session->set_flashdata('error', "Data Admin <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			echo "error";
+			redirect('admin');
 		}	
-		
-		redirect('admin');
 	}
 	
 }

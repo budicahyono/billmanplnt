@@ -53,7 +53,7 @@ class Jenis_kendala extends CI_Controller {
 			$data  		=  array('nama_jenis_kendala'=> ucwords($nama_jenis_kendala));
 				$jenis_kendala = $this->M_Jenis_Kendala->post($data);	
 				$error = $this->db->error();
-				if ($jenis_kendala) {
+				if ($error['code'] == null) {
 					$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  disimpan");
 				} else {
 					$this->session->set_flashdata('error', "Data Jenis Kendala <b>Gagal</b> disimpan. <br>Error:".$error['message']);
@@ -92,7 +92,7 @@ class Jenis_kendala extends CI_Controller {
 			$data       =  array('nama_jenis_kendala'=>ucwords($nama_jenis_kendala));
 			$jenis_kendala = $this->M_Jenis_Kendala->edit($data, $id_jenis_kendala);	
 			$error = $this->db->error();
-			if ($jenis_kendala) {
+			if ($error['code'] == null) {
 				$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  diedit");
 			} else {
 				$this->session->set_flashdata('error', "Data Jenis Kendala <b>Gagal</b> diedit. <br>Error:".$error['message']);
@@ -104,16 +104,22 @@ class Jenis_kendala extends CI_Controller {
 	
 	public function hapus($id)
 	{
-		
-		$jenis_kendala = $this->M_Jenis_Kendala->hapus($id);
-		$error = $this->db->error();
-		if ($jenis_kendala) {
-			$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  dihapus");
+		$cek = $this->M_Jenis_Kendala->get_one($id)->num_rows();
+		if ($cek > 0) {
+			$jenis_kendala = $this->M_Jenis_Kendala->hapus($id);
+			$error = $this->db->error();
+			if ($error['code'] == null) {
+				$this->session->set_flashdata('success', "Data Jenis Kendala <b>Berhasil</b>  dihapus");
+			} else {
+				$this->session->set_flashdata('error', "Data Jenis Kendala <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+			}
+			
+			redirect('jenis_kendala');
 		} else {
-			$this->session->set_flashdata('error', "Data Jenis Kendala <b>Gagal</b> dihapus. <br>Error:".$error['message']);
-		}
-		
-		redirect('jenis_kendala');
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			echo "error";
+			redirect('jenis_kendala');
+		}	
 	}
 	
 	

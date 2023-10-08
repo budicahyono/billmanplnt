@@ -76,7 +76,7 @@ class Petugas extends CI_Controller {
 								 'id_unit'					=>$id_unit);
 				$petugas = $this->M_Petugas->post($data);	
 				$error = $this->db->error();
-				if ($petugas) {
+				if ($error['code'] == null) {
 					$this->session->set_flashdata('success', "Data Petugas <b>Berhasil</b>  disimpan");
 				} else {
 					$this->session->set_flashdata('error', "Data Petugas <b>Gagal</b> disimpan. <br>Error:".$error['message']);
@@ -89,25 +89,26 @@ class Petugas extends CI_Controller {
 	
 	public function unit($id)
 	{
-		$petugas = $this->M_Petugas->by_unit($id);
-		$cek = $petugas->num_rows();
-		if ($cek > 0) {
-			if ($id == 0) {
+		if ($id == 0) {
+				redirect('petugas');
+		} else {		
+			$petugas = $this->M_Petugas->by_unit($id);
+			$cek = $petugas->num_rows();
+			if ($cek > 0) {
+				$data = array(
+					'app' 	=> 'Billman PLN-T',
+					'title' =>	ucfirst($this->uri->segment(1)),
+					'petugas'	=>	$petugas,
+					'unit'		=>	$this->M_Unit->get_all(),
+					'id_unit'	=>	$id,
+				);
+				$this->template->load('template','petugas/v_index',$data);
+					
+			} else {
+				$this->session->set_flashdata('error', "Data Petugas di Unit <b>$id</b> tidak ada.");
 				redirect('petugas');
 			}
-			
-			$data = array(
-				'app' 	=> 'Billman PLN-T',
-				'title' =>	ucfirst($this->uri->segment(1)),
-				'petugas'	=>	$petugas,
-				'unit'		=>	$this->M_Unit->get_all(),
-				'id_unit'	=>	$id,
-			);
-			$this->template->load('template','petugas/v_index',$data);
-		} else {
-			$this->session->set_flashdata('error', "Data Petugas di Unit <b>$id</b> tidak ada.");
-			redirect('petugas');
-		}
+		}	
 	}
 	
 	public function edit($id)
@@ -166,7 +167,7 @@ class Petugas extends CI_Controller {
 									 'last_login'				=>$last_login);
 				$petugas = $this->M_Petugas->edit($data, $id_petugas);	
 				$error = $this->db->error();
-				if ($petugas) {
+				if ($error['code'] == null) {
 					$this->session->set_flashdata('success', "Data Petugas <b>Berhasil</b>  diedit");
 				} else {
 					$this->session->set_flashdata('error', "Data Petugas <b>Gagal</b> diedit. <br>Error:".$error['message']);
@@ -178,16 +179,22 @@ class Petugas extends CI_Controller {
 	
 	public function hapus($id)
 	{
-		
-		$petugas = $this->M_Petugas->hapus($id);
-		$error = $this->db->error();
-		if ($petugas) {
-			$this->session->set_flashdata('success', "Data Petugas <b>Berhasil</b>  dihapus");
+		$cek = $this->M_Petugas->get_one($id)->num_rows();
+		if ($cek > 0) {
+			$petugas = $this->M_Petugas->hapus($id);
+			$error = $this->db->error();
+			if ($error['code'] == null) {
+				$this->session->set_flashdata('success', "Data Petugas <b>Berhasil</b>  dihapus");
+			} else {
+				$this->session->set_flashdata('error', "Data Petugas <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+			}
+			
+			redirect('petugas');
 		} else {
-			$this->session->set_flashdata('error', "Data Petugas <b>Gagal</b> dihapus. <br>Error:".$error['message']);
-		}
-		
-		redirect('petugas');
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			echo "error";
+			redirect('petugas');
+		}		
 	}
 	
 	

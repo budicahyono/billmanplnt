@@ -165,7 +165,7 @@
           
           
          
-          <li class="nav-item menu">
+          <li class="nav-item menu <?php if ($title == "Tusbung" || $title == "Import Tusbung" || $title == "Jadwal Tusbung" || $title == "Kendala" ) echo 'menu-is-opening menu-open' ; ?>">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
@@ -175,25 +175,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbung/import" class="nav-link ">
+                <a href="<?=base_url()?>tusbung/import" class="nav-link <?php if ($title == "Import Tusbung") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Import Tusbung</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbung" class="nav-link">
+                <a href="<?=base_url()?>tusbung" class="nav-link <?php if ($title == "Tusbung") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Monitoring Tusbung</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbung/jadwal" class="nav-link">
+                <a href="<?=base_url()?>tusbung/jadwal" class="nav-link <?php if ($title == "Jadwal Tusbung") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Jadwal Tusbung</p>
                 </a>
               </li>
 			  <li class="nav-item">
-                <a href="<?=base_url()?>tusbung/kendala" class="nav-link">
+                <a href="<?=base_url()?>tusbung/kendala" class="nav-link <?php if ($title == "Kendala") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Monitoring Kendala</p>
                 </a>
@@ -202,7 +202,7 @@
           </li>
          
 		 
-		 <li class="nav-item menu">
+		 <li class="nav-item menu <?php if ($title == "Tusbung Harian"  || $title == "Update Kendala" ) echo 'menu-is-opening menu-open' ; ?>">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
@@ -212,13 +212,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbungharian/import" class="nav-link ">
+                <a href="<?=base_url()?>tusbungharian" class="nav-link <?php if ($title == "Tusbung Harian") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Import Tusbung Harian</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbungharian/update" class="nav-link">
+                <a href="<?=base_url()?>tusbungharian/update" class="nav-link <?php if ($title == "Update Kendala") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Update Kendala</p>
                 </a>
@@ -228,13 +228,13 @@
           </li>
 		   <li class="nav-header">PANDUAN APLIKASI</li>
 		  <li class="nav-item">
-            <a href="<?=base_url()?>panduan/admin" class="nav-link">
+            <a href="<?=base_url()?>" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>Panduan Admin</p>
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="<?=base_url()?>panduan/manager" class="nav-link">
+            <a href="<?=base_url()?>" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>Panduan Manajer</p>
             </a>
@@ -364,9 +364,8 @@
   });
 </script>
 
-<!-- alert -->
+<!-- alert success -->
 <script>
-  $(function() {
 <?php if ($this->session->flashdata('success')) { ?>	 
     $(document).ready(function() {
       $(document).Toasts('create', {
@@ -375,11 +374,14 @@
         subtitle: '',
 		autohide: true,
         delay: 5000,
-        body: '<?= $this->session->flashdata('success') ?>'
+        body: "<?= $this->session->flashdata('success') ?>"
       })
     });
 <?php } ?>	
-	
+</script>
+
+<!-- alert error -->
+<script>
 <?php if ($this->session->flashdata('error')) { ?>	
 	$(document).ready(function() {
       $(document).Toasts('create', {
@@ -388,12 +390,10 @@
         subtitle: '',
 		autohide: true,
         delay: 5000,
-        body: '<?= $this->session->flashdata('error') ?>'
+        body: "<?= $this->session->flashdata('error') ?>"
       })
     });
 <?php } ?>		
-	
-  });
 </script>
 
 <!-- logout  -->

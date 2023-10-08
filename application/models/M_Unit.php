@@ -14,7 +14,7 @@
 		
 		function post($data) // input data
 		{
-			$this->db->insert($this->tb,$data);
+			return $this->db->insert($this->tb,$data);
 		}	
 		function hapus($key) // hapus data data
 		{
