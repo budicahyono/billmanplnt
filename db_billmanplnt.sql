@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2023 at 07:12 PM
+-- Generation Time: Oct 15, 2023 at 09:35 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -43,7 +43,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nama_admin`, `username`, `password`, `level`, `is_admin_unit`, `id_unit`, `last_login`) VALUES
-(1, 'Admin Utama', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'superadmin', 0, 0, '2023-10-08 18:29:15'),
+(1, 'Admin Utama', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'superadmin', 0, 0, '2023-10-15 14:22:56'),
 (2, 'Manager', 'manager', '1d0258c2440a8d19e716292b231e3190', 'manager', 0, 0, '2023-10-02 21:17:40'),
 (8, 'Admin Tes', 'tes', '28b662d883b6d76fd96e4ddc5e9ba780', 'admin', 0, 0, '2023-10-02 21:10:53');
 
@@ -63,9 +63,9 @@ CREATE TABLE `jenis_kendala` (
 --
 
 INSERT INTO `jenis_kendala` (`id_jenis_kendala`, `nama_jenis_kendala`) VALUES
+(0, ' '),
 (1, 'Janji Bayar'),
 (2, 'Pagar Terkunci'),
-(3, ' '),
 (5, 'Via WA'),
 (6, 'Tidak Ada Orang'),
 (7, 'Rumah Tutup'),
@@ -118,7 +118,7 @@ INSERT INTO `kendala_harian` (`id_kendala_harian`, `tgl_kendala`, `id_petugas`, 
 --
 
 CREATE TABLE `pelanggan` (
-  `id_pelanggan` int(12) NOT NULL,
+  `id_pelanggan` varchar(12) NOT NULL,
   `nama_pelanggan` varchar(100) NOT NULL,
   `tarif` varchar(2) NOT NULL,
   `daya` int(11) NOT NULL,
@@ -130,13 +130,6 @@ CREATE TABLE `pelanggan` (
   `id_unit` int(11) NOT NULL,
   `id_petugas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `pelanggan`
---
-
-INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `tarif`, `daya`, `gol`, `alamat`, `kddk`, `no_hp`, `is_new`, `id_unit`, `id_petugas`) VALUES
-(123, 'Asep', 'B1', 31000, 0, 'apa aja', '123', 123, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -186,18 +179,20 @@ INSERT INTO `petugas` (`id_petugas`, `nama_petugas`, `username`, `password`, `le
 
 CREATE TABLE `rp_kategori` (
   `id_rp_kategori` int(11) NOT NULL,
-  `nama_rp_kategori` varchar(100) NOT NULL
+  `nama_rp_kategori` varchar(100) NOT NULL,
+  `rp_bawah` int(11) NOT NULL,
+  `rp_atas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rp_kategori`
 --
 
-INSERT INTO `rp_kategori` (`id_rp_kategori`, `nama_rp_kategori`) VALUES
-(1, '1-200 Ribu'),
-(2, '200-500 Ribu'),
-(3, '500-1 Juta'),
-(4, 'Rupiah Besar');
+INSERT INTO `rp_kategori` (`id_rp_kategori`, `nama_rp_kategori`, `rp_bawah`, `rp_atas`) VALUES
+(1, '1-200 Ribu', 1, 200000),
+(2, '200-500 Ribu', 200001, 500000),
+(3, '500 Ribu-1 Juta', 500001, 1000000),
+(4, 'Rupiah Besar', 1000001, 1000000000);
 
 -- --------------------------------------------------------
 
@@ -207,18 +202,11 @@ INSERT INTO `rp_kategori` (`id_rp_kategori`, `nama_rp_kategori`) VALUES
 
 CREATE TABLE `tusbung_harian` (
   `id_tusbung_harian` int(11) NOT NULL,
-  `id_pelanggan` int(11) NOT NULL,
+  `id_pelanggan` varchar(12) NOT NULL,
   `tgl_tusbung` date NOT NULL,
   `is_evidence` int(1) NOT NULL,
   `id_jenis_kendala` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tusbung_harian`
---
-
-INSERT INTO `tusbung_harian` (`id_tusbung_harian`, `id_pelanggan`, `tgl_tusbung`, `is_evidence`, `id_jenis_kendala`) VALUES
-(1, 123, '2023-09-24', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -228,9 +216,10 @@ INSERT INTO `tusbung_harian` (`id_tusbung_harian`, `id_pelanggan`, `tgl_tusbung`
 
 CREATE TABLE `tusbung_kumulatif` (
   `id_tusbung_kumulatif` int(11) NOT NULL,
-  `id_pelanggan` int(11) NOT NULL,
+  `id_pelanggan` varchar(12) NOT NULL,
   `lbr` int(1) NOT NULL,
   `rptag` int(11) NOT NULL,
+  `rbk` int(11) NOT NULL,
   `is_lunas` int(1) NOT NULL,
   `tgl_lunas` date NOT NULL,
   `id_jenis_kendala` int(11) NOT NULL,
@@ -239,13 +228,6 @@ CREATE TABLE `tusbung_kumulatif` (
   `bulan` int(2) NOT NULL,
   `tahun` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tusbung_kumulatif`
---
-
-INSERT INTO `tusbung_kumulatif` (`id_tusbung_kumulatif`, `id_pelanggan`, `lbr`, `rptag`, `is_lunas`, `tgl_lunas`, `id_jenis_kendala`, `id_rp_kategori`, `id_petugas_khusus`, `bulan`, `tahun`) VALUES
-(4, 123, 1, 123000, 0, '0000-00-00', 3, 1, 0, 1, 2023);
 
 -- --------------------------------------------------------
 
@@ -320,18 +302,18 @@ ALTER TABLE `rp_kategori`
 --
 ALTER TABLE `tusbung_harian`
   ADD PRIMARY KEY (`id_tusbung_harian`),
-  ADD KEY `fk_id_pelanggan_th` (`id_pelanggan`),
-  ADD KEY `fk_id_jkendala_th` (`id_jenis_kendala`);
+  ADD KEY `fk_id_jkendala_th` (`id_jenis_kendala`),
+  ADD KEY `fk_id_pelanggan_th` (`id_pelanggan`);
 
 --
 -- Indexes for table `tusbung_kumulatif`
 --
 ALTER TABLE `tusbung_kumulatif`
   ADD PRIMARY KEY (`id_tusbung_kumulatif`),
-  ADD KEY `fk_id_pelanggan_tk` (`id_pelanggan`),
   ADD KEY `fk_id_jkendala_tk` (`id_jenis_kendala`),
   ADD KEY `fk_id_rp_kategori_tk` (`id_rp_kategori`),
-  ADD KEY `id_petugas_khusus` (`id_petugas_khusus`);
+  ADD KEY `id_petugas_khusus` (`id_petugas_khusus`),
+  ADD KEY `k_id_pelanggan_tk` (`id_pelanggan`);
 
 --
 -- Indexes for table `unit`
@@ -383,7 +365,7 @@ ALTER TABLE `tusbung_harian`
 -- AUTO_INCREMENT for table `tusbung_kumulatif`
 --
 ALTER TABLE `tusbung_kumulatif`
-  MODIFY `id_tusbung_kumulatif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_tusbung_kumulatif` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `unit`
@@ -425,15 +407,15 @@ ALTER TABLE `petugas`
 --
 ALTER TABLE `tusbung_harian`
   ADD CONSTRAINT `fk_id_jkendala_th` FOREIGN KEY (`id_jenis_kendala`) REFERENCES `jenis_kendala` (`id_jenis_kendala`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_id_pelanggan_th` FOREIGN KEY (`id_pelanggan`) REFERENCES `tusbung_kumulatif` (`id_pelanggan`) ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_id_pelanggan_th` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `tusbung_kumulatif`
 --
 ALTER TABLE `tusbung_kumulatif`
   ADD CONSTRAINT `fk_id_jkendala_tk` FOREIGN KEY (`id_jenis_kendala`) REFERENCES `jenis_kendala` (`id_jenis_kendala`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_id_pelanggan_tk` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_id_rp_kategori_tk` FOREIGN KEY (`id_rp_kategori`) REFERENCES `rp_kategori` (`id_rp_kategori`) ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_id_rp_kategori_tk` FOREIGN KEY (`id_rp_kategori`) REFERENCES `rp_kategori` (`id_rp_kategori`) ON UPDATE NO ACTION,
+  ADD CONSTRAINT `k_id_pelanggan_tk` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
