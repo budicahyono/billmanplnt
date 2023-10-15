@@ -28,6 +28,12 @@
 			return $this->db->get_where($this->tb, array($this->id => $key));
 		}
 		
+		function cek($nama)
+		{
+			return $this->db->get_where($this->tb, array("nama_petugas" => $nama));
+		}
+		
+		
 		function by_unit($key)
 		{
 			$this->db->join('unit', 'unit.id_unit = petugas.id_unit');

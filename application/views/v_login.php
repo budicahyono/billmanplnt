@@ -1,7 +1,7 @@
 <div class="login-box">
   <div class="login-logo">
   <img src="<?=base_url();?>img/Logo.png" width="100%">
-    <a href="index2.html"><b>BILLMAN</b></a>
+    <a href="<?=base_url();?>"><b>SITU - BILLMAN MNK</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

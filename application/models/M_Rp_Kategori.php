@@ -20,7 +20,13 @@
 		{
 			$this->db->delete($this->tb, array($this->id => $key)); 
 		}
-		
+		function cek($rptag)
+		{
+			 $this->db->where('rp_bawah <=', $rptag);
+			 $this->db->where('rp_atas >=', $rptag);
+			 return $this->db->get($this->tb);
+			
+		}
 		
 		function get_one($key)
 		{

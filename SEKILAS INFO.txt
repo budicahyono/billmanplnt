@@ -1,0 +1,17 @@
+SEKILAS TENTANG IMPORT TUSBUNG:
+
+Pelanggan input dulu > Lalu Tusbung
+
+Jika hanya pelanggan yg duplikat, Berarti masih dapat input tusbung
+
+Jika pelanggan dan tusbung yang duplikat (ada user iseng input id pelanggan, bulan, dan tahun yg sudah ada) maka error 
+
+Jumlah error duplikat dibatasi sampai 100 saja (untuk mengurangi beban server)
+lebih dari itu akan di stop
+
+100 data duplikat akan ditampilkan agar dapat dicek 
+
+===================================================
+Dalam melakukan import pelanggan biasanya:
+Pelanggan bertambah, maka dapat dicek dari jumlah data baru dan data duplikat
+Pelanggan berkurang, maka dapat dicek dari selisih jumlah data di database dengan data yang terinput (baru dan duplikat) 

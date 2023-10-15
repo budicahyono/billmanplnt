@@ -29,6 +29,8 @@
   <link rel="stylesheet" href="<?=base_url();?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="<?=base_url();?>plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="<?=base_url();?>plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="<?=base_url();?>plugins/dropzone/min/dropzone.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -321,6 +323,7 @@
 <script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?=base_url();?>plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
 <!-- datatable -->
 <script>
   $(function () {
@@ -408,12 +411,24 @@
 });
 </script>
 
-<!-- ajax pilih unit di petugas  -->
+<!--  javascript pilih unit di petugas  -->
 <script>
  $('#id_unit').change(function () {
     var id_unit = $(this).val();
     window.location.replace("<?=base_url()?>petugas/unit/" + id_unit);
  });  
+</script>
+
+<!-- upload file   -->
+<script>
+ $(function () {
+ 
+    $('#uploadBtn').change(function () {
+      var path = $(this)[0].files[0].name;
+      $("#uploadFile").val(path);
+    });       
+ 
+ })
 </script>
 
 
