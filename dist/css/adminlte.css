@@ -13,7 +13,15 @@
  
  
  /*Custom Theme*/
- 
+
+
+.text-href:hover{
+  color: #bf2f2b !important; 
+}
+
+.text-href{
+  color: #a07800 !important;  
+}
  
 .mini {
   font-size:12px !important;   

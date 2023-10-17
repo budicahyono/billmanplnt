@@ -15,6 +15,11 @@ class M_Pelanggan extends CI_Model {
 		return $this->db->get($this->tb);
 	}
 	
+	function get_by_unit($id_unit)
+	{
+		return $this->db->get_where($this->tb, array('id_unit' => $id_unit));
+	}
+	
 	
 	function edit($data, $key)
 	{

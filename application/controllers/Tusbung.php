@@ -224,7 +224,7 @@ class Tusbung extends CI_Controller {
 				}	
 				
 				//cek jumlah data di database
-				$cek_pelanggan = $this->M_Pelanggan->get_all()->num_rows();
+				$cek_pelanggan = $this->M_Pelanggan->get_by_unit($id_unit)->num_rows();
 				echo "Data pelanggan yang berhasil diinput : ".$sum_pelanggan."<br>";
 				echo "Data tusbung yang berhasil diinput : ".$sum_tusbung."<br>";
 				echo "Data pelanggan yang duplikat : ".$sum_duplikat."<br>";
