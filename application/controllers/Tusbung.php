@@ -282,7 +282,7 @@ class Tusbung extends CI_Controller {
 			}else{ 
 				$error =  $this->upload->display_errors();   
 				$this->session->set_flashdata('error', "Data Tusbung <b>Gagal</b>  diimport. Error :" . $error);echo "gagal";
-				redirect("tusbung/back"); 
+				redirect("tusbung/import"); 
 			}  
 			
 			
