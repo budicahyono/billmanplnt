@@ -11,6 +11,7 @@ Progress Aplikasi Version 1.0 Build 23102023
 1. Dashboard progres 
 2. Hasil import tusbung
 2. Pilih Bulan dan Tahun sebelum login
+2. Import tanggal lunas excel ke database (ini yang lama)
 
 Untuk lebih jelasnya dapat dilihat dalam link berikut:
 [Billman Project](https://docs.google.com/spreadsheets/d/1awP3t7B6ldCpr9AHQaoaL8rsntCMXIMi/edit?rtpof=true&sd=true#gid=534714750)
