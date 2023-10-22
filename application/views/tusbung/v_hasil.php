@@ -40,7 +40,10 @@
 								<th><?=$sum_tus_duplikat?></th>
 							  </tr>
 						 </table>
-						 
+					</div>
+					
+					
+					<div class="col-lg-12">	 
 						 <?php 
 						 if ($sum_duplikat > 0 &&  $sum_tus_duplikat > 0) { // jika ada duplikat 
 					
@@ -96,9 +99,13 @@
 								<?php } ?>
 							
 						</table>	
+					</div>	
+					
+					
 						<?php	
 							} 
 						} else { // jika tidak ada duplikat ?>
+						<div class="col-lg-6">
 						<table class="table table-bordered">
 							  <tr>
 								<td>Total pelanggan baru : </td>
@@ -114,15 +121,16 @@
 							  </tr>
 							 
 						 </table>
+						 </div>
 					<?php  } ?>
 					
 					
 					
 						<div class="form-group ">
-							<a href="<?=base_url('tusbung/import')?>" class="btn btn-info"><i class="fa fa-arrow-left"></i> Kembali</a>
+							<a href="<?=base_url('tusbung/back')?>" class="btn btn-info"><i class="fa fa-arrow-left"></i> Kembali</a>
 						</div> 
 						 
-					</div>	 
+					 
                 </div>
               </div>
             </div>

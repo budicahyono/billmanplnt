@@ -177,7 +177,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbung/import" class="nav-link <?php if ($title == "Import Tusbung") echo 'active'; ?>">
+                <a href="<?=base_url()?>tusbung/import" class="nav-link <?php if ($title == "Import Tusbung" || $title == "Hasil Import Tusbung") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Import Tusbung</p>
                 </a>

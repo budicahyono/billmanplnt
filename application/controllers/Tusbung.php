@@ -256,8 +256,12 @@ class Tusbung extends CI_Controller {
 					redirect("tusbung/import"); 
 				}
 				
-				$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  diimport");	
-				//redirect("tusbung"); 
+				if ($sum_duplikat == 0 && $sum_tus_duplikat == 0) { 
+					$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  diimport");
+				} else {
+					$this->session->set_flashdata('error', "Data Tusbung dan Pelanggan ada yang <b>Duplikat</b>!! gagal diimport");
+				}
+				
 				$data = array(
 					'app' => 'Billman PLN-T',
 					'title' => "Hasil Import Tusbung",
@@ -278,12 +282,17 @@ class Tusbung extends CI_Controller {
 			}else{ 
 				$error =  $this->upload->display_errors();   
 				$this->session->set_flashdata('error', "Data Tusbung <b>Gagal</b>  diimport. Error :" . $error);echo "gagal";
-				redirect("tusbung/import"); 
+				redirect("tusbung/back"); 
 			}  
 			
 			
 			
 		}	
+	}
+	
+	public function back()
+	{
+		redirect("tusbung/import"); 
 	}
 	
 	public function jadwal()
