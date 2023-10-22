@@ -167,7 +167,7 @@
           
           
          
-          <li class="nav-item menu <?php if ($title == "Tusbung" || $title == "Import Tusbung" || $title == "Jadwal Tusbung" || $title == "Kendala" ) echo 'menu-is-opening menu-open' ; ?>">
+          <li class="nav-item menu <?php if ($title == "Tusbung" || $title == "Import Tusbung" || $title == "Hasil Import Tusbung" || $title == "Jadwal Tusbung" || $title == "Kendala" ) echo 'menu-is-opening menu-open' ; ?>">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
