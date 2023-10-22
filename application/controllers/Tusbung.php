@@ -90,8 +90,8 @@ class Tusbung extends CI_Controller {
 		
 		
 		
-			$bulan   		 =  $this->input->post('bulan');
-			$tahun   		 =  $this->input->post('tahun');
+			$bulan   		 =  $_SESSION['bulan_sess'];
+			$tahun   		 =  $_SESSION['tahun_sess'];
 			$id_unit   		 =  $this->input->post('id_unit');
 			
 			
@@ -176,14 +176,36 @@ class Tusbung extends CI_Controller {
 						);
 						$cek_tusbung = $this->M_Tusbung->cek($where)->num_rows();
 						if ($cek_tusbung == 0) {
-						if ($row['O'] == "lunas") { $is_lunas = 1;} else {$is_lunas = 0;}
+							if ($row['O'] == "lunas") { 
+								$is_lunas = 1;
+							} else {
+								$is_lunas = 0;
+							}
+							
+							if (isset($row['P'])) { //cek jika kolom tanggal terisi
+								if(strpos($row['P'], "'") !== false){ // cek jika ada single quote
+									$ubah_tgl = str_replace("'","",$row['P']);
+								} else {
+									$ubah_tgl = $row['P'];
+								}
+								// cek jika kolom di isi tanggal sesuai format excel
+								if (DateTime::createFromFormat("d/m/Y", $ubah_tgl) !== false) {
+								  $ubah_lagi =  str_replace("/", "-", $ubah_tgl); //ubah / ke -
+								  $tgl_lunas =  date("Y-m-d", strtotime($ubah_lagi)); //ubah ke format mysql
+								} else {
+								  $tgl_lunas = "0000-00-00";
+								}
+							} else { // jika kosong, input tanggal kosong dengan format mysql
+								$tgl_lunas = "0000-00-00";
+							}
+						
 							array_push($data_tusbung, [          
 								'id_pelanggan' 		=>$row['A'],    
 								'lbr'    			=>$row['L'],   
 								'rptag'     		=>$rptag,   
 								'rbk'     			=>0,
 								'is_lunas'			=>$is_lunas,
-								'tgl_lunas'			=>"0000-00-00",
+								'tgl_lunas'			=>$tgl_lunas,
 								'id_jenis_kendala'	=>0,  
 								'id_rp_kategori'	=>$id_rp_kategori,  
 								'bulan'				=>$bulan,  
@@ -200,22 +222,20 @@ class Tusbung extends CI_Controller {
 								'tahun'				=>$tahun,  
 							]); 
 						}	
-						// cegah proses tangkap duplikat hanya 100 saja
-						if (count($duplikat_pelanggan) >  100 && count($duplikat_tusbung) > 100) { 
-							goto hasil;
-						}
+						
 					}            
 					
 					$numrow++;    
 				} 
 				
 				
-				echo "<a href='".base_url('tusbung/import')."'>kembali</a><br>";
-				//masukkan dalam proses query tapi dicek dulu jumlah array dalam data
+				
+				
 				$sum_pelanggan = count($data_pelanggan);
 				$sum_tusbung = count($data_tusbung);
 				$sum_duplikat = count($duplikat_pelanggan);
 				$sum_tus_duplikat = count($duplikat_tusbung);
+				//masukkan dalam proses query tapi dicek dulu jumlah array dalam data
 				if ($sum_pelanggan > 0) {
 					$this->M_Pelanggan->insert_multiple($data_pelanggan);  
 				}
@@ -223,68 +243,45 @@ class Tusbung extends CI_Controller {
 					$this->M_Tusbung->insert_multiple($data_tusbung);  
 				}	
 				
-				//cek jumlah data di database
+				//cek jumlah data di database per unit 
 				$cek_pelanggan = $this->M_Pelanggan->get_by_unit($id_unit)->num_rows();
-				echo "Data pelanggan yang berhasil diinput : ".$sum_pelanggan."<br>";
-				echo "Data tusbung yang berhasil diinput : ".$sum_tusbung."<br>";
-				echo "Data pelanggan yang duplikat : ".$sum_duplikat."<br>";
-				echo "Data tusbung yang duplikat : ".$sum_tus_duplikat."<br>";
-					
-				if ($sum_duplikat > 0 &&  $sum_tus_duplikat > 0) { // jika ada duplikat 
-					
-					if ($sum_duplikat <= 100 && $sum_tus_duplikat <= 100) { // tampilkan duplikat hanya 100
-						echo "<h2>Data pelanggan dan tusbung yang duplikat</h2>";
-						$no = 1;
-						foreach ($duplikat_pelanggan as $r) {
-							echo $no++." "; 
-							echo $r['id_pelanggan']." "; 
-							echo $r['nama_pelanggan']." "; 
-							echo $r['tarif']." "; 
-							echo $r['daya']." "; 
-							echo $r['gol']." "; 
-							echo $r['alamat']." "; 
-							echo $r['kddk']." "; 
-							echo $r['no_hp']." "; 
-							echo $r['id_petugas']." "; 
-							
-							foreach ($duplikat_tusbung as $t) {
-								if ($t['id_pelanggan'] == $r['id_pelanggan']) {
-									echo $t['lbr']." "; 
-									echo $t['rptag']." "; 
-									echo $t['id_jenis_kendala']." "; 
-									echo $t['id_rp_kategori']." "; 
-									echo $t['bulan']." "; 
-									echo $t['tahun']." "; 
-								}
-							}
-							echo "<br>";
-						}
-					} 
-				} else { // jika tidak ada duplikat
-					echo "<br>";
-					echo "Total pelanggan baru: ".$sum_pelanggan."<br>";
-					echo "Total pelanggan lama: ".$sum_duplikat."<br>";
-					
-					$total = $sum_pelanggan + $sum_duplikat;
-					$out_pelanggan = $cek_pelanggan - $total;
-					echo "Total pelanggan keluar: ".$out_pelanggan."<br>";
-					
-					echo "Total data pelanggan sekarang (sesuai dengan jumlah tusbung): ".$total."<br>";
-				} 
 				
-				hasil: //langsung lompat kesini kalau duplikat lebih dari 100
+				$total = $sum_pelanggan + $sum_duplikat;	
+				
+				
+				
+				
 				if (count($duplikat_pelanggan) > 100 && count($duplikat_tusbung) > 100) { 
-					echo "<h2>Terlalu banyak Data pelanggan dan tusbung yang duplikat</h2>";
-					echo "<a href='".base_url('tusbung/import')."'>kembali</a><br>";
+					$this->session->set_flashdata('error', "Terlalu banyak Data pelanggan dan tusbung yang <b>Duplikat</b>");
+					redirect("tusbung/import"); 
 				}
-				unlink("import/$namafile.xlsx");
-				//$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  diimport");	
+				
+				$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  diimport");	
 				//redirect("tusbung"); 
+				$data = array(
+					'app' => 'Billman PLN-T',
+					'title' => "Hasil Import Tusbung",
+					'sum_pelanggan' => $sum_pelanggan,
+					'sum_tusbung' => $sum_tusbung,
+					'sum_duplikat' => $sum_duplikat,
+					'sum_tus_duplikat' => $sum_tus_duplikat,
+					'duplikat_pelanggan' => $duplikat_pelanggan,
+					'duplikat_tusbung' => $duplikat_tusbung,
+					'total' => $total,
+				);
+				
+				
+				
+				$this->template->load('template','tusbung/v_hasil',$data);
+				unlink("import/$namafile.xlsx");
+				
 			}else{ 
 				$error =  $this->upload->display_errors();   
 				$this->session->set_flashdata('error', "Data Tusbung <b>Gagal</b>  diimport. Error :" . $error);echo "gagal";
-				//redirect("tusbung/import"); 
+				redirect("tusbung/import"); 
 			}  
+			
+			
 			
 		}	
 	}

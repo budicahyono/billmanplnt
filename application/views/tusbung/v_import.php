@@ -33,10 +33,10 @@
                   <div class="col-lg-6">
                     <label>Bulan</label>
                     <br/>
-                    <select name="bulan" id="bulan" class="form-control" required>
+                    <select name="bulan" id="bulan" class="form-control" disabled >
                     <option value="">--Pilih Bulan--</option>
                       <?php
-                      $bln_skrg = date("m");
+                      $bln_skrg = $_SESSION['bulan_sess'];
                      $jumlah_bulan = 12;
                       for ($i=1;$i<=$jumlah_bulan;$i++){
                         if ($bln_skrg == $i) {
@@ -51,11 +51,11 @@
                   <div class="col-lg-6">
                     <label>Tahun</label>
                     <br/>
-                    <select name="tahun" id="tahun" class="form-control" required>
+                    <select name="tahun" id="tahun" class="form-control" disabled>
                     <option value="">--Pilih tahun--</option>
                       <?php
                       $thn_awal = 2022;
-                      $thn_skrg = date("Y");
+                      $thn_skrg = $_SESSION['tahun_sess'];
                       $jumlah_thn = 3;
                       $selisih = $thn_skrg - $thn_awal;
                       $tambah = $selisih + $thn_awal + $jumlah_thn;

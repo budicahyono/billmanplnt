@@ -15,12 +15,12 @@
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                   </button>
-                </div>
+				  </div> 
                 <!-- /.card-tools -->
               </div>
               <div class="card-body">
 
-                
+                 
                 
               </div>
             </div>

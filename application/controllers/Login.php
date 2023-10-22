@@ -7,6 +7,18 @@ class Login extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('M_Admin'); // panggil model admin
+		
+		function bln_indo($date)
+		{
+			$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+		 
+			
+			$bulan = $date;
+			 
+		 
+			$result =   $BulanIndo[(int)$bulan-1] ;		
+			return($result);
+		}
 	}
 		
 		
@@ -29,9 +41,13 @@ class Login extends CI_Controller {
 		if (isset($_POST['submit'])) {
 			$username = $this->input->post('username');
 			$password = md5($this->input->post('password'));
+			
+			$bulan_sess = $this->input->post('bulan'); //ambil bulan
+			$tahun_sess = $this->input->post('tahun'); //ambil tahun
+			
 			$where = array(
 				'username' => $username,
-				'password' => $password
+				'password' => $password,
 			);
 			$data_admin = $this->M_Admin->check($where);
 			$cek_admin = $this->M_Admin->check($where)->num_rows();
@@ -44,20 +60,13 @@ class Login extends CI_Controller {
 					'level' 		=> $r->level,
 					'id_admin' 		=> $r->id_admin,
 					'is_admin_unit' => $r->is_admin_unit,
-					'id_unit' 		=> $r->id_unit,
+					'bulan_sess' 		=> $bulan_sess, //simpan dalam session
+					'tahun_sess' 		=> $tahun_sess, //simpan dalam session
 					);
 				
 					$last_login = date("Y-m-d H:i:s");
 					$edit = $this->M_Admin->edit(array('last_login' => $last_login), $r->id_admin);	
-					/*
-					if ($edit) {
-						echo "terinput";
-					} else {
-						echo "belum";
-					}
-					echo $r->id_admin."<br>";
-					echo $last_login;
-					*/
+					
 				}
 				
 				

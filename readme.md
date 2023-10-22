@@ -1,71 +1,51 @@
 ###################
-What is CodeIgniter
+SITU BILLMANPLNT MNK
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
 
-*******************
-Release Information
-*******************
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+********************************************
+Progress Aplikasi Version 1.0 Build 23102023 
+********************************************
 
-**************************
-Changelog and New Features
-**************************
+1. Dashboard progres 
+2. Hasil import tusbung
+2. Pilih Bulan dan Tahun sebelum login
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+Untuk lebih jelasnya dapat dilihat dalam link berikut:
+`Billman Project
+<https://docs.google.com/spreadsheets/d/1awP3t7B6ldCpr9AHQaoaL8rsntCMXIMi/edit?rtpof=true&sd=true#gid=534714750>`_.
 
-*******************
-Server Requirements
-*******************
+**********************************
+Proses import tusbung dalam sistem
+**********************************
 
-PHP version 5.6 or newer is recommended.
+Pelanggan input dulu Lalu Tusbung
+Jika hanya pelanggan yg duplikat, Berarti masih dapat input tusbung
+Jika pelanggan dan tusbung yang duplikat (ada user iseng input id pelanggan, bulan, dan tahun yg sudah ada) maka error 
+Jumlah error duplikat dibatasi sampai 100 saja (untuk mengurangi beban server)
+lebih dari itu akan di stop
+100 data duplikat akan ditampilkan agar dapat dicek 
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+Dalam melakukan import pelanggan biasanya:
+Jika pelanggan bertambah, maka dapat dicek dari jumlah data baru dan data duplikat
+Jika pelanggan berkurang, maka dapat dicek dari histori tusbung pelanggan per bulan dan tahun (belum dibuat)
 
-************
-Installation
-************
+Tanggal harus memiliki tanda single quote ( ' ) di awal tanggal, 
+jika tidak ada, maka hasilnya akan terbalik antara bulan dan tanggal
 
-Please see the `installation section <https://codeigniter.com/userguide3/installation/index.html>`_
-of the CodeIgniter User Guide.
-
-*******
-License
-*******
-
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
-
-*********
-Resources
-*********
-
--  `User Guide <https://codeigniter.com/docs>`_
--  `Contributing Guide <https://github.com/bcit-ci/CodeIgniter/blob/develop/contributing.md>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
-
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
+Format import ada pada folder import atau pada link di halaman import tusbung
 
 ***************
-Acknowledgement
+Update Database
 ***************
 
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+1. no_hp menjadi varchar
+2. sudah diisi data tusbung dan pelanggan untuk semua unit pada bulan september 2023 (disesuaikan data di excel) 
+
+*************
+Saran Testing
+*************
+
+Import data tusbung pada bulan-bulan dan tahun sebelumnya
+Cek data pada dashboard apakah valid sesuai dashboard di excel atau tidak

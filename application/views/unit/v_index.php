@@ -23,7 +23,7 @@
                   <a href="unit/tambah" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Unit</a>
                 </div>
                 <table id="datatable" class="table table-bordered table-hover">
-                  <thead>
+                    <thead> 
                   <tr>
                     <th>No</th>
                     <th>Nama Unit</th>
