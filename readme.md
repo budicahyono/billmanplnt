@@ -22,14 +22,20 @@ Proses import tusbung dalam sistem
 **********************************
 
 Pelanggan input dulu Lalu Tusbung
+
 Jika hanya pelanggan yg duplikat, Berarti masih dapat input tusbung
+
 Jika pelanggan dan tusbung yang duplikat (ada user iseng input id pelanggan, bulan, dan tahun yg sudah ada) maka error 
+
 Jumlah error duplikat dibatasi sampai 100 saja (untuk mengurangi beban server)
 lebih dari itu akan di stop
+
 100 data duplikat akan ditampilkan agar dapat dicek 
 
 Dalam melakukan import pelanggan biasanya:
+
 Jika pelanggan bertambah, maka dapat dicek dari jumlah data baru dan data duplikat
+
 Jika pelanggan berkurang, maka dapat dicek dari histori tusbung pelanggan per bulan dan tahun (belum dibuat)
 
 Tanggal harus memiliki tanda single quote ( ' ) di awal tanggal, 
@@ -49,4 +55,5 @@ Saran Testing
 *************
 
 Import data tusbung pada bulan-bulan dan tahun sebelumnya
+
 Cek data pada dashboard apakah valid sesuai dashboard di excel atau tidak
