@@ -13,8 +13,8 @@ Progress Aplikasi Version 1.0 Build 23102023
 2. Pilih Bulan dan Tahun sebelum login
 
 Untuk lebih jelasnya dapat dilihat dalam link berikut:
-`Billman Project
-<https://docs.google.com/spreadsheets/d/1awP3t7B6ldCpr9AHQaoaL8rsntCMXIMi/edit?rtpof=true&sd=true#gid=534714750>`_.
+[Billman Project](https://docs.google.com/spreadsheets/d/1awP3t7B6ldCpr9AHQaoaL8rsntCMXIMi/edit?rtpof=true&sd=true#gid=534714750)
+
 
 **********************************
 Proses import tusbung dalam sistem
