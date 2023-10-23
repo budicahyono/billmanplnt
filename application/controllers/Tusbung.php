@@ -93,7 +93,10 @@ class Tusbung extends CI_Controller {
 			$bulan   		 =  $_SESSION['bulan_sess'];
 			$tahun   		 =  $_SESSION['tahun_sess'];
 			$id_unit   		 =  $this->input->post('id_unit');
-			
+			$unit = $this->M_Unit->get_one($id_unit);
+			foreach ($unit->result() as $r) {
+				$nama_unit = ucfirst(strtolower($r->nama_unit));
+			}
 			
 			$this->load->library('upload'); 
 			$config['upload_path'] = './import/';    
@@ -121,9 +124,14 @@ class Tusbung extends CI_Controller {
 						
 						$nama = $row['J'];
 						$petugas = $this->M_Petugas->cek($nama);
-						foreach ($petugas->result() as $r) {
-							$id_petugas = $r->id_petugas;
-						}
+						if ($petugas->num_rows() > 0) {
+							foreach ($petugas->result() as $r) {
+								$id_petugas = $r->id_petugas;
+							}
+						} else {
+							$this->session->set_flashdata('error', "Tidak ada petugas dengan nama <b>$nama</b> pada data master");
+							redirect("tusbung/import"); 
+						}	
 						
 						//cek dulu idpelanggan di database
 						$id_pelanggan = $row['A'];
@@ -256,15 +264,16 @@ class Tusbung extends CI_Controller {
 					redirect("tusbung/import"); 
 				}
 				
-				if ($sum_duplikat == 0 && $sum_tus_duplikat == 0) { 
-					$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  diimport");
-				} else {
+				if ($sum_duplikat > 0 && $sum_tus_duplikat > 0) { 
 					$this->session->set_flashdata('error', "Data Tusbung dan Pelanggan ada yang <b>Duplikat</b>!! gagal diimport");
+				} else {
+					$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  diimport");
 				}
 				
 				$data = array(
 					'app' => 'Billman PLN-T',
-					'title' => "Hasil Import Tusbung",
+					'title' => "Hasil Import Tusbung $nama_unit",
+					'nama_unit' => $nama_unit,
 					'sum_pelanggan' => $sum_pelanggan,
 					'sum_tusbung' => $sum_tusbung,
 					'sum_duplikat' => $sum_duplikat,

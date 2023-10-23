@@ -71,7 +71,7 @@ class Petugas extends CI_Controller {
 			} else {
 				$data  		=  array('nama_petugas'	=>strtoupper($nama_petugas),
 								 'username'		=>$username,
-								 'password'		=>$password,
+								 'password'		=>md5($password),
 								 'is_petugas_khusus'		=>$is_petugas_khusus,
 								 'id_unit'					=>$id_unit);
 				$petugas = $this->M_Petugas->post($data);	
@@ -160,7 +160,7 @@ class Petugas extends CI_Controller {
 			} else {	
 				$data       =  array('nama_petugas'	=>strtoupper($nama_petugas),
 									 'username'		=>$username,
-									 'password'		=>$password,
+									 'password'		=>md5($password),
 									 'level'		=>$level,
 									 'is_petugas_khusus'		=>$is_petugas_khusus,
 									 'id_unit'					=>$id_unit,

@@ -127,7 +127,7 @@ class Dashboard extends CI_Controller {
 		//lunas by pelanggan
 		
 		//bintuni
-		$total_bintuni = $this->M_Pelanggan->get_by_unit($id_bintuni)->num_rows();
+		$total_bintuni = $this->M_Tusbung->get_by_unit($id_bintuni)->num_rows();
 		$lunas_bintuni = $this->M_Tusbung->get_lunas($id_bintuni)->num_rows();
 	 
 		if ($total_bintuni != 0 && $lunas_bintuni != 0) {
@@ -137,7 +137,7 @@ class Dashboard extends CI_Controller {
 		}
 		
 		//manokwari
-		$total_manokwari = $this->M_Pelanggan->get_by_unit($id_manokwari)->num_rows();
+		$total_manokwari = $this->M_Tusbung->get_by_unit($id_manokwari)->num_rows();
 		$lunas_manokwari = $this->M_Tusbung->get_lunas($id_manokwari)->num_rows();
 	 
 		if ($total_manokwari != 0 && $lunas_manokwari != 0) {
@@ -147,7 +147,7 @@ class Dashboard extends CI_Controller {
 		}
 		
 		//wasior
-		$total_wasior = $this->M_Pelanggan->get_by_unit($id_wasior)->num_rows();
+		$total_wasior = $this->M_Tusbung->get_by_unit($id_wasior)->num_rows();
 		$lunas_wasior = $this->M_Tusbung->get_lunas($id_wasior)->num_rows();
 	 
 		if ($total_wasior != 0 && $lunas_wasior != 0) {
@@ -157,7 +157,7 @@ class Dashboard extends CI_Controller {
 		}
 		
 		//prafi
-		$total_prafi = $this->M_Pelanggan->get_by_unit($id_prafi)->num_rows();
+		$total_prafi = $this->M_Tusbung->get_by_unit($id_prafi)->num_rows();
 		$lunas_prafi = $this->M_Tusbung->get_lunas($id_prafi)->num_rows();
 	 
 		if ($total_prafi != 0 && $lunas_prafi != 0) {

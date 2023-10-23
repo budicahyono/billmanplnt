@@ -10,7 +10,7 @@
             <div class="card card-primary card-outline">
               
 			  <div class="card-header">
-                <h3 class="card-title"><i class=" fas fa-th-list mr-2"></i>Hasil Import Tusbung</h3>
+                <h3 class="card-title"><i class=" fas fa-th-list mr-2"></i>Hasil Import Tusbung <?=$nama_unit?></h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
