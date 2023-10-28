@@ -21,7 +21,17 @@ class Rp_Kategori extends CI_Controller {
 				}
 				
 				
+				 function bln_indo($date)
+				{
+					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 				 
+					
+					$bulan = $date;
+					 
+				 
+					$result =   $BulanIndo[(int)$bulan-1] ;		
+					return($result);
+				} 
 		}
 		
 	public function index()
