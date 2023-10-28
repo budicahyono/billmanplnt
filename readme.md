@@ -5,13 +5,14 @@ SITU BILLMANPLNT MNK
 
 
 ********************************************
-Progress Aplikasi Version 1.0 Build 23102023 
+Progress Aplikasi Version 1.0 Build 29102023 
 ********************************************
 
 1. Dashboard progres 
 2. Hasil import tusbung
-2. Pilih Bulan dan Tahun sebelum login
-2. Import tanggal lunas excel ke database (ini yang lama)
+3. Pilih Bulan dan Tahun sebelum login
+4. Import tanggal lunas excel ke database (ini yang lama)
+5. Monitoring Tusbung, pilih bln & tahun di navbar, dashboard blm lunas dan kumulatif
 
 Untuk lebih jelasnya dapat dilihat dalam link berikut:
 [Billman Project](https://docs.google.com/spreadsheets/d/1awP3t7B6ldCpr9AHQaoaL8rsntCMXIMi/edit?rtpof=true&sd=true#gid=534714750)
@@ -48,7 +49,8 @@ Update Database
 ***************
 
 1. no_hp menjadi varchar
-2. sudah diisi data tusbung dan pelanggan untuk semua unit pada bulan september 2023 (disesuaikan data di excel) 
+2. sudah diisi data tusbung dan pelanggan untuk semua unit pada bulan september - oktober 2023 (disesuaikan data di excel) 
+3. pindah id_petugas dari tabel pelanggan ke tabel tusbung (tiap tusbung pelanggan punya petugas yg berbeda, kadang petugas, kadang non petugas)
 
 *************
 Saran Testing
