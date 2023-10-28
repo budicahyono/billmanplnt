@@ -194,6 +194,102 @@
                       </div>
                     </div>
                   </div>
+                  
+                  <div class="col-3">
+                   <div class="card">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-th-list mr-2"></i>Rupiah Pelanggan Belum Lunas</h3>
+
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <table class="table table-bordered">
+                          <tr>
+                            <th>Unit</th>
+                            <th>Pelanggan</th>
+                            <th>Rupiah</th>
+                          </tr>
+                          <tr>
+                            <td>BINTUNI</td>
+                            <td><?=$blm_bintuni?></td>
+                            <td><?="Rp ".number_format($blm_bintuni_rp)?></td>
+                          </tr>
+                          <tr>
+                            <td>MANOKWARI</td>
+                            <td><?=$blm_manokwari?></td>
+                            <td><?="Rp ".number_format($blm_manokwari_rp)?></td>
+                          </tr>
+                          <tr>
+                            <td>WASIOR</td>
+                            <td><?=$blm_wasior?></td>
+                            <td><?="Rp ".number_format($blm_wasior_rp)?></td>
+                          </tr>
+                          <tr>
+                            <td>PRAFI</td>
+                            <td><?=$blm_prafi?></td>
+                            <td><?="Rp ".number_format($blm_prafi_rp)?></td>
+                          </tr>
+                          <tr>
+                            <td>UP3</td>
+                            <td><?=$blm_up3?></td>
+                            <td><?="Rp ".number_format($blm_up3_rp)?></td>
+                          </tr>
+                        </table>  
+                      </div>
+                    </div>
+                  </div>
+                   
+                  <div class="col-3">
+                      <div class="card">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-th-list mr-2"></i>Rupiah Pelanggan Kumulatif UP3</h3>
+
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                          <tr>
+                            <th>JUMLAH (PLG)</th>
+                            <th>RP TUL</th>
+                          </tr>
+                          <tr>
+                            <td><?=$total_up3?></td>
+                            <td><?="Rp ".number_format($total_up3_rp)?></td>
+                          </tr>
+                          
+                          <tr>
+                            <th>LUNAS (PLG)</th>
+                            <th>RP PELUNASAN</th>
+                          </tr>
+                          <tr>
+                            <td><?=$lunas_up3?></td>
+                            <td><?="Rp ".number_format($lunas_up3_rp)?></td>
+                          </tr>
+                          
+                          <tr>
+                            <th>BLM LUNAS (PLG)</th>
+                            <th>RP BLM LUNAS</th>
+                          </tr>
+                          <tr>
+                            <td><?=$blm_up3?></td>
+                            <td><?="Rp ".number_format($blm_up3_rp)?></td>
+                          </tr>
+                          
+                        </table>  
+                      </div>
+                    </div>
+                  </div>
+                  
                 </div>
               
                 

@@ -88,7 +88,19 @@ class Login extends CI_Controller {
 		redirect("login/sampai_jumpa");
 	}
 		
+	public function change(){
+		$bulan = $_GET['bulan'];
+		$tahun = $_GET['tahun'];
+		$url = $_GET['url'];
 		
+		$data_session = array(
+			'bulan_sess' 		=> $bulan, //simpan dalam session
+			'tahun_sess' 		=> $tahun, //simpan dalam session
+		);
+		$this->session->set_userdata($data_session);
+		$this->session->set_flashdata('success', 'Bulan dan Tahun berhasil diganti!!');
+		header('location:'.$url);
+	}	
 		
 	public function profil() // method default dari controller ini 
 	{

@@ -34,39 +34,14 @@
                     <label>Bulan</label>
                     <br/>
                     <select name="bulan" id="bulan" class="form-control" disabled >
-                    <option value="">--Pilih Bulan--</option>
-                      <?php
-                      $bln_skrg = $_SESSION['bulan_sess'];
-                     $jumlah_bulan = 12;
-                      for ($i=1;$i<=$jumlah_bulan;$i++){
-                        if ($bln_skrg == $i) {
-                          echo '<option value="'.$i.'" selected>'.bln_indo($i).'</option>';
-                        } else {
-                          echo '<option value="'.$i.'">'.bln_indo($i).'</option>';
-                        }
-                      }
-                      ?>
+                      <option value="<?=$_SESSION['bulan_sess']?>" selected><?=bln_indo($_SESSION['bulan_sess'])?></option>
                     </select>
                   </div>
                   <div class="col-lg-6">
                     <label>Tahun</label>
                     <br/>
                     <select name="tahun" id="tahun" class="form-control" disabled>
-                    <option value="">--Pilih tahun--</option>
-                      <?php
-                      $thn_awal = 2022;
-                      $thn_skrg = $_SESSION['tahun_sess'];
-                      $jumlah_thn = 3;
-                      $selisih = $thn_skrg - $thn_awal;
-                      $tambah = $selisih + $thn_awal + $jumlah_thn;
-                      for ($i=$thn_awal;$i<=$tambah;$i++){
-                        if ($thn_skrg == $i) {
-                           echo '<option value="'.$i.'" selected>'.$i.'</option>';
-                        } else {
-                           echo '<option value="'.$i.'">'.$i.'</option>';
-                        }
-                      }
-                      ?>
+                      <option value="<?=$_SESSION['tahun_sess']?>" selected><?=$_SESSION['tahun_sess']?></option>
                     </select>
                   </div>
                 </div>

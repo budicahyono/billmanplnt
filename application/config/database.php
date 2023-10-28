@@ -79,6 +79,7 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 	'database' => 'db_billmanplnt',
+	//'database' => 'billmanplnt2',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

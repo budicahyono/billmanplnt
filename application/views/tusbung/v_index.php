@@ -73,6 +73,36 @@
                      
                       //ambil semua tul per petugas yg lunas
                     $sum_lunas =  $this->M_Tusbung->get_tul_lunas($r->id_petugas, $id_unit)->num_rows(); 
+                    
+                     //ambil semua tul per petugas yg lunas dan hitung rupiahnya
+                    $cek_lunas_rp =  $this->M_Tusbung->get_tul_lunas_rp($r->id_petugas, $id_unit); 
+                    foreach ($cek_lunas_rp->result() as $row) {
+                        $sum_lunas_rp = $row->rptag;
+                     }
+                     
+                       //ambil semua tul per petugas yg blm lunas
+                    $sum_blm =  $this->M_Tusbung->get_tul_blm($r->id_petugas, $id_unit)->num_rows(); 
+                    
+                     //ambil semua tul per petugas yg blm lunas dan hitung rupiahnya
+                    $cek_blm_rp =  $this->M_Tusbung->get_tul_blm_rp($r->id_petugas, $id_unit); 
+                    foreach ($cek_blm_rp->result() as $row) {
+                        $sum_blm_rp = $row->rptag;
+                     }
+                     
+                     //realisasi pelanggan / tul yg lunas
+                    if ($sum_tul != 0 && $sum_lunas != 0) {
+                        $persen_tul = round($sum_lunas / $sum_tul * 100);
+                    } else {
+                        $persen_tul = 0;
+                    }
+                    
+                    //realisasi rupiah yg lunas
+                    if ($sum_tul_rp != 0 && $sum_lunas_rp != 0) {
+                        $persen_tul_rp = round($sum_lunas_rp / $sum_tul_rp * 100);
+                    } else {
+                        $persen_tul_rp = 0;
+                    }
+                    
                   ?>	
                     <td><?=$no++?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
@@ -81,15 +111,15 @@
                     <td><?="Rp ".number_format($sum_tul_rp)?></td>
                     
                     <td><?=$sum_lunas?></td>
-                    <td></td>
+                    <td><?="Rp ".number_format($sum_lunas_rp)?></td>
                     
-                    <td></td>
-                    <td></td>
+                    <td><?=$sum_blm?></td>
+                    <td><?="Rp ".number_format($sum_blm_rp)?></td>
                     
-                    <td></td>
-                    <td></td>
+                    <th><?=$persen_tul?>%</td>
+                    <th><?=$persen_tul_rp?>%</td>
                     <td style="width:100px">
-                      <a  href="tusbung/detail/<?php echo $r->id_petugas ?>" class="btn btn-info "><i class="fa fa-edit"></i> Detail</a>
+                      <a  href="tusbung/detail/<?php echo $r->id_petugas ?>?id_unit=<?=$id_unit?>" class="btn btn-info "><i class="fa fa-th-list"></i> Detail</a>
                        
                         
                     </td>
@@ -111,6 +141,35 @@
                      
                       //ambil semua tul per petugas yg lunas
                     $sum_lunas2 =  $this->M_Tusbung->get_tul_lunas($r->id_petugas, $id_unit)->num_rows(); 
+                    
+                     //ambil semua tul per petugas yg lunas dan hitung rupiahnya
+                    $cek_lunas_rp2 =  $this->M_Tusbung->get_tul_lunas_rp($r->id_petugas, $id_unit); 
+                    foreach ($cek_lunas_rp2->result() as $row) {
+                        $sum_lunas_rp2 = $row->rptag;
+                     }
+                     
+                       //ambil semua tul per petugas yg blm lunas
+                    $sum_blm2 =  $this->M_Tusbung->get_tul_blm($r->id_petugas, $id_unit)->num_rows(); 
+                    
+                     //ambil semua tul per petugas yg blm lunas dan hitung rupiahnya
+                    $cek_blm_rp2 =  $this->M_Tusbung->get_tul_blm_rp($r->id_petugas, $id_unit); 
+                    foreach ($cek_blm_rp2->result() as $row) {
+                        $sum_blm_rp2 = $row->rptag;
+                     }
+                     
+                      //realisasi pelanggan / tul yg lunas
+                    if ($sum_tul2 != 0 && $sum_lunas2 != 0) {
+                        $persen_tul2 = round($sum_lunas2 / $sum_tul2 * 100);
+                    } else {
+                        $persen_tul2 = 0;
+                    }
+                    
+                    //realisasi rupiah yg lunas
+                    if ($sum_tul_rp2 != 0 && $sum_lunas_rp2 != 0) {
+                        $persen_tul_rp2 = round($sum_lunas_rp2 / $sum_tul_rp2 * 100);
+                    } else {
+                        $persen_tul_rp2 = 0;
+                    }
                   ?>	
                     <td><?=$no?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
@@ -119,15 +178,15 @@
                     <td><?="Rp ".number_format($sum_tul_rp2)?></td>
                     
                     <td><?=$sum_lunas2?></td>
-                    <td></td>
+                    <td><?="Rp ".number_format($sum_lunas_rp2)?></td>
                     
-                    <td></td>
-                    <td></td>
+                    <td><?=$sum_blm2?></td>
+                    <td><?="Rp ".number_format($sum_blm_rp2)?></td>
                     
-                    <td></td>
-                    <td></td>
+                     <th><?=$persen_tul2?>%</td>
+                    <th><?=$persen_tul_rp2?>%</td>
                     <td style="width:100px">
-                      <a  href="tusbung/detail/<?php echo $r->id_petugas ?>" class="btn btn-info "><i class="fa fa-edit"></i> Detail</a>
+                      <a  href="tusbung/detail/<?php echo $r->id_petugas ?>?id_unit=<?=$id_unit?>" class="btn btn-info "><i class="fa fa-th-list"></i> Detail</a>
                        
                         
                     </td>
@@ -138,6 +197,57 @@
                     </tr>	
                   <?php } ?>	
                   </tbody>
+                   <thead >
+                  <tr >
+                  <?php 
+                  
+                $total_tul = $this->M_Tusbung->get_by_unit($id_unit)->num_rows(); //tul total
+                $lunas_tul = $this->M_Tusbung->get_lunas($id_unit)->num_rows(); //tul lunas
+                $blm_tul = $this->M_Tusbung->get_blm($id_unit)->num_rows(); //tul blm
+	 
+                if ($total_tul != 0 && $lunas_tul != 0) {
+                    $persen_tul_total = round($lunas_tul / $total_tul * 100, 1);
+                } else {
+                    $persen_tul_total = 0;
+                }    
+                
+                $cek_total_rp = $this->M_Tusbung->get_unit_rp($id_unit); //tul total rupiah
+                foreach ($cek_total_rp->result() as $row) {
+                  $total_rp = $row->rptag;
+                }
+                
+                $cek_total_lunas_rp = $this->M_Tusbung->get_lunas_rp($id_unit); //tul total rupiah lunas
+                foreach ($cek_total_lunas_rp->result() as $row) {
+                  $total_lunas_rp = $row->rptag;
+                }
+                
+                $cek_total_blm_rp = $this->M_Tusbung->get_blm_rp($id_unit); //tul total rupiah blm
+                foreach ($cek_total_blm_rp->result() as $row) {
+                  $total_blm_rp = $row->rptag;
+                }
+                
+                if ($total_rp != 0 && $total_lunas_rp != 0) {
+                    $persen_total_rp = round($total_lunas_rp / $total_rp * 100, 1);
+                } else {
+                    $persen_total_rp = 0;
+                } 
+                  ?>
+                    <th class="text-center" colspan=2 style="vertical-align:middle">TOTAL</th> 
+                    
+                    <th ><?=$total_tul?></th>
+                    <th><?="Rp ".number_format($total_rp)?></th>
+                    
+                    <th ><?=$lunas_tul?></th>
+                    <th><?="Rp ".number_format($total_lunas_rp)?></th>
+                    
+                    <th ><?=$blm_tul?></th>
+                    <th><?="Rp ".number_format($total_blm_rp)?></th>
+                    
+                    <th><?=$persen_tul_total?>%</th>
+                    <th><?=$persen_total_rp?>%</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                  </thead>
                 </table>  
               </div>
             </div>

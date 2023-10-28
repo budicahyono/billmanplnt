@@ -52,31 +52,96 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       
-
+        <!-- bulan tahun Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="bulan_tahun" href="#">
+          <i class="fas fa-calendar mr-2"></i>Pilih: <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?>
+          
+        </a>
+        
+		
+		<div id="bulan_tahun_open" class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px; ">
+          <div class="form-group col-lg-12">
+                    <label>Bulan</label>
+                    <br/>
+                    <select name="bulan" id="bulan_form" class="form-control"  >
+                    <option value="">--Pilih Bulan--</option>
+                      <?php
+                      $bln_skrg = $_SESSION['bulan_sess'];
+                     $jumlah_bulan = 12;
+                      for ($i=1;$i<=$jumlah_bulan;$i++){
+                        if ($bln_skrg == $i) {
+                          echo '<option value="'.$i.'" selected>'.bln_indo($i).'</option>';
+                        } else {
+                          echo '<option value="'.$i.'">'.bln_indo($i).'</option>';
+                        }
+                      }
+                      ?>
+                    </select>
+          </div>
+          <div class="form-group col-lg-12">
+                    <label>Tahun</label>
+                    <br/>
+                    <select name="tahun" id="tahun_form" class="form-control" >
+                    <option value="">--Pilih tahun--</option>
+                      <?php
+                      $thn_awal = 2022;
+                      $thn_skrg = $_SESSION['tahun_sess'];
+                      $jumlah_thn = 3;
+                      $selisih = $thn_skrg - $thn_awal;
+                      $tambah = $selisih + $thn_awal + $jumlah_thn;
+                      for ($i=$thn_awal;$i<=$tambah;$i++){
+                        if ($thn_skrg == $i) {
+                           echo '<option value="'.$i.'" selected>'.$i.'</option>';
+                        } else {
+                           echo '<option value="'.$i.'">'.$i.'</option>';
+                        }
+                      }
+                      ?>
+                    </select>
+          </div>
+          <div class="form-group col-lg-12">
+                  <input id="url_form" value="<?=current_url()?>" type="hidden">
+                  <button id="submit_form"  class="btn btn-primary btn-block "><i class="fa fa-check"></i> Pilih</button>
+          </div>
+        </div>
+      </li>
+      <!-- bulan tahun End -->
+      
+      
       <!-- Account Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fas fa-user"></i>
+          <i class="fas fa-user mr-2"></i> <?=$_SESSION['nama_admin']?>
           
         </a>
         
 		
 		<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
           
-          <div class="dropdown-divider"></div>
-          <a href="<?=base_url();?>login/logout" id="logout" class="dropdown-item">
-            <i class="fas fa-sign-out-alt mr-2"></i> Logout
-          </a>
+          
           <div class="dropdown-divider"></div>
           <a href="<?=base_url();?>login/profil" class="dropdown-item">
             <i class="far fa-id-card mr-2"></i> Profil
           </a>
-         
+          <div class="dropdown-divider"></div>
+          <a href="<?=base_url();?>login/logout" id="logout" class="dropdown-item">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </a>
         </div>
       </li>
       <!-- Account Menu End -->
 	  
-	  
+	  <!-- Clock Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#">
+          <i class="fas fa-clock mr-2"></i>
+          <b>Date And Time: <span id="time">dd/mm/yyyy 00:00:00</span></b>
+          
+        </a>
+		
+      </li>
+      <!-- Account Menu End -->
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -520,6 +585,33 @@
  });  
 </script>
 
+<!--  javascript bulan tahun di menu atas  -->
+<script>
+$(document).ready(function() {    
+// munculkan menu bulan tahun
+  $("#bulan_tahun").click(function(){
+    $("#bulan_tahun_open").toggle();
+  }); 
+  
+  $("#submit_form").click(function(){
+      var bulan = $("#bulan_form").val();
+      var tahun = $("#tahun_form").val();
+      var url = $("#url_form").val();
+      window.location.replace("<?=base_url()?>login/change?bulan=" + bulan + "&tahun=" + tahun + "&url=" + url);
+  }); 
+  
+})
+</script>
+
+<!--  javascript date and time di menu atas  -->
+<script>
+setInterval(myTimer, 1000);
+
+function myTimer() {
+  const date = new Date();
+  document.getElementById("time").innerHTML = date.toLocaleString('id-ID',  { hour12: false });
+}
+</script>
 
 <!-- upload file   -->
 <script>

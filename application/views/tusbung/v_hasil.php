@@ -128,6 +128,7 @@
 					
 						<div class="form-group ">
 							<a href="<?=base_url('tusbung/back')?>" class="btn btn-info"><i class="fa fa-arrow-left"></i> Kembali</a>
+							<a href="<?=base_url('tusbung/next?id_unit='.$id_unit)?>" class="btn btn-success"><i class="fa fa-arrow-right"></i> Monitoring</a>
 						</div> 
 						 
 					 

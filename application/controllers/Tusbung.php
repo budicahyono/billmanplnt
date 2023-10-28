@@ -70,6 +70,23 @@ class Tusbung extends CI_Controller {
 		$this->template->load('template','tusbung/v_index',$data);
 	}
 	
+	public function detail($id)
+	{
+		if (isset($_GET['id_unit'])) {
+			$id_unit = $_GET['id_unit'];
+			} else {
+			$id_unit = 1;
+			
+		}
+		
+		$data['app'] 	= "Billman PLN-T";
+		$data['title'] 	= ucfirst($this->uri->segment(1));
+		$data['id_unit']= $id_unit;
+		
+		
+		$this->template->load('template','tusbung/v_detail',$data);
+	}
+	
 	public function import()
 	{
 		$data = array(
@@ -167,7 +184,6 @@ class Tusbung extends CI_Controller {
 								'no_hp'				=>$row['M'], 
 								'is_new'			=>1, 
 								'id_unit'			=>$id_unit,
-								'id_petugas'		=>$id_petugas,
 							]); 
 						} else { // kalau ada data masukkan dalam array duplikat
 							array_push($duplikat_pelanggan, [          
@@ -180,7 +196,6 @@ class Tusbung extends CI_Controller {
 								'kddk'				=>$row['G'],  
 								'no_hp'				=>$row['M'], 
 								'id_unit'			=>$id_unit,
-								'id_petugas'		=>$id_petugas,
 							]); 
 							//ubah data yg di database jadi 0 karena sudah bukan data baru
 							$this->M_Pelanggan->edit(array('is_new'	=>0), $id_pelanggan);	
@@ -236,6 +251,7 @@ class Tusbung extends CI_Controller {
 								'id_rp_kategori'	=>$id_rp_kategori,  
 								'bulan'				=>$bulan,  
 								'tahun'				=>$tahun,  
+								'id_petugas'		=>$id_petugas,
 							]); 	
 						} else {
 							array_push($duplikat_tusbung, [          
@@ -246,6 +262,7 @@ class Tusbung extends CI_Controller {
 								'id_rp_kategori'	=>$id_rp_kategori,  
 								'bulan'				=>$bulan,  
 								'tahun'				=>$tahun,  
+								'id_petugas'		=>$id_petugas,
 							]); 
 						}	
 						
@@ -291,6 +308,7 @@ class Tusbung extends CI_Controller {
 				$data = array(
 					'app' => 'Billman PLN-T',
 					'title' => "Hasil Import Tusbung $nama_unit",
+					'id_unit' => $id_unit,
 					'nama_unit' => $nama_unit,
 					'sum_pelanggan' => $sum_pelanggan,
 					'sum_tusbung' => $sum_tusbung,
@@ -320,6 +338,17 @@ class Tusbung extends CI_Controller {
 	public function back()
 	{
 		redirect("tusbung/import"); 
+	}
+	
+	public function next()
+	{
+		if (isset($_GET['id_unit'])) {
+			$id_unit = $_GET['id_unit'];
+		} else {
+			$id_unit = 1;
+			
+		}
+		redirect("tusbung?id_unit=$id_unit"); 
 	}
 	
 	public function jadwal()
