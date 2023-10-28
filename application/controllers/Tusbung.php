@@ -45,10 +45,28 @@ class Tusbung extends CI_Controller {
 		
 	public function index()
 	{
-		$data = array(
-			'app' => 'Billman PLN-T',
-			'title' => ucfirst($this->uri->segment(1)),
-		);
+		if (isset($_GET['id_unit'])) {
+			$id_unit = $_GET['id_unit'];
+		} else {
+			$id_unit = 1;
+			
+		}
+		
+		$data['app'] 	= "Billman PLN-T";
+		$data['title'] 	= ucfirst($this->uri->segment(1));
+		$data['unit'] 		= $this->M_Unit->get_all();
+		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
+		
+		if ($id_unit == null) {
+			$data['petugas'] 	= $this->M_Petugas->by_unit(1); // 1 = manokwari
+			
+			$data['id_unit'] 	= $id_unit;
+		} else {
+			$data['petugas'] 	= $this->M_Petugas->by_unit($id_unit);
+			$data['id_unit'] 	= $id_unit;
+		}
+		
+		
 		$this->template->load('template','tusbung/v_index',$data);
 	}
 	

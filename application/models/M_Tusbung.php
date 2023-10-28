@@ -42,6 +42,27 @@ class M_Tusbung extends CI_Model {
 	}
 	
 	
+	
+	
+	function get_tul_petugas($key, $id_unit) // ambil semua data pelanggan / tul per petugas
+	{
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "pelanggan.id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'] ));
+	}
+	
+	function get_tul_petugas_rp($key, $id_unit) // ambil semua data pelanggan / tul per petugas dan hitung rupiahnya
+	{
+		$this->db->select_sum('tusbung_kumulatif.rptag');
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "pelanggan.id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess']));
+	}
+	
+	function get_tul_lunas($key, $id_unit) // ambil semua data pelanggan / tul per petugas
+	{
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "pelanggan.id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'], "is_lunas" => 1));
+	}
+	
 	// Buat sebuah fungsi untuk melakukan insert lebih dari 1 data  
 	function insert_multiple($data)
 	{    

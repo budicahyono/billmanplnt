@@ -429,6 +429,19 @@
       "autoWidth": false,
       "responsive": true,
     });
+  //datatable khusus tusbung  
+    $('#data_tusbung').DataTable({
+      "paging": true,
+      "lengthMenu": [[20, 50, 100], [20, 50, 100]],
+      "searching": false,
+      "ordering": true,
+      columnDefs: [
+        { orderable: false, targets: -1},
+      ],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });  
   //datatable pencarian  
      $('#data_search').DataTable({
       "paging": true,
@@ -493,6 +506,20 @@
     window.location.replace("<?=base_url()?>petugas/unit/" + id_unit);
  });  
 </script>
+
+<!--  javascript pilih unit di tusbung  -->
+<script>
+ $('#id_unit').change(function () {
+    var id_unit = $(this).val();
+    if (id_unit == 1) {
+       window.location.replace("<?=base_url()?>tusbung");
+    } else {
+       window.location.replace("<?=base_url()?>tusbung?id_unit=" + id_unit);
+    } 
+   
+ });  
+</script>
+
 
 <!-- upload file   -->
 <script>
