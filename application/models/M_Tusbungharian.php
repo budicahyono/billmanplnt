@@ -1,14 +1,19 @@
 <?php
-class M_Tusbung extends CI_Model {
+class M_Tusbungharian extends CI_Model {
     
-	var $tb = "tusbung_kumulatif";
-	var $id = "id_tusbung_kumulatif";
+	var $tb = " tusbung_harian";
+	var $id = "id_tusbung_harian";
 	
 	function __construct()
 	{
 		parent::__construct();	
 	}
     
+	
+	function cek($id_pelanggan, $tgl_tusbung) // ambil semua data pelanggan per unit 
+	{
+		return $this->db->get_where($this->tb, array("id_pelanggan" => $id_pelanggan, "tgl_tusbung" => $tgl_tusbung));
+	}
 	
 	function get_by_unit($key) // ambil semua data pelanggan per unit 
 	{
@@ -50,9 +55,7 @@ class M_Tusbung extends CI_Model {
 	}
 	
 	
-	function cek($where){	//cek di tusbung apakah sudah ada id_pelanggan, bulan dan tahun tersebut 
-		return $this->db->get_where($this->tb,$where);
-	}
+	
 	
 	
 	
@@ -100,12 +103,6 @@ class M_Tusbung extends CI_Model {
 	function insert_multiple($data)
 	{    
 		$this->db->insert_batch($this->tb, $data);  
-	}
-	
-	function edit($data, $key)
-	{
-		$this->db->where($this->id, $key);
-		$this->db->update($this->tb, $data);
 	}
 	
 }		

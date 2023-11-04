@@ -28,6 +28,11 @@
 		{
 			return $this->db->get_where($this->tb, array($this->id => $key));
 		}
+		
+		function get_by_nama($kendala)
+		{
+			return $this->db->get_where($this->tb, array("nama_jenis_kendala" => $kendala));
+		}
 		function edit($data, $key)
 		{
 			$this->db->where($this->id, $key);

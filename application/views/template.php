@@ -279,13 +279,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbungharian" class="nav-link <?php if ($title == "Tusbung Harian") echo 'active'; ?>">
+                <a href="<?=base_url()?>tusbungharian/import" class="nav-link <?php if ($title == "Tusbung Harian") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Import Tusbung Harian</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbungharian/update" class="nav-link <?php if ($title == "Update Kendala") echo 'active'; ?>">
+                <a href="<?=base_url()?>tusbungharian" class="nav-link <?php if ($title == "Update Kendala") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Update Kendala</p>
                 </a>
@@ -564,6 +564,7 @@
 });
 </script>
 
+<?php if ($this->uri->segment(1) == "petugas") { ?>
 <!--  javascript pilih unit di petugas  -->
 <script>
  $('#id_unit').change(function () {
@@ -571,7 +572,9 @@
     window.location.replace("<?=base_url()?>petugas/unit/" + id_unit);
  });  
 </script>
+<?php } ?>
 
+<?php if ($this->uri->segment(1) == "tusbung") { ?>
 <!--  javascript pilih unit di tusbung  -->
 <script>
  $('#id_unit').change(function () {
@@ -580,6 +583,20 @@
        window.location.replace("<?=base_url()?>tusbung");
     } else {
        window.location.replace("<?=base_url()?>tusbung?id_unit=" + id_unit);
+    } 
+   
+ });  
+</script>
+<?php } ?>
+
+<!--  javascript pilih unit di jadwal tusbung  -->
+<script>
+ $('#id_unit_jadwal').change(function () {
+    var id_unit = $(this).val();
+    if (id_unit == 1) {
+       window.location.replace("<?=base_url()?>tusbung/jadwal");
+    } else {
+       window.location.replace("<?=base_url()?>tusbung/jadwal?id_unit=" + id_unit);
     } 
    
  });  
