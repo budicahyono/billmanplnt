@@ -96,6 +96,19 @@ class M_Tusbung extends CI_Model {
 		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'], "is_lunas" => 0));
 	}
 	
+	function get_baca_blm($key, $baca) // ambil data tul per petugas dan kode baca yg belum
+	{
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->where("id_petugas", $key);
+		$this->db->where("SUBSTRING(kddk, 7, 1) = '$baca'");
+		$this->db->where("bulan", $_SESSION['bulan_sess']);
+		$this->db->where("tahun", $_SESSION['tahun_sess']);
+		$this->db->where("is_lunas", 0);
+		return $this->db->get($this->tb);
+	
+	}
+	
+	
 	// Buat sebuah fungsi untuk melakukan insert lebih dari 1 data  
 	function insert_multiple($data)
 	{    

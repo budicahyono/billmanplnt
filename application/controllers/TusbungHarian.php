@@ -12,6 +12,7 @@ class TusbungHarian extends CI_Controller {
 				$this->load->model('M_Admin');
 				$this->load->model('M_Unit');
 				$this->load->model('M_Petugas');
+				$this->load->model('M_Pelanggan');
 				$this->load->model('M_Tusbung');
 				$this->load->model('M_Jenis_Kendala');
 				$this->load->model('M_Tusbungharian');
@@ -100,18 +101,6 @@ class TusbungHarian extends CI_Controller {
 				foreach($sheet as $row){      
 					if($numrow > 1){     
 						
-						$nama = $row['J'];
-						$petugas = $this->M_Petugas->cek($nama);
-						if ($petugas->num_rows() > 0) {
-							foreach ($petugas->result() as $r) {
-								$id_petugas = $r->id_petugas;
-							}
-						} else {
-							//$this->session->set_flashdata('error', "Tidak ada petugas dengan nama <b>$nama</b> pada data master");
-							//redirect("tusbungharian/import"); 
-							$id_petugas = 0;
-						}	
-						
 						$kendala = $row['M'];
 						$jenis_kendala = $this->M_Jenis_Kendala->get_by_nama($kendala);
 						if ($jenis_kendala->num_rows() > 0) {
@@ -129,29 +118,47 @@ class TusbungHarian extends CI_Controller {
 						
 						//cek dulu idpelanggan dan tanggal yg sama
 						$id_pelanggan = $row['A'];
-						$pelanggan = $this->M_Tusbungharian->cek($id_pelanggan, $tgl_tusbung)->num_rows();
+						$pelanggan_harian = $this->M_Tusbungharian->cek($id_pelanggan, $tgl_tusbung)->num_rows();
 						
-						if ($pelanggan == 0) { // kalau kosong
-							//input ke tabel tusbung_harian 
-							array_push($tusbung_harian, [          
-								'id_pelanggan' 		=>$row['A'],    
-								'tgl_tusbung'    	=>$tgl_tusbung,   
-								'is_evidence'     	=>$row['L'], 
-								'id_jenis_kendala'  =>$id_jenis_kendala
-							]); 
+						if ($pelanggan_harian == 0) { // kalau kosong
+							//cek lagi di pelanggan dan tusbung kumulatif
+							$pelanggan = $this->M_Pelanggan->cek($id_pelanggan)->num_rows();
+							$where = array(
+								'id_pelanggan' => $id_pelanggan,
+								'bulan' => $bulan,
+								'tahun' => $tahun,
+							);
+							$tusbung = $this->M_Tusbung->cek($where)->num_rows();
+							if ($pelanggan != 0 && $tusbung != 0) {
+						
+								//input ke tabel tusbung_harian 
+								array_push($tusbung_harian, [          
+									'id_pelanggan' 		=>$id_pelanggan,    
+									'tgl_tusbung'    	=>$tgl_tusbung,   
+									'is_evidence'     	=>$row['L'], 
+									'id_jenis_kendala'  =>$id_jenis_kendala
+								]); 
+							} else {
+								if ($pelanggan == 0 && $tusbung == 0) {
+									$this->session->set_flashdata('error', "Tidak ada data pelanggan dengan ID <b>$id_pelanggan</b> maupun di tusbung kumulatif pada bulan <b>$bulan</b> dan tahun <b>$tahun</b>");
+								}
+								if ($tusbung == 0) {
+									$this->session->set_flashdata('error', "Tidak ada data tusbung kumulatif dengan ID pelanggan <b>$id_pelanggan</b> pada bulan <b>$bulan</b> dan tahun <b>$tahun</b>");
+								}
+								redirect("tusbungharian/import"); 
+							}	
 						} else { // kalau ada data masukkan dalam array duplikat
 							array_push($duplikat_pelanggan, [          
-								'id_pelanggan' 		=>$row['A'],   
+								'id_pelanggan' 		=>$id_pelanggan,   
 								'nama_pelanggan'    =>$row['B'],   
 								'tarif'     		=>$row['C'], 
 								'daya'     			=>$row['D'],   
 								'gol'				=>$row['E'],  
 								'alamat'			=>$row['F'],  
 								'kddk'				=>$row['G'],  
-								'no_hp'				=>$row['M'], 
-								'id_petugas'		=>$id_petugas, 
-								'tgl_tusbung'    	=>$tgl_tusbung,   
 								'is_evidence'     	=>$row['L'], 
+								'no_hp'				=>$row['M'], 
+								'tgl_tusbung'    	=>$tgl_tusbung, 
 								'id_jenis_kendala'  =>$id_jenis_kendala,
 								
 							]); 
@@ -164,7 +171,7 @@ class TusbungHarian extends CI_Controller {
 						} else {
 							$is_lunas = 0;
 						}
-						$this->M_Tusbung->edit(array('is_lunas'	=>$is_lunas), $id_pelanggan);	
+						$this->M_Tusbung->edit(array('is_lunas'	=>$is_lunas, 'tgl_lunas' => $tgl_tusbung), $id_pelanggan);	
 						
 					}            
 					
@@ -178,12 +185,7 @@ class TusbungHarian extends CI_Controller {
 				if ($sum_tusbung_harian > 0) {
 					$this->M_Tusbungharian->insert_multiple($tusbung_harian);  
 				}
-				
-				
-				
 				$total = $sum_tusbung_harian + $sum_duplikat;	
-				
-				
 				
 				
 				if (count($duplikat_pelanggan) > 100 ) { 

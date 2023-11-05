@@ -64,26 +64,53 @@
                   <tbody>
                   <tr>
                   <?php  $no=1;
+                      $total_A = 0;
+                      $total_B = 0;
+                      $total_C = 0;
+                      $total_D = 0;
+                      $total_E = 0;
+                      $total_F = 0;
+                      $total_G = 0;
+                      $total_H = 0;
+                      $total_I = 0;
+                      $grand_total = 0;
                     foreach ($petugas->result() as $r) {
                     if ($r->is_petugas_khusus == 0) {
-                    
-                    //ambil huruf A 
-                    $sum_tul =  $this->M_Tusbung->get_tul_petugas($r->id_petugas, $id_unit)->num_rows(); 
-                    
+                      $sum_A =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "A")->num_rows(); 
+                      $sum_B =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "B")->num_rows(); 
+                      $sum_C =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "C")->num_rows(); 
+                      $sum_D =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "D")->num_rows(); 
+                      $sum_E =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "E")->num_rows(); 
+                      $sum_F =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "F")->num_rows(); 
+                      $sum_G =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "G")->num_rows(); 
+                      $sum_H =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "H")->num_rows(); 
+                      $sum_I =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "I")->num_rows(); 
+                      
+                      $total = $sum_A+$sum_B+$sum_C+$sum_D+$sum_E+$sum_F+$sum_G+$sum_H+$sum_I;
+                      $total_A = $total_A + $sum_A;
+                      $total_B = $total_B + $sum_B;
+                      $total_C = $total_C + $sum_C;
+                      $total_D = $total_D + $sum_D;
+                      $total_E = $total_E + $sum_E;
+                      $total_F = $total_F + $sum_F;
+                      $total_G = $total_G + $sum_G;
+                      $total_H = $total_H + $sum_H;
+                      $total_I = $total_I + $sum_I;
+                      $grand_total = $total_A+$total_B+$total_C+$total_D+$total_E+$total_F+$total_G+$total_H+$total_I;
                   ?>	
                     <td><?=$no++?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
                     
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <th>Totals</th>
+                    <td style="background:<?php if ($sum_A > 0) echo "#e6f2ff"; ?>" ><?=$sum_A?></td>
+                    <td style="background:<?php if ($sum_B > 0) echo "#e6f2ff"; ?>"><?=$sum_B?></td>
+                    <td style="background:<?php if ($sum_C > 0) echo "#e6f2ff"; ?>"><?=$sum_C?></td>
+                    <td style="background:<?php if ($sum_D > 0) echo "#e6f2ff"; ?>"><?=$sum_D?></td>
+                    <td style="background:<?php if ($sum_E > 0) echo "#e6f2ff"; ?>"><?=$sum_E?></td>
+                    <td style="background:<?php if ($sum_F > 0) echo "#e6f2ff"; ?>"><?=$sum_F?></td>
+                    <td style="background:<?php if ($sum_G > 0) echo "#e6f2ff"; ?>"><?=$sum_G?></td>
+                    <td style="background:<?php if ($sum_H > 0) echo "#e6f2ff"; ?>"><?=$sum_H?></td>
+                    <td style="background:<?php if ($sum_I > 0) echo "#e6f2ff"; ?>"><?=$sum_I?></td>
+                    <th><?=$total?></th>
                     
                     <td style="width:100px">
                       <a  href="tusbung/detail_jadwal/<?php echo $r->id_petugas ?>?id_unit=<?=$id_unit?>" class="btn btn-info "><i class="fa fa-th-list"></i> Detail</a>
@@ -96,21 +123,41 @@
                     }}
                     foreach ($non_petugas->result() as $r) {
                     if ($r->is_petugas_khusus == 0) {
-                    
+                      $sum_A =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "A")->num_rows(); 
+                      $sum_B =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "B")->num_rows(); 
+                      $sum_C =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "C")->num_rows(); 
+                      $sum_D =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "D")->num_rows(); 
+                      $sum_E =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "E")->num_rows(); 
+                      $sum_F =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "F")->num_rows(); 
+                      $sum_G =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "G")->num_rows(); 
+                      $sum_H =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "H")->num_rows(); 
+                      $sum_I =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "I")->num_rows(); 
+                      
+                      $total = $sum_A+$sum_B+$sum_C+$sum_D+$sum_E+$sum_F+$sum_G+$sum_H+$sum_I;
+                      $total_A = $total_A + $sum_A;
+                      $total_B = $total_B + $sum_B;
+                      $total_C = $total_C + $sum_C;
+                      $total_D = $total_D + $sum_D;
+                      $total_E = $total_E + $sum_E;
+                      $total_F = $total_F + $sum_F;
+                      $total_G = $total_G + $sum_G;
+                      $total_H = $total_H + $sum_H;
+                      $total_I = $total_I + $sum_I;
+                      $grand_total = $total_A+$total_B+$total_C+$total_D+$total_E+$total_F+$total_G+$total_H+$total_I;
                   ?>	
                     <td><?=$no++?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
                     
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <th>Totals</th>
+                    <td style="background:<?php if ($sum_A > 0) echo "#e6f2ff"; ?>" ><?=$sum_A?></td>
+                    <td style="background:<?php if ($sum_B > 0) echo "#e6f2ff"; ?>"><?=$sum_B?></td>
+                    <td style="background:<?php if ($sum_C > 0) echo "#e6f2ff"; ?>"><?=$sum_C?></td>
+                    <td style="background:<?php if ($sum_D > 0) echo "#e6f2ff"; ?>"><?=$sum_D?></td>
+                    <td style="background:<?php if ($sum_E > 0) echo "#e6f2ff"; ?>"><?=$sum_E?></td>
+                    <td style="background:<?php if ($sum_F > 0) echo "#e6f2ff"; ?>"><?=$sum_F?></td>
+                    <td style="background:<?php if ($sum_G > 0) echo "#e6f2ff"; ?>"><?=$sum_G?></td>
+                    <td style="background:<?php if ($sum_H > 0) echo "#e6f2ff"; ?>"><?=$sum_H?></td>
+                    <td style="background:<?php if ($sum_I > 0) echo "#e6f2ff"; ?>"><?=$sum_I?></td>    
+                    <th><?=$total?></th>
                     <td style="width:100px">
                       <a  href="tusbung/detail_jadwal/<?php echo $r->id_petugas ?>?id_unit=<?=$id_unit?>" class="btn btn-info "><i class="fa fa-th-list"></i> Detail</a>
                        
@@ -131,16 +178,16 @@
                   ?>
                     <th class="text-center" colspan=2>TOTAL</th> 
                     
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <td>A</td>
-                    <th>Totals</th>
+                    <td><?=$total_A?></td>
+                    <td><?=$total_B?></td>
+                    <td><?=$total_C?></td>
+                    <td><?=$total_D?></td>
+                    <td><?=$total_E?></td>
+                    <td><?=$total_F?></td>
+                    <td><?=$total_G?></td>
+                    <td><?=$total_H?></td>
+                    <td><?=$total_I?></td>
+                    <th><?=$grand_total?></th>
                     <th class="text-center">Action</th>
                   </tr>
                   </thead>
