@@ -55,6 +55,11 @@ class Tusbung extends CI_Controller {
 		$data['app'] 	= "Billman PLN-T";
 		$data['title'] 	= ucfirst($this->uri->segment(1));
 		$data['unit'] 		= $this->M_Unit->get_all();
+		$unit = $this->M_Unit->get_one($id_unit);
+		foreach ($unit->result() as $r) {
+			$data['nama_unit'] = $r->nama_unit;
+		}
+		
 		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
 		
 		if ($id_unit == null) {
@@ -376,6 +381,31 @@ class Tusbung extends CI_Controller {
 		$this->template->load('template','tusbung/v_jadwal',$data);
 	}
 	
+	public function rp_baca()
+	{
+		if (isset($_GET['id_unit'])) {
+			$id_unit = $_GET['id_unit'];
+		} else {
+			$id_unit = 1;
+			
+		}
+		
+		$data['app'] 	= "Billman PLN-T";
+		$data['title'] 	= "Jadwal Tusbung";
+		$data['unit'] 		= $this->M_Unit->get_all();
+		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
+		
+		if ($id_unit == null) {
+			$data['petugas'] 	= $this->M_Petugas->by_unit(1); // 1 = manokwari
+			
+			$data['id_unit'] 	= $id_unit;
+		} else {
+			$data['petugas'] 	= $this->M_Petugas->by_unit($id_unit);
+			$data['id_unit'] 	= $id_unit;
+		}
+		$this->template->load('template','tusbung/v_rp_baca',$data);
+	}
+	
 	public function kendala()
 	{
 		$data = array(
@@ -418,5 +448,33 @@ class Tusbung extends CI_Controller {
 		
 		
     }
+	
+	
+	public function hapus($id)
+	{
+		$cek = $this->M_Unit->get_one($id)->num_rows();
+		if ($cek > 0) {
+			$tusbung = $this->M_Tusbung->hapus($id);
+			$error = $this->db->error();
+			if ($error['code'] == null) {
+				$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  dihapus");
+			} else {
+				$this->session->set_flashdata('error', "Data Tusbung <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+			}
+			if ($id == 1) {
+				redirect('tusbung');
+			} else {
+				redirect('tusbung?id_unit='.$id);
+			}	
+		} else {
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			echo "error";
+			if ($id == 1) {
+				redirect('tusbung');
+			} else {
+				redirect('tusbung?id_unit='.$id);
+			}
+		}		
+	}
 	
 }

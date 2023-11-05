@@ -15,89 +15,14 @@ class M_Tusbungharian extends CI_Model {
 		return $this->db->get_where($this->tb, array("id_pelanggan" => $id_pelanggan, "tgl_tusbung" => $tgl_tusbung));
 	}
 	
-	function get_by_unit($key) // ambil semua data pelanggan per unit 
+	
+	
+	function get_tul_petugas($key, $tgl) // ambil semua data pelanggan / tul per petugas
 	{
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'] ));
+		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
+		return $this->db->get_where($this->tb, array( "tusbung_kumulatif.id_petugas" => $key, "tgl_tusbung" => $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl));
 	}
 	
-    function get_lunas($key) // ambil semua data pelanggan lunas 
-	{
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $key, "is_lunas" => 1, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'] ));
-	}
-	
-	function get_blm($key) // ambil semua data pelanggan blm lunas 
-	{
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $key, "is_lunas" => 0, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'] ));
-	}
-	
-	function get_blm_rp($key) // ambil semua data pelanggan blm lunas dan hitung rupiahnya
-	{
-		$this->db->select_sum('tusbung_kumulatif.rptag');
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $key, "is_lunas" => 0, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess']));
-	}
-	
-	function get_lunas_rp($key) // ambil semua data pelanggan lunas dan hitung rupiahnya
-	{
-		$this->db->select_sum('tusbung_kumulatif.rptag');
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $key, "is_lunas" => 1, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess']));
-	}
-	
-	function get_unit_rp($key) // ambil semua data pelanggan dan hitung rupiahnya
-	{
-		$this->db->select_sum('tusbung_kumulatif.rptag');
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess']));
-	}
-	
-	
-	
-	
-	
-	
-	
-	function get_tul_petugas($key, $id_unit) // ambil semua data pelanggan / tul per petugas
-	{
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'] ));
-	}
-	
-	function get_tul_petugas_rp($key, $id_unit) // ambil semua data pelanggan / tul per petugas dan hitung rupiahnya
-	{
-		$this->db->select_sum('tusbung_kumulatif.rptag');
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess']));
-	}
-	
-	function get_tul_lunas($key, $id_unit) // ambil semua data pelanggan / tul per petugas yg lunas
-	{
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'], "is_lunas" => 1));
-	}
-	
-	function get_tul_lunas_rp($key, $id_unit) // ambil semua data pelanggan / tul per petugas yg lunas dan hitung rupiahnya
-	{
-		$this->db->select_sum('tusbung_kumulatif.rptag');
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'], "is_lunas" => 1));
-	}
-	
-	function get_tul_blm($key, $id_unit) // ambil semua data pelanggan / tul per petugas yg belum
-	{
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'], "is_lunas" => 0));
-	}
-	
-	function get_tul_blm_rp($key, $id_unit) // ambil semua data pelanggan / tul per petugas yg belum dan hitung rupiahnya
-	{
-		$this->db->select_sum('tusbung_kumulatif.rptag');
-		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'], "is_lunas" => 0));
-	}
 	
 	// Buat sebuah fungsi untuk melakukan insert lebih dari 1 data  
 	function insert_multiple($data)
@@ -105,4 +30,15 @@ class M_Tusbungharian extends CI_Model {
 		$this->db->insert_batch($this->tb, $data);  
 	}
 	
+	
+	
+	
+	function hapus($key, $tgl) // hapus data tusbung
+	{
+		$this->db->query("DELETE ".$this->tb." FROM ".$this->tb." 
+						  JOIN tusbung_kumulatif ON tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan 
+						  JOIN pelanggan ON pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan
+						  WHERE pelanggan.id_unit = '$key' 
+						  AND tgl_tusbung = '".$_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl."' ");
+	}
 }		

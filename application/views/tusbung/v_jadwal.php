@@ -15,10 +15,10 @@
                 <div class="card-tools">
                   <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#hari-baca" data-toggle="tab">Hari Baca</a>
+                        <a class="nav-link active" href="<?=base_url()?>tusbung/jadwal" >Hari Baca</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#rupiah-baca" data-toggle="tab">Rupiah Baca</a>
+                      <a class="nav-link" href="<?=base_url()?>tusbung/rp_baca" >Rupiah Baca</a>
                     </li>
                     <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                   </button>
@@ -43,7 +43,7 @@
                </div> 
                
                  
-                 <table id="data_tusbung" class="table table-bordered table-hover">
+                 <table id="data_tusbung" class="table table-bordered table-hover ">
                   <thead class="text-center">
                   <tr >
                     <th>NO</th> 
@@ -58,7 +58,6 @@
                     <th>H</th>
                     <th>I</th>
                     <th>TOTAL</th>
-                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -112,11 +111,7 @@
                     <td style="background:<?php if ($sum_I > 0) echo "#e6f2ff"; ?>"><?=$sum_I?></td>
                     <th><?=$total?></th>
                     
-                    <td style="width:100px">
-                      <a  href="tusbung/detail_jadwal/<?php echo $r->id_petugas ?>?id_unit=<?=$id_unit?>" class="btn btn-info "><i class="fa fa-th-list"></i> Detail</a>
-                       
-                        
-                    </td>
+                    
                   </tr>
                   <tr>
                   <?php  
@@ -158,11 +153,7 @@
                     <td style="background:<?php if ($sum_H > 0) echo "#e6f2ff"; ?>"><?=$sum_H?></td>
                     <td style="background:<?php if ($sum_I > 0) echo "#e6f2ff"; ?>"><?=$sum_I?></td>    
                     <th><?=$total?></th>
-                    <td style="width:100px">
-                      <a  href="tusbung/detail_jadwal/<?php echo $r->id_petugas ?>?id_unit=<?=$id_unit?>" class="btn btn-info "><i class="fa fa-th-list"></i> Detail</a>
-                       
-                        
-                    </td>
+                    
                   </tr>
                   <?php $no++;}} if (count($petugas->result()) == 0) { ?>
                     <tr>
@@ -170,7 +161,7 @@
                     </tr>	
                   <?php } ?>	
                   </tbody>
-                   <thead >
+                  <tfoot>  
                   <tr >
                   <?php 
                   
@@ -188,9 +179,8 @@
                     <td><?=$total_H?></td>
                     <td><?=$total_I?></td>
                     <th><?=$grand_total?></th>
-                    <th class="text-center">Action</th>
                   </tr>
-                  </thead>
+                  </tfoot> 
                 </table>  
               </div>
             </div>

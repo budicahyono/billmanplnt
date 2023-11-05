@@ -28,6 +28,7 @@
                 <div class="form-group">
                 <label>Nama Unit</label>
                 <input value="<?=$r->id_unit?>" required name="id_unit" type="hidden" class="form-control" >
+               
                 <input value="<?=$r->nama_unit?>" required name="nama_unit" type="text" class="form-control" >
                 </div>
                 

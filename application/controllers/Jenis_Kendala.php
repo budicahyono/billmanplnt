@@ -60,7 +60,7 @@ class Jenis_kendala extends CI_Controller {
 	{	
 		if(isset($_POST['submit'])){
 			$nama_jenis_kendala	=  $this->input->post('nama_jenis_kendala');
-			$data  		=  array('nama_jenis_kendala'=> ucwords($nama_jenis_kendala));
+			$data  		=  array('nama_jenis_kendala'=> strtoupper($nama_jenis_kendala));
 				$jenis_kendala = $this->M_Jenis_Kendala->post($data);	
 				$error = $this->db->error();
 				if ($error['code'] == null) {
@@ -99,7 +99,7 @@ class Jenis_kendala extends CI_Controller {
 			$id_jenis_kendala    =  $this->input->post('id_jenis_kendala');
 			$nama_jenis_kendala	=  $this->input->post('nama_jenis_kendala');
 			
-			$data       =  array('nama_jenis_kendala'=>ucwords($nama_jenis_kendala));
+			$data       =  array('nama_jenis_kendala'=>strtoupper($nama_jenis_kendala));
 			$jenis_kendala = $this->M_Jenis_Kendala->edit($data, $id_jenis_kendala);	
 			$error = $this->db->error();
 			if ($error['code'] == null) {

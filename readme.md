@@ -5,14 +5,13 @@ SITU BILLMANPLNT MNK
 
 
 ********************************************
-Progress Aplikasi Version 1.0 Build 29102023 
+Progress Aplikasi Version 1.0 Build 06112023 
 ********************************************
 
-1. Dashboard progres 
-2. Hasil import tusbung
-3. Pilih Bulan dan Tahun sebelum login
-4. Import tanggal lunas excel ke database (ini yang lama)
-5. Monitoring Tusbung, pilih bln & tahun di navbar, dashboard blm lunas dan kumulatif
+1. Hapus Data Tusbung 
+3. Hari Baca dan Rupiah Baca
+4. Import tusbung harian
+5. Monitoring tusbung harian (baru sebagian kecil)
 
 Untuk lebih jelasnya dapat dilihat dalam link berikut:
 [Billman Project](https://docs.google.com/spreadsheets/d/1awP3t7B6ldCpr9AHQaoaL8rsntCMXIMi/edit?rtpof=true&sd=true#gid=534714750)
@@ -44,13 +43,26 @@ jika tidak ada, maka hasilnya akan terbalik antara bulan dan tanggal
 
 Format import ada pada folder import atau pada link di halaman import tusbung
 
+**********************************
+Proses import tusbung harian
+**********************************
+
+sistem cek id pelanggan pada data tusbung harian 
+
+jika ada maka akan masuk duplikat data
+
+jika tidak ada, maka cek lagi id pelanggan di data pelanggan dan tusbung kumulatif
+
+jika tidak ada id pelanggan tersebut di kedua tabel, maka akan error dan langsung stop import
+
+jika ada maka akan di input 
+
 ***************
 Update Database
 ***************
 
-1. no_hp menjadi varchar
-2. sudah diisi data tusbung dan pelanggan untuk semua unit pada bulan september - oktober 2023 (disesuaikan data di excel) 
-3. pindah id_petugas dari tabel pelanggan ke tabel tusbung (tiap tusbung pelanggan punya petugas yg berbeda, kadang petugas, kadang non petugas)
+1. data pelanggan, tusbung, dan tusbung harian kosong, (silahkan coba diimport)
+2. perbaikan huruf kecil ke huruf besar jenis kendala
 
 *************
 Saran Testing

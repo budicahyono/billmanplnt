@@ -108,6 +108,19 @@ class M_Tusbung extends CI_Model {
 	
 	}
 	
+	function get_baca_blm_rp($key, $baca) // ambil data tul per petugas dan kode baca yg belum
+	{
+		$this->db->select_sum('tusbung_kumulatif.rptag');
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->where("id_petugas", $key);
+		$this->db->where("SUBSTRING(kddk, 7, 1) = '$baca'");
+		$this->db->where("bulan", $_SESSION['bulan_sess']);
+		$this->db->where("tahun", $_SESSION['tahun_sess']);
+		$this->db->where("is_lunas", 0);
+		return $this->db->get($this->tb);
+	
+	}
+	
 	
 	// Buat sebuah fungsi untuk melakukan insert lebih dari 1 data  
 	function insert_multiple($data)
@@ -121,4 +134,21 @@ class M_Tusbung extends CI_Model {
 		$this->db->update($this->tb, $data);
 	}
 	
+	function edit_lunas($data, $key, $bulan, $tahun)
+	{
+		$this->db->where("id_pelanggan", $key);
+		$this->db->where("bulan", $bulan);
+		$this->db->where("tahun", $tahun);
+		$this->db->update($this->tb, $data);
+	}
+	
+	
+	function hapus($key) // hapus data tusbung
+	{
+		$this->db->query("DELETE ".$this->tb." FROM ".$this->tb." 
+						  JOIN pelanggan ON pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan 
+						  WHERE pelanggan.id_unit = '$key' 
+						  AND bulan = '".$_SESSION['bulan_sess']."' 
+						  AND tahun = '".$_SESSION['tahun_sess']."' ");
+	}
 }		

@@ -13,8 +13,13 @@
                 <h3 class="card-title"><i class=" fas fa-th-list mr-2"></i>Monitoring Data Tusbung <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?></h3>
 
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                  
+                    
+                  <a onclick="return confirm('Apa anda yakin ingin menghapus tusbung <?=$nama_unit?> pada bulan <?=bln_indo($_SESSION['bulan_sess'])?> dan tahun <?=$_SESSION['tahun_sess']?>? ')" class="btn btn-danger btn-md" href="<?=base_url()?>tusbung/hapus/<?=$id_unit?>" ><i class="fa fa-trash"></i> Hapus Tusbung</a>
+                    
+                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                   </button>
+                 
 				  </div> 
                 <!-- /.card-tools -->
               </div>
@@ -32,7 +37,7 @@
                </div> 
                
                  
-                 <table id="data_tusbung" class="table table-bordered table-hover">
+                 <table id="data_tusbung" class="table table-bordered table-hover ">
                   <thead class="text-center">
                   <tr >
                     <th rowspan=2 style="vertical-align:middle">NO</th> 
@@ -42,7 +47,6 @@
                     <th colspan=2>BELUM LUNAS</th>
                     <th rowspan=2 style="vertical-align:middle">REALISASI PLG</th>
                     <th rowspan=2 style="vertical-align:middle">REALISASI RUPIAH</th>
-                    <th rowspan=2 style="vertical-align:middle">Action</th>
                   </tr>
                   <tr >
                     <th >PLG</th> 
@@ -118,11 +122,7 @@
                     
                     <th><?=$persen_tul?>%</td>
                     <th><?=$persen_tul_rp?>%</td>
-                    <td style="width:100px">
-                      <a  href="tusbung/detail/<?php echo $r->id_petugas ?>?id_unit=<?=$id_unit?>" class="btn btn-info "><i class="fa fa-th-list"></i> Detail</a>
-                       
-                        
-                    </td>
+                   
                   </tr>
                   <tr>
                   <?php  
@@ -185,11 +185,7 @@
                     
                      <th><?=$persen_tul2?>%</td>
                     <th><?=$persen_tul_rp2?>%</td>
-                    <td style="width:100px">
-                      <a  href="tusbung/detail/<?php echo $r->id_petugas ?>?id_unit=<?=$id_unit?>" class="btn btn-info "><i class="fa fa-th-list"></i> Detail</a>
-                       
-                        
-                    </td>
+                    
                   </tr>
                   <?php $no++;}} if (count($petugas->result()) == 0) { ?>
                     <tr>
@@ -197,7 +193,7 @@
                     </tr>	
                   <?php } ?>	
                   </tbody>
-                   <thead >
+                   <tfoot> 
                   <tr >
                   <?php 
                   
@@ -245,9 +241,8 @@
                     
                     <th><?=$persen_tul_total?>%</th>
                     <th><?=$persen_total_rp?>%</th>
-                    <th class="text-center">Action</th>
                   </tr>
-                  </thead>
+                  </tfoot>
                 </table>  
               </div>
             </div>

@@ -30,7 +30,16 @@
                 <input value="<?=$r->id_rp_kategori?>" required name="id_rp_kategori" type="hidden" class="form-control" >
                 <input value="<?=$r->nama_rp_kategori?>" required name="nama_rp_kategori" type="text" class="form-control" >
                 </div>
-                
+                 <div class="form-group">
+                <label>Rupiah Batas Bawah</label>
+                <input value="<?=$r->rp_bawah?>" required name="rp_bawah" type="number" class="form-control" >
+                 <small>Misalnya 200rb-500rb maka batas bawah 200.001</small>
+                </div>
+                <div class="form-group">
+                <label>Rupiah Batas Atas</label>
+                <input value="<?=$r->rp_atas?>" required name="rp_atas" type="number" class="form-control" >
+                <small>Misalnya 200rb-500rb maka batas atas 500.000</small>
+                </div>
                 <button name="submit" type="submit" class="btn btn-primary "><i class="fa fa-check"></i> Simpan</button>
                 <button type="reset" class="btn btn-warning "><i class="fa fa-times"></i> Reset</button>
                 </form>

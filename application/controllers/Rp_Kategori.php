@@ -60,16 +60,26 @@ class Rp_Kategori extends CI_Controller {
 	{	
 		if(isset($_POST['submit'])){
 			$nama_rp_kategori	=  $this->input->post('nama_rp_kategori');
-			$data  		=  array('nama_rp_kategori'=>ucwords($nama_rp_kategori));
-				$rp_kategori = $this->M_Rp_Kategori->post($data);	
-				$error = $this->db->error();
-				if ($error['code'] == null) {
-					$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  disimpan");
-				} else {
-					$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> disimpan. <br>Error:".$error['message']);
-				}	
-				
+			$rp_bawah			=  $this->input->post('rp_bawah');
+			$rp_atas			=  $this->input->post('rp_atas');
+			
+			if ($rp_bawah < $rp_atas) {
+			
+				$data  		=  array('nama_rp_kategori'=>ucwords($nama_rp_kategori));
+					$rp_kategori = $this->M_Rp_Kategori->post($data);	
+					$error = $this->db->error();
+					if ($error['code'] == null) {
+						$this->session->set_flashdata('success', "Data Rp Kategori <b>Berhasil</b>  disimpan");
+					} else {
+						$this->session->set_flashdata('error', "Data Rp Kategori <b>Gagal</b> disimpan. <br>Error:".$error['message']);
+					}	
+					
+					redirect('rp_kategori');
+			
+			} else {
+				$this->session->set_flashdata('error', "Rp Bawah <b>harus</b> lebih kecil dari Rp Atas ");
 				redirect('rp_kategori');
+			}		
 			
 		}	
 	}

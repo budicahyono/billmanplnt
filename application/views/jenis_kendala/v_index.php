@@ -23,7 +23,7 @@
                 <div class="form-group">
                   <a href="<?=base_url('jenis_kendala/tambah')?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah jenis kendala</a>
                 </div>
-                <table id="datatable" class="table table-bordered table-hover">
+                <table id="data_search" class="table table-bordered table-hover">
                   <thead>
                   <tr>
                     <th>No</th>

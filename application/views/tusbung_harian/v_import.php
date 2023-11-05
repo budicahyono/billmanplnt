@@ -36,6 +36,7 @@
                     <select name="tanggal" id="tanggal" class="form-control"  >
                       <option value="">--Pilih Tanggal--</option>
                       <?php
+                       $tgl_skrg = date("d");
                       $bln_skrg = $_SESSION['bulan_sess'];
 					  $thn_skrg = $_SESSION['tahun_sess'];
                      $jumlah_tanggal = cal_days_in_month(CAL_GREGORIAN, $bln_skrg, $thn_skrg);

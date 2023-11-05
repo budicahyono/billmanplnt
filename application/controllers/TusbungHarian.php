@@ -41,6 +41,36 @@ class TusbungHarian extends CI_Controller {
 					$result =   $BulanIndo[(int)$bulan-1] ;		
 					return($result);
 				} 
+				
+				 function hari($day) // hari bhs inggris
+				{
+					switch ($day) {
+					  case "Monday":
+						$hari = "Senin";
+						break;
+					  case "Tuesday":
+						$hari = "Selasa";
+						break;
+					  case "Wednesday":
+						$hari = "Rabu";
+						break;
+					  case "Thursday":
+						$hari = "Kamis";
+						break;
+					  case "Friday":
+						$hari = "Jumat";
+						break;	
+					  case "Saturday":
+						$hari = "Sabtu";
+						break;	
+					  case "Sunday":
+						$hari = "Minggu";
+						break;		
+					  default:
+						echo "Hari Kiamat";
+					}
+					return($hari);
+				} 
 		}
 		
 	
@@ -171,8 +201,11 @@ class TusbungHarian extends CI_Controller {
 						} else {
 							$is_lunas = 0;
 						}
-						$this->M_Tusbung->edit(array('is_lunas'	=>$is_lunas, 'tgl_lunas' => $tgl_tusbung), $id_pelanggan);	
+						$edit = array('is_lunas'	=>$is_lunas, 
+									  'tgl_lunas' => $tgl_tusbung);
 						
+						$this->M_Tusbung->edit_lunas($edit, $id_pelanggan, $bulan, $tahun);	
+						//echo $lunas;
 					}            
 					
 					$numrow++;    
@@ -246,14 +279,80 @@ class TusbungHarian extends CI_Controller {
 	
 	public function index()
 	{
-		$data = array(
-			'app' => 'Billman PLN-T',
-			'title' => "Update Kendala",
-		);
+		if (isset($_GET['id_unit'])) {
+			$id_unit = $_GET['id_unit'];
+		} else {
+			$id_unit = 1;
+			
+		}
+		
+		if (isset($_GET['tgl_skrg'])) {
+			$tgl_skrg = $_GET['tgl_skrg'];
+		} else {
+			$tgl_skrg = date("d");
+			
+			
+		}
+		
+		$hari = date("l", strtotime($_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl_skrg));
+		
+		$data['app'] 	= "Billman PLN-T";
+		$data['title'] 	= "Update Kendala";
+		$data['unit'] 		= $this->M_Unit->get_all();
+		$data['tgl_skrg']   = $tgl_skrg;
+		$data['hari']   	= $hari;
+		$unit = $this->M_Unit->get_one($id_unit);
+		foreach ($unit->result() as $r) {
+			$data['nama_unit'] = $r->nama_unit;
+		}
+		
+		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
+		
+		if ($id_unit == null) {
+			$data['petugas'] 	= $this->M_Petugas->by_unit(1); // 1 = manokwari
+			
+			$data['id_unit'] 	= $id_unit;
+		} else {
+			$data['petugas'] 	= $this->M_Petugas->by_unit($id_unit);
+			$data['id_unit'] 	= $id_unit;
+		}
+		
 		$this->template->load('template','tusbung_harian/v_index',$data);
 	}
 	
 	
-	
+	public function hapus($id)
+	{
+		if (isset($_GET['tgl'])) {
+			$tgl_skrg = $_GET['tgl'];
+		} else {
+		$tgl_skrg = date("d");
+		}
+		
+		
+		$cek = $this->M_Unit->get_one($id)->num_rows();
+		if ($cek > 0) {
+			$tusbung = $this->M_Tusbungharian->hapus($id, $tgl_skrg);
+			$error = $this->db->error();
+			if ($error['code'] == null) {
+				$this->session->set_flashdata('success', "Data Tusbung Harian <b>Berhasil</b>  dihapus");
+			} else {
+				$this->session->set_flashdata('error', "Data Tusbung Harian <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+			}
+			if ($id == 1) {
+				redirect('tusbungharian');
+			} else {
+				redirect('tusbungharian?id_unit='.$id);
+			}	
+		} else {
+			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
+			echo "error";
+			if ($id == 1) {
+				redirect('tusbungharian');
+			} else {
+				redirect('tusbungharian?id_unit='.$id);
+			}
+		}		
+	}
 	
 }

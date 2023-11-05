@@ -52,13 +52,9 @@
 								<th>Alamat</th>
 								<th>KDDK</th>
 								<th>No.HP</th>
-								<th>ID Petugas</th>
-								<th>LBR</th>
-								<th>Rptag</th>
+								<th>Evidence</th>
+								<th>Tgl. Tusbung</th>
 								<th>ID Jenis Kendala</th>
-								<th>ID Rp Kategori</th>
-								<th>Bulan</th>
-								<th>Tahun</th>
 							</tr>
 							
 								<?php
@@ -74,7 +70,9 @@
 								<td><?=$r['alamat']?></td>
 								<td><?=$r['kddk']?></td>
 								<td><?=$r['no_hp']?></td>
-								<td><?=$r['id_petugas']?></td>
+								<td><?=$r['is_evidence']?></td>
+								<td><?=$r['tgl_tusbung']?></td>
+								<td><?=$r['id_jenis_kendala']?></td>
 								</tr>	
 								<?php } ?>
 							

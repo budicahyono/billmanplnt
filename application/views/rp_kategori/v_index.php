@@ -28,6 +28,8 @@
                   <tr>
                     <th>No</th>
                     <th>Nama Rp Kategori</th>
+                    <th>Rupiah Batas Bawah</th>
+                    <th>Rupiah Batas Atas</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -38,6 +40,8 @@
                   ?>	
                     <td><?=$no?></td>
                     <td><?=$r->nama_rp_kategori?></td>
+                    <td><?="Rp ".number_format($r->rp_bawah)?></td>
+                    <td><?="Rp ".number_format($r->rp_atas)?></td>
                     <td style="width:200px">
                       <a  href="rp_kategori/edit/<?php echo $r->id_rp_kategori ?>" class="btn btn-info "><i class="fa fa-edit"></i> Edit</a>
                       <a  onclick="return confirm('Apa anda yakin ingin menghapusnya?')" href="rp_kategori/hapus/<?php echo $r->id_rp_kategori ?>" class="btn btn-danger "><i class="fa fa-trash"></i> Hapus</a>  

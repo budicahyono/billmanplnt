@@ -602,6 +602,40 @@
  });  
 </script>
 
+<!--  javascript pilih unit di rupiah baca tusbung  -->
+<script>
+ $('#id_unit_rp_baca').change(function () {
+    var id_unit = $(this).val();
+    if (id_unit == 1) {
+       window.location.replace("<?=base_url()?>tusbung/rp_baca");
+    } else {
+       window.location.replace("<?=base_url()?>tusbung/rp_baca?id_unit=" + id_unit);
+    } 
+   
+ });  
+</script>
+
+<!--  javascript pilih unit dan tanggal di update kendala  -->
+<script>
+$(document).ready(function() {       
+  function ganti_tgl_unit() {
+    var tgl_skrg = $("#tanggal_harian").val();
+    var id_unit = $("#id_unit_harian").val();
+    
+    
+    if (id_unit == 1 && tgl_skrg == <?=date("d")?>) {
+       window.location.replace("<?=base_url()?>tusbungharian");
+    } else {
+       window.location.replace("<?=base_url()?>tusbungharian?id_unit=" + id_unit + "&tgl_skrg=" + tgl_skrg);
+    } 
+    
+  }    
+
+    
+  $("#tanggal_harian, #id_unit_harian").on("change", ganti_tgl_unit); 
+}) 
+</script>
+
 <!--  javascript bulan tahun di menu atas  -->
 <script>
 $(document).ready(function() {    
