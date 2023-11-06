@@ -115,7 +115,7 @@
                             
                             <div class="col-lg-2 col-md-6 text-center">
                               <div style="display:inline;width:90px;height:90px;">
-                                <input type="text" class="knob" value="<?=$persen_wasior?>" data-width="90" data-height="90" data-fgcolor="#3c8dbc" data-readonly="true" readonly="readonly" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;"></div> 
+                                  <input type="text" class="knob" value="<?=$persen_wasior?>" data-width="90" data-height="90" data-fgcolor="#3c8dbc" data-readonly="true" readonly="readonly" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(60, 141, 188); padding: 0px; appearance: none;"></div> 
 
                               <div class="knob-label">WASIOR</div>
                             </div> 

@@ -75,39 +75,39 @@
                       $grand_total = 0;
                     foreach ($petugas->result() as $r) {
                     if ($r->is_petugas_khusus == 0) {
-                      $sum_A =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "A"); 
+                      $sum_A =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "A", $id_unit); 
 					  foreach ($sum_A->result() as $row) {
 						$rp_A = $row->rptag;
 					  } 
-                      $sum_B =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "B"); 
+                      $sum_B =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "B", $id_unit); 
 					  foreach ($sum_B->result() as $row) {
 						$rp_B = $row->rptag;
 					  } 
-                      $sum_C =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "C"); 
+                      $sum_C =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "C", $id_unit); 
 					  foreach ($sum_C->result() as $row) {
 						$rp_C = $row->rptag;
 					  } 
-                      $sum_D =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "D"); 
+                      $sum_D =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "D", $id_unit); 
 					  foreach ($sum_D->result() as $row) {
 						$rp_D = $row->rptag;
 					  }
-                      $sum_E =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "E"); 
+                      $sum_E =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "E", $id_unit); 
 					  foreach ($sum_E->result() as $row) {
 						$rp_E = $row->rptag;
 					  }
-                      $sum_F =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "F"); 
+                      $sum_F =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "F", $id_unit); 
                       foreach ($sum_F->result() as $row) {
 						  $rp_F = $row->rptag; 
 					  } 
-					  $sum_G =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "G"); 
+					  $sum_G =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "G", $id_unit); 
                       foreach ($sum_G->result() as $row) { 
 						  $rp_G = $row->rptag; 
 					  }
-					  $sum_H =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "H"); 
+					  $sum_H =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "H", $id_unit); 
                       foreach ($sum_H->result() as $row) {
 						  $rp_H = $row->rptag;
 					  }
-					  $sum_I =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "I"); 
+					  $sum_I =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "I", $id_unit); 
                       foreach ($sum_I->result() as $row) {
 						$rp_I = $row->rptag;
 					  }
@@ -144,39 +144,39 @@
                     }}
                     foreach ($non_petugas->result() as $r) {
                     if ($r->is_petugas_khusus == 0) {
-                      $sum_A =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "A"); 
+                      $sum_A =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "A", $id_unit); 
 					  foreach ($sum_A->result() as $row) {
 						$rp_A = $row->rptag;
 					  } 
-                      $sum_B =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "B"); 
+                      $sum_B =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "B", $id_unit); 
 					  foreach ($sum_B->result() as $row) {
 						$rp_B = $row->rptag;
 					  } 
-                      $sum_C =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "C"); 
+                      $sum_C =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "C", $id_unit); 
 					  foreach ($sum_C->result() as $row) {
 						$rp_C = $row->rptag;
 					  } 
-                      $sum_D =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "D"); 
+                      $sum_D =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "D", $id_unit); 
 					  foreach ($sum_D->result() as $row) {
 						$rp_D = $row->rptag;
 					  }
-                      $sum_E =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "E"); 
+                      $sum_E =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "E", $id_unit); 
 					  foreach ($sum_E->result() as $row) {
 						$rp_E = $row->rptag;
 					  }
-                      $sum_F =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "F"); 
+                      $sum_F =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "F", $id_unit); 
                       foreach ($sum_F->result() as $row) {
 						  $rp_F = $row->rptag; 
 					  } 
-					  $sum_G =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "G"); 
+					  $sum_G =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "G", $id_unit); 
                       foreach ($sum_G->result() as $row) { 
 						  $rp_G = $row->rptag; 
 					  }
-					  $sum_H =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "H"); 
+					  $sum_H =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "H", $id_unit); 
                       foreach ($sum_H->result() as $row) {
 						  $rp_H = $row->rptag;
 					  }
-					  $sum_I =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "I"); 
+					  $sum_I =  $this->M_Tusbung->get_baca_blm_rp($r->id_petugas, "I", $id_unit); 
                       foreach ($sum_I->result() as $row) {
 						$rp_I = $row->rptag;
 					  }

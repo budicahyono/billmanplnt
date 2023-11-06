@@ -103,24 +103,63 @@
                     
                     $sum_tul = $this->M_Tusbungharian->get_tul_petugas($r->id_petugas, $tgl_skrg)->num_rows();
                     
+                     $sum_tul_rp = $this->M_Tusbungharian->get_tul_petugas_rp($r->id_petugas, $tgl_skrg);
+                     foreach ($sum_tul_rp->result() as $row) {
+						$sum_rp = $row->rptag;
+					  } 
+                      
+                    $sum_lunas = $this->M_Tusbungharian->get_lunas_petugas($r->id_petugas, $tgl_skrg)->num_rows();
+                    
+                     $sum_lunas_rp = $this->M_Tusbungharian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg);
+                     foreach ($sum_tul_rp->result() as $row) {
+						$lunas_rp = $row->rptag;
+					  } 
+                      
+                      if ($sum_tul != 0 && $sum_lunas != 0) {
+                          $persen_tul = round($sum_lunas / $sum_tul * 100, 1);
+                      } else {
+                          $persen_tul = 0;
+                      }
+                      
+                      if ($sum_rp != 0 && $lunas_rp != 0) {
+                          $persen_rp = round($lunas_rp / $sum_rp * 100, 1);
+                      } else {
+                          $persen_rp = 0;
+                      }
+                      
+                      $sum_evidence = $this->M_Tusbungharian->get_evidence($r->id_petugas, $tgl_skrg)->num_rows();
+                      
+                      if ($sum_tul != 0 && $sum_evidence != 0) {
+                          $persen_evidence = round($sum_evidence / $sum_tul * 100, 1);
+                      } else {
+                          $persen_evidence = 0;
+                      }
+                      
+                      $sisa_evidence = $sum_tul-$sum_evidence;
+                      
+                      $isi_kendala = "<i style='color:red'>Belum diisi</i>";
+                      $kendala_harian = $this->M_Tusbungharian->get_kendala_harian($r->id_petugas, $tgl_skrg);
+                      foreach ($kendala_harian->result() as $row) {
+						$isi_kendala = $row->isi_kendala;
+					  } 
                     
                   ?>	
                     <td><?=$no++?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
                     
                     <td><?=$sum_tul?></td>
-                    <td></td>
+                    <td><?="Rp ".number_format($sum_rp)?></td>
                     
-                    <td></td>
-                    <td></td>
+                    <td><?=$sum_lunas?></td>
+                    <td><?="Rp ".number_format($lunas_rp)?></td>
                     
-                    <td></td>
-                    <td></td>
+                    <td><?=$persen_tul?>%</td>
+                    <td><?=$persen_rp?>%</td>
                     
-                    <th></td>
-                    <th></td>
-                    <th></td>
-                    <th></td>
+                    <td><?=$sum_evidence?></td>
+                    <td><?=$persen_evidence?>%</td>
+                    <td><?=$sisa_evidence?></td>
+                    <td><?=$isi_kendala?></td>
                    
                   </tr>
                   

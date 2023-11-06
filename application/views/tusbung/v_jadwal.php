@@ -75,15 +75,15 @@
                       $grand_total = 0;
                     foreach ($petugas->result() as $r) {
                     if ($r->is_petugas_khusus == 0) {
-                      $sum_A =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "A")->num_rows(); 
-                      $sum_B =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "B")->num_rows(); 
-                      $sum_C =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "C")->num_rows(); 
-                      $sum_D =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "D")->num_rows(); 
-                      $sum_E =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "E")->num_rows(); 
-                      $sum_F =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "F")->num_rows(); 
-                      $sum_G =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "G")->num_rows(); 
-                      $sum_H =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "H")->num_rows(); 
-                      $sum_I =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "I")->num_rows(); 
+                      $sum_A =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "A", $id_unit)->num_rows(); 
+                      $sum_B =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "B", $id_unit)->num_rows(); 
+                      $sum_C =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "C", $id_unit)->num_rows(); 
+                      $sum_D =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "D", $id_unit)->num_rows(); 
+                      $sum_E =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "E", $id_unit)->num_rows(); 
+                      $sum_F =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "F", $id_unit)->num_rows(); 
+                      $sum_G =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "G", $id_unit)->num_rows(); 
+                      $sum_H =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "H", $id_unit)->num_rows(); 
+                      $sum_I =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "I", $id_unit)->num_rows(); 
                       
                       $total = $sum_A+$sum_B+$sum_C+$sum_D+$sum_E+$sum_F+$sum_G+$sum_H+$sum_I;
                       $total_A = $total_A + $sum_A;
@@ -118,15 +118,15 @@
                     }}
                     foreach ($non_petugas->result() as $r) {
                     if ($r->is_petugas_khusus == 0) {
-                      $sum_A =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "A")->num_rows(); 
-                      $sum_B =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "B")->num_rows(); 
-                      $sum_C =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "C")->num_rows(); 
-                      $sum_D =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "D")->num_rows(); 
-                      $sum_E =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "E")->num_rows(); 
-                      $sum_F =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "F")->num_rows(); 
-                      $sum_G =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "G")->num_rows(); 
-                      $sum_H =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "H")->num_rows(); 
-                      $sum_I =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "I")->num_rows(); 
+                      $sum_A =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "A", $id_unit)->num_rows(); 
+                      $sum_B =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "B", $id_unit)->num_rows(); 
+                      $sum_C =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "C", $id_unit)->num_rows(); 
+                      $sum_D =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "D", $id_unit)->num_rows(); 
+                      $sum_E =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "E", $id_unit)->num_rows(); 
+                      $sum_F =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "F", $id_unit)->num_rows(); 
+                      $sum_G =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "G", $id_unit)->num_rows(); 
+                      $sum_H =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "H", $id_unit)->num_rows(); 
+                      $sum_I =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "I", $id_unit)->num_rows(); 
                       
                       $total = $sum_A+$sum_B+$sum_C+$sum_D+$sum_E+$sum_F+$sum_G+$sum_H+$sum_I;
                       $total_A = $total_A + $sum_A;

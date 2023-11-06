@@ -96,10 +96,11 @@ class M_Tusbung extends CI_Model {
 		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'], "is_lunas" => 0));
 	}
 	
-	function get_baca_blm($key, $baca) // ambil data tul per petugas dan kode baca yg belum
+	function get_baca_blm($key, $baca, $id_unit) // ambil data tul per petugas dan kode baca yg belum
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
 		$this->db->where("id_petugas", $key);
+		$this->db->where("pelanggan.id_unit", $id_unit);
 		$this->db->where("SUBSTRING(kddk, 7, 1) = '$baca'");
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
@@ -108,11 +109,12 @@ class M_Tusbung extends CI_Model {
 	
 	}
 	
-	function get_baca_blm_rp($key, $baca) // ambil data tul per petugas dan kode baca yg belum
+	function get_baca_blm_rp($key, $baca, $id_unit) // ambil data tul per petugas dan kode baca yg belum
 	{
 		$this->db->select_sum('tusbung_kumulatif.rptag');
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
 		$this->db->where("id_petugas", $key);
+		$this->db->where("pelanggan.id_unit", $id_unit);
 		$this->db->where("SUBSTRING(kddk, 7, 1) = '$baca'");
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
