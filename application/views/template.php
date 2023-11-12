@@ -642,6 +642,10 @@ $(document).ready(function() {
 // munculkan menu bulan tahun
   $("#bulan_tahun").click(function(){
     $("#bulan_tahun_open").toggle();
+    
+    
+   
+    
   }); 
   
   $("#submit_form").click(function(){

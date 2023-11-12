@@ -25,7 +25,7 @@
                <div class="alert alert-warning alert-dismissible">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                   <h5><i class="icon fas fa-exclamation-triangle"></i> Perhatian!</h5>
-                  Harap mengikuti format excel berikut agar data Tusbung dapat berhasil di import. Silahkan download <a class="text-href" href="<?=base_url('import/Format Import Tusbung.xlsx')?>">disini</a>
+                  Harap mengikuti format excel berikut agar data Tusbung dapat berhasil di import. Silahkan download <a class="text-href" href="<?=base_url('import/Format Import Tusbung Harian.xlsx')?>">disini</a>
                 </div>
                
                 <form  action="<?=base_url('tusbungharian/post')?>" method="post" enctype="multipart/form-data">

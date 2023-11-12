@@ -49,6 +49,7 @@
                   <tr>
                   <?php  $no=1;
                     foreach ($petugas->result() as $r) {
+                    if ($r->id_unit > 0) { 
                   ?>	
                     <td><?=$no?></td>
                     <td><?=$r->nama_petugas?></td>
@@ -75,7 +76,7 @@
                   </tr>
                   <?php 
 $no++;
-} if (count($petugas->result()) == 0) { ?>
+                    }} if (count($petugas->result()) == 0) { ?>
 <tr>
 <td colspan="6" class="text-center"><b>TIDAK ADA DATA</b></td>
 </tr>	

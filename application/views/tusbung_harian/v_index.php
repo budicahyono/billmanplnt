@@ -99,49 +99,78 @@
                   <tbody>
                   <tr>
                   <?php  $no=1;
-                    foreach ($petugas->result() as $r) {
+                  $total_tul = 0;
+                  $total_rp = 0;
+                  $total_lunas = 0;
+                  $total_lunas_rp = 0;
+                  $total_persen = 0;
+                  $total_persen_rp = 0;
+                  $total_evidence = 0;
+                  $total_persen_evidence = 0;
+                  $total_sisa = 0;
+                  foreach ($petugas->result() as $r) {
                     
                     $sum_tul = $this->M_Tusbungharian->get_tul_petugas($r->id_petugas, $tgl_skrg)->num_rows();
+                    
+                    $total_tul = $total_tul + $sum_tul;
                     
                      $sum_tul_rp = $this->M_Tusbungharian->get_tul_petugas_rp($r->id_petugas, $tgl_skrg);
                      foreach ($sum_tul_rp->result() as $row) {
 						$sum_rp = $row->rptag;
 					  } 
                       
+                    $total_rp = $total_rp + $sum_rp;
+                      
                     $sum_lunas = $this->M_Tusbungharian->get_lunas_petugas($r->id_petugas, $tgl_skrg)->num_rows();
                     
-                     $sum_lunas_rp = $this->M_Tusbungharian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg);
-                     foreach ($sum_tul_rp->result() as $row) {
+                    $total_lunas = $total_lunas + $sum_lunas;
+                    
+                    $sum_lunas_rp = $this->M_Tusbungharian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg);
+                    foreach ($sum_tul_rp->result() as $row) {
 						$lunas_rp = $row->rptag;
-					  } 
+                    } 
                       
-                      if ($sum_tul != 0 && $sum_lunas != 0) {
-                          $persen_tul = round($sum_lunas / $sum_tul * 100, 1);
-                      } else {
-                          $persen_tul = 0;
-                      }
+                    $total_lunas_rp = $total_lunas_rp + $lunas_rp;  
                       
-                      if ($sum_rp != 0 && $lunas_rp != 0) {
-                          $persen_rp = round($lunas_rp / $sum_rp * 100, 1);
-                      } else {
-                          $persen_rp = 0;
-                      }
+                    if ($sum_tul != 0 && $sum_lunas != 0) {
+                        $persen_tul = round($sum_lunas / $sum_tul * 100, 1);
+                    } else {
+                        $persen_tul = 0;
+                    }
+                    
+                    $total_persen = $total_persen + $persen_tul;  
                       
-                      $sum_evidence = $this->M_Tusbungharian->get_evidence($r->id_petugas, $tgl_skrg)->num_rows();
+                    if ($sum_rp != 0 && $lunas_rp != 0) {
+                        $persen_rp = round($lunas_rp / $sum_rp * 100, 1);
+                    } else {
+                        $persen_rp = 0;
+                    }
+                    
+                    $total_persen_rp = $total_persen_rp + $persen_rp; 
+                    
+                    $sum_evidence = $this->M_Tusbungharian->get_evidence($r->id_petugas, $tgl_skrg)->num_rows();
+                    
+                    $total_evidence = $total_evidence + $sum_evidence; 
+                    
+                    if ($sum_tul != 0 && $sum_evidence != 0) {
+                        $persen_evidence = round($sum_evidence / $sum_tul * 100, 1);
+                    } else {
+                        $persen_evidence = 0;
+                    }
+                    
+                    $total_persen_evidence = $total_persen_evidence + $persen_evidence; 
+                    
+                    $sisa_evidence = $sum_tul-$sum_evidence;
+                    
+                    $total_sisa = $total_sisa + $sisa_evidence;
                       
-                      if ($sum_tul != 0 && $sum_evidence != 0) {
-                          $persen_evidence = round($sum_evidence / $sum_tul * 100, 1);
-                      } else {
-                          $persen_evidence = 0;
-                      }
-                      
-                      $sisa_evidence = $sum_tul-$sum_evidence;
-                      
-                      $isi_kendala = "<i style='color:red'>Belum diisi</i>";
-                      $kendala_harian = $this->M_Tusbungharian->get_kendala_harian($r->id_petugas, $tgl_skrg);
-                      foreach ($kendala_harian->result() as $row) {
-						$isi_kendala = $row->isi_kendala;
-					  } 
+                    $isi_kendala = "<i style='color:red'>Belum diisi</i>";
+                    $kendala_harian = $this->M_Tusbungharian->get_kendala_harian($r->id_petugas, $tgl_skrg);
+                    foreach ($kendala_harian->result() as $row) {
+                      $isi_kendala = $row->isi_kendala;
+                    } 
+                    
+                    
                     
                   ?>	
                     <td><?=$no++?></td>
@@ -176,19 +205,19 @@
                   ?>
                     <th class="text-center" colspan=2 style="vertical-align:middle">TOTAL</th> 
                     
-                    <th></th>
-                    <th></th>
+                    <th><?=$total_tul?></th>
+                    <th><?="Rp ".number_format($total_rp)?></th>
                     
-                    <th></th>
-                    <th></th>
+                    <th><?=$total_lunas?></th>
+                    <th><?="Rp ".number_format($total_lunas_rp)?></th>
                     
-                    <th></th>
-                    <th></th>
+                    <th><?=$total_persen?>%</th>
+                    <th><?=$total_persen_rp?>%</th>
                     
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th><?=$total_evidence?></th>
+                    <th><?=$total_persen_evidence?>%</th>
+                    <th><?=$total_sisa?></th>
+                    <th>Total</th>
                   </tr>
                   </tfoot>
                 </table>  

@@ -137,10 +137,12 @@ class TusbungHarian extends CI_Controller {
 							foreach ($jenis_kendala->result() as $r) {
 								$id_jenis_kendala = $r->id_jenis_kendala;
 							}
+							$is_evidence = 1; // jika ada data jadikan evidence 1
 						} else {
 							//$this->session->set_flashdata('error', "Tidak ada jenis kendala dengan nama <b>$kendala</b> pada data master");
 							//redirect("tusbungharian/import"); 
 							$id_jenis_kendala = 0;
+							$is_evidence = 0;
 						}	
 						
 						
@@ -149,6 +151,9 @@ class TusbungHarian extends CI_Controller {
 						//cek dulu idpelanggan dan tanggal yg sama
 						$id_pelanggan = $row['A'];
 						$pelanggan_harian = $this->M_Tusbungharian->cek($id_pelanggan, $tgl_tusbung)->num_rows();
+						
+						
+						
 						
 						if ($pelanggan_harian == 0) { // kalau kosong
 							//cek lagi di pelanggan dan tusbung kumulatif
@@ -165,7 +170,7 @@ class TusbungHarian extends CI_Controller {
 								array_push($tusbung_harian, [          
 									'id_pelanggan' 		=>$id_pelanggan,    
 									'tgl_tusbung'    	=>$tgl_tusbung,   
-									'is_evidence'     	=>$row['L'], 
+									'is_evidence'     	=>$is_evidence, 
 									'id_jenis_kendala'  =>$id_jenis_kendala
 								]); 
 							} else {
@@ -186,7 +191,7 @@ class TusbungHarian extends CI_Controller {
 								'gol'				=>$row['E'],  
 								'alamat'			=>$row['F'],  
 								'kddk'				=>$row['G'],  
-								'is_evidence'     	=>$row['L'], 
+								'is_evidence'     	=>$is_evidence, 
 								'no_hp'				=>$row['M'], 
 								'tgl_tusbung'    	=>$tgl_tusbung, 
 								'id_jenis_kendala'  =>$id_jenis_kendala,
