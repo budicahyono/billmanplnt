@@ -126,7 +126,7 @@
                     $total_lunas = $total_lunas + $sum_lunas;
                     
                     $sum_lunas_rp = $this->M_Tusbungharian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg);
-                    foreach ($sum_tul_rp->result() as $row) {
+                    foreach ($sum_lunas_rp->result() as $row) {
 						$lunas_rp = $row->rptag;
                     } 
                       
@@ -138,7 +138,7 @@
                         $persen_tul = 0;
                     }
                     
-                    $total_persen = $total_persen + $persen_tul;  
+                    
                       
                     if ($sum_rp != 0 && $lunas_rp != 0) {
                         $persen_rp = round($lunas_rp / $sum_rp * 100, 1);
@@ -146,7 +146,7 @@
                         $persen_rp = 0;
                     }
                     
-                    $total_persen_rp = $total_persen_rp + $persen_rp; 
+                    
                     
                     $sum_evidence = $this->M_Tusbungharian->get_evidence($r->id_petugas, $tgl_skrg)->num_rows();
                     
@@ -158,7 +158,7 @@
                         $persen_evidence = 0;
                     }
                     
-                    $total_persen_evidence = $total_persen_evidence + $persen_evidence; 
+                    
                     
                     $sisa_evidence = $sum_tul-$sum_evidence;
                     
@@ -223,7 +223,7 @@
                         $persen_tul = 0;
                     }
                     
-                    $total_persen = $total_persen + $persen_tul;  
+                    
                       
                     if ($sum_rp != 0 && $lunas_rp != 0) {
                         $persen_rp = round($lunas_rp / $sum_rp * 100, 1);
@@ -231,7 +231,7 @@
                         $persen_rp = 0;
                     }
                     
-                    $total_persen_rp = $total_persen_rp + $persen_rp; 
+                    
                     
                     $sum_evidence = $this->M_Tusbungharian->get_evidence($r->id_petugas, $tgl_skrg, $id_petugas_khusus)->num_rows();
                     
@@ -243,7 +243,7 @@
                         $persen_evidence = 0;
                     }
                     
-                    $total_persen_evidence = $total_persen_evidence + $persen_evidence; 
+                   
                     
                     $sisa_evidence = $sum_tul-$sum_evidence;
                     
@@ -284,7 +284,18 @@
                    <tfoot> 
                   <tr >
                   <?php 
-               
+                    if ($total_tul > 0 and $total_lunas > 0) {
+                      $total_persen = round($total_lunas / $total_tul * 100, 1);
+                    }
+                    
+                    if ($total_rp > 0 and $total_lunas_rp > 0) {
+                      $total_persen_rp = round($total_lunas_rp / $total_rp * 100, 1);
+                    }
+                    
+                    if ($total_tul > 0 and $total_evidence > 0) {
+                        $total_persen_evidence = round($total_evidence / $total_tul * 100, 1);
+                    }
+                   
                   ?>
                     <th class="text-center" colspan=2 style="vertical-align:middle">TOTAL</th> 
                     
