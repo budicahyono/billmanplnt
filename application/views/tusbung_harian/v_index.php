@@ -64,7 +64,7 @@
                 <select class="form-control" name="id_unit" id="id_unit_harian">
                  <?php foreach ($unit->result() as $r) { 
                      if (!$r->id_unit == 0) { ?>
-                    <option value="<?=$r->id_unit?>"><?=$r->nama_unit?></option>
+                    <option value="<?=$r->id_unit?>" <?php if ($id_unit == $r->id_unit) echo "selected" ;?>><?=$r->nama_unit?></option>
                  <?php }} ?>
                  </select> 
                </div> 

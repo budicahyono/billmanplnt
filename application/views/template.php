@@ -256,7 +256,7 @@
               <li class="nav-item">
                 <a href="<?=base_url()?>tusbung/jadwal" class="nav-link <?php if ($title == "Jadwal Tusbung") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
-                  <p>Jadwal Tusbung</p>
+                  <p>Monitoring Hari Baca</p>
                 </a>
               </li>
 			  <li class="nav-item">
