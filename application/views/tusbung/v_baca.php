@@ -15,7 +15,7 @@
                 <div class="card-tools">
                   <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="<?=base_url()?>tusbung/jadwal" >Hari Baca</a>
+                        <a class="nav-link active" href="<?=base_url()?>tusbung/baca" >Hari Baca</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="<?=base_url()?>tusbung/rp_baca" >Rupiah Baca</a>
@@ -61,7 +61,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  
                   <?php  $no=1;
                       $total_A = 0;
                       $total_B = 0;
@@ -74,7 +74,7 @@
                       $total_I = 0;
                       $grand_total = 0;
                     foreach ($petugas->result() as $r) {
-                    if ($r->is_petugas_khusus == 0) {
+                    
                       $sum_A =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "A", $id_unit)->num_rows(); 
                       $sum_B =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "B", $id_unit)->num_rows(); 
                       $sum_C =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "C", $id_unit)->num_rows(); 
@@ -96,7 +96,8 @@
                       $total_H = $total_H + $sum_H;
                       $total_I = $total_I + $sum_I;
                       $grand_total = $total_A+$total_B+$total_C+$total_D+$total_E+$total_F+$total_G+$total_H+$total_I;
-                  ?>	
+                  ?>
+                    <tr>
                     <td><?=$no++?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
                     
@@ -115,9 +116,9 @@
                   </tr>
                   <tr>
                   <?php  
-                    }}
+                    }
                     foreach ($non_petugas->result() as $r) {
-                    if ($r->is_petugas_khusus == 0) {
+                    
                       $sum_A =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "A", $id_unit)->num_rows(); 
                       $sum_B =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "B", $id_unit)->num_rows(); 
                       $sum_C =  $this->M_Tusbung->get_baca_blm($r->id_petugas, "C", $id_unit)->num_rows(); 
@@ -155,7 +156,7 @@
                     <th><?=$total?></th>
                     
                   </tr>
-                  <?php $no++;}} if (count($petugas->result()) == 0) { ?>
+                  <?php $no++;} if (count($petugas->result()) == 0) { ?>
                     <tr>
                       <td colspan="6" class="text-center"><b>TIDAK ADA DATA</b></td>
                     </tr>	

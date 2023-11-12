@@ -31,6 +31,10 @@
   <link rel="stylesheet" href="<?=base_url();?>plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="<?=base_url();?>plugins/dropzone/min/dropzone.min.css">
+  <!-- jquery-ui -->
+ <link rel="stylesheet" href="<?=base_url();?>plugins/jquery-ui-1.13.2/jquery-ui.css">
+
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -232,7 +236,7 @@
           
           
          
-          <li class="nav-item menu <?php if ($title == "Tusbung" || $title == "Import Tusbung" || $title == "Hasil Import Tusbung" || $title == "Jadwal Tusbung" || $title == "Kendala" ) echo 'menu-is-opening menu-open' ; ?>">
+          <li class="nav-item menu <?php if ($title == "Tusbung" || $title == "Import Tusbung" || $title == "Hasil Import Tusbung" || $title == "Hari Baca Tusbung" || $title == "Kendala" ) echo 'menu-is-opening menu-open' ; ?>">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
@@ -254,7 +258,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbung/jadwal" class="nav-link <?php if ($title == "Jadwal Tusbung") echo 'active'; ?>">
+                <a href="<?=base_url()?>tusbung/baca" class="nav-link <?php if ($title == "Hari Baca Tusbung") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Monitoring Hari Baca</p>
                 </a>
@@ -269,7 +273,7 @@
           </li>
          
 		 
-		 <li class="nav-item menu <?php if ($title == "Tusbung Harian"  || $title == "Update Kendala" ) echo 'menu-is-opening menu-open' ; ?>">
+		 <li class="nav-item menu <?php if ($title == "Tusbung Harian"  || $title == "Update Kendala" || $title == "Hasil Import Tusbung Harian" ) echo 'menu-is-opening menu-open' ; ?>">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
@@ -279,7 +283,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=base_url()?>tusbungharian/import" class="nav-link <?php if ($title == "Tusbung Harian") echo 'active'; ?>">
+                <a href="<?=base_url()?>tusbungharian/import" class="nav-link <?php if ($title == "Tusbung Harian" || $title == "Hasil Import Tusbung Harian") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Import Tusbung Harian</p>
                 </a>
@@ -345,14 +349,14 @@
 </div>
 <!-- ./wrapper -->
 
+
+
+
+
 <!-- jQuery -->
 <script src="<?=base_url();?>plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="<?=base_url();?>plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
+<script src="<?=base_url();?>plugins/jquery-ui-1.13.2/jquery-ui.js"></script>
+  
 <!-- Bootstrap 4 -->
 <script src="<?=base_url();?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
@@ -374,6 +378,237 @@
 <script src="<?=base_url();?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=base_url();?>dist/js/adminlte.js"></script>
+
+
+
+<?php $no=1; 
+ if ($title == "Tusbung") {   
+     foreach ($petugas->result() as $r) { ?>   
+
+     <!-- Modal -->
+     <div class="modal fade" id="modal_app_<?=$no?>" role="dialog"> 
+    <div class="modal-dialog modal-xl" > 
+     
+      <!-- Modal content-->
+     <div class="modal-content" >
+            <div class="modal-header">
+              <h4 class="modal-title">Data Pelanggan Berdasarkan Petugas <span style="text-transform: capitalize;" id="title_modal_<?=$no?>"></span></h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             <div class="form-group row">
+              <div class="col-lg-4">
+                  <div class="form-group row" style="padding-top:10px">
+                    <label for="limit" class="col-sm-2 col-form-label">Show</label>
+                    <div class="col-sm-8">
+                      <input type="hidden" class="form-control" id="id_petugas_<?=$no?>"  >
+                      <input type="hidden" class="form-control" id="no_list_<?=$no?>"  >
+                      <select name="limit_<?=$no?>" id="limit_<?=$no?>" class="form-control"  >
+                        <option value="10" selected>10</option>
+                        <option value="20" >20</option>
+                        <option value="30" >30</option>
+                        <option value="50" >50</option>
+                        <option value="100" >100</option>
+                      </select>
+                       <small>Total <span id="total_<?=$no?>"></span> entries</small>
+                    </div>
+                   
+                  </div> 
+              </div>
+              <div class="col-lg-8">
+                  <div class="form-group row" style="padding-top:10px">
+                    <div class="col-sm-3">
+                    </div>
+                    <label for="limit" class="col-sm-1 col-form-label">Search</label>
+                    <div class="col-sm-8 auto_input">
+                     <input placeholder="Cari ID atau nama pelanggan" type="text" class="form-control" id="search_<?=$no?>"  name="search_<?=$no?>">
+                     <div class="list-group auto" id="auto_<?=$no?>" style="display:none">
+                        
+                     </div>
+                     
+                    </div>
+                  </div> 
+              </div>
+              </div>
+            <div id="isi_modal_<?=$no?>" style="overflow-x:scroll;overflow-y:hidden;padding:0px">
+              <div id="isi_width_<?=$no?>" style="height:1px">
+              </div>
+            </div >
+            <div id="isi_modal2_<?=$no?>"  style="overflow-x:scroll;padding:0px" >
+             
+              <table id="get_width_<?=$no?>" class="table table-bordered table-hover" >
+                  <thead >
+                  <tr>
+                    <th>No</th>
+                    <th>ID Pelanggan</th>
+                    <th>Nama</th>
+                    <th>Tarif</th>
+                    <th>Daya</th>
+                    <th>Gol</th>
+                    <th>Alamat</th>
+                    <th>KDDK</th>
+                    <th>No.HP</th>
+                    <th>Rptag</th>
+                    <th>RBK</th>
+                    <th>Lunas?</th>
+                    <th>Tgl.Lunas</th>
+                  </tr>
+                  </thead>
+                  <tbody id="tabel_isi_<?=$no?>" >
+                   <tr>
+                      <td>No</td>
+                      <td>ID Pelanggan</td>
+                      <td>Nama</td>
+                      <td>Tarif</td>
+                      <td>Daya</td>
+                      <td>Gol</td>
+                      <td>Alamat</td>
+                      <td>KDDK</td>
+                      <td>No.HP</td>
+                      <td>Rptag</td>
+                      <td>RBK</td>
+                      <td>Lunas?</td>
+                      <td>Tgl.Lunas</td>
+                  </tr>
+                </table>
+            </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+    </div>
+  </div>
+  
+  
+  <!--  javascript klik nama_petugas utk tusbung_kumulatif per petugas -->
+<script>
+$(document).ready(function() {  
+  function ajax_tusbung(id_petugas, limit = null, q = null) {
+  if (limit == null) {
+    isi_limit = 10;
+  } else {
+    isi_limit = limit;
+  }
+  
+  if (q == null) {
+    q_url = ""; 
+  } else {
+    q_url = "&q="+ q;
+  }
+    $.ajax({
+			type: 'GET',
+			url: "<?php echo base_url(); ?>tusbung/petugas/" + id_petugas + "?id_unit=<?=$id_unit?>&limit="+ isi_limit + q_url,
+			success: function(data) {
+				$("#tabel_isi_<?=$no?>").html(data);
+                
+			}
+		});    
+  } 
+   
+   
+  $("#nama_petugas_<?=$no?>, #tul_<?=$no?>").click(function(){
+    var nama_petugas = $(this).data("name");
+    var id_petugas = $(this).data("id");
+    var sum = $(this).data("sum");
+    $("#id_petugas_<?=$no?>").val(id_petugas);
+    $("#no_list_<?=$no?>").val(<?=$no?>);
+    
+    var nama = nama_petugas.toLowerCase();
+    $("#modal_app_<?=$no?>").modal();
+    $("#title_modal_<?=$no?>").html(nama);
+    $("#total_<?=$no?>").html(sum);
+    
+    ajax_tusbung(id_petugas);
+    
+    $("#modal_app_<?=$no?>").on('shown.bs.modal', function(){
+        var lebar = $("#get_width_<?=$no?>").outerWidth();
+        $("#isi_width_<?=$no?>").outerWidth(lebar);
+        $("#isi_modal_<?=$no?>").scroll(function(){
+            $("#isi_modal2_<?=$no?>")
+                .scrollLeft($("#isi_modal_<?=$no?>").scrollLeft());
+        });
+        $("#isi_modal2_<?=$no?>").scroll(function(){
+            $("#isi_modal_<?=$no?>")
+                .scrollLeft($("#isi_modal2_<?=$no?>").scrollLeft());
+        });
+        $("#search_<?=$no?>").val("")
+        
+         
+        
+    });
+   
+    
+  }); 
+  
+  $("#limit_<?=$no?>").change(function(){
+    var id_petugas = $("#id_petugas_<?=$no?>").val();
+    var search =  $("#search_<?=$no?>").val();
+    var limit =  $("#limit_<?=$no?>").val();
+    $("#modal_app_<?=$no?>").modal();
+    ajax_tusbung(id_petugas, limit)
+  }); 
+  
+  $("#search_<?=$no?>").keyup(function(){
+    var search =  $("#search_<?=$no?>").val();
+    var id_petugas = $("#id_petugas_<?=$no?>").val();
+    var no_list = $("#no_list_<?=$no?>").val();
+    if (search == "") {
+      $("#auto_<?=$no?>").css("display", "none");
+      $("#auto_<?=$no?>").html("");
+      ajax_tusbung(id_petugas)
+    } else {
+      $("#auto_<?=$no?>").css("display", "flex");
+      $.ajax({
+            dataType: 'json',
+			url: "<?php echo base_url(); ?>tusbung/search/" + id_petugas + "?id_unit=<?=$id_unit?>&q="+ search+"&no="+no_list,
+			success: function(data) {
+				//$("#auto_<?=$no?>").html(data);
+                $('#auto_<?=$no?>').empty();
+                var no = 1;
+                data.data_rows.forEach(function(data_rows) {
+                    var row = '<a href="javascript:void(0)" class="list-group-item" id="auto_li_'+no+'" data-id="'+data_rows.id_pelanggan+'">';
+                     row += data_rows.id_pelanggan+' '+data_rows.nama_pelanggan;
+                     row += '</a>';
+                    $('#auto_<?=$no?>').append(row);
+                    
+                    
+                    $("#auto_li_"+no).click(function(){
+                        var isi_auto =  $(this).data("id");
+                        var limit =  data.limit;
+                        var id_petugas =  data.id_petugas;
+                        $("#search_<?=$no?>").val(isi_auto);
+                        $("#auto_<?=$no?>").css("display", "none");
+                        ajax_tusbung(id_petugas, limit, isi_auto)
+                    })
+                no = no + 1;
+                })    
+                
+			}
+		});
+      
+      
+      
+      
+    }
+    
+  }); 
+  
+  
+})
+</script>
+<script>
+ 
+  </script>
+    
+ <?php $no = $no+ 1;}} ?>
+
+
+
+
 
 <!-- DataTables  & Plugins -->
 <script src="<?=base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
@@ -510,15 +745,47 @@
   //datatable pencarian  
      $('#data_search').DataTable({
       "paging": true,
-      "lengthChange": false,
+     "lengthMenu": [[20, 50, 100], [20, 50, 100]],
       "searching": true,
       "ordering": true,
+     columnDefs: [
+        { orderable: false, targets: -1},
+      ],
       "info": true,
       "autoWidth": false,
       "responsive": true,
     });
   });
 </script>
+
+
+<?php $no=1; 
+ if ($title == "Tusbung") {   
+     foreach ($petugas->result() as $r) { ?>    
+     
+  <!--  javascript data_search modal -->
+<script>
+$(document).ready(function() {    
+  //datatable pencarian  
+     $('#data_search_<?=$no?>').DataTable({
+      "paging": true,
+     "lengthMenu": [[20, 50, 100], [20, 50, 100]],
+      "searching": true,
+      "ordering": true,
+     columnDefs: [
+        { orderable: false, targets: -1},
+      ],
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+})
+</script>
+
+ <?php $no = $no+ 1;}} ?>
+
+
+
 
 <!-- alert success -->
 <script>
@@ -657,6 +924,9 @@ $(document).ready(function() {
   
 })
 </script>
+
+
+
 
 <!--  javascript date and time di menu atas  -->
 <script>

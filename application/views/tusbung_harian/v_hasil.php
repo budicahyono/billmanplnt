@@ -39,7 +39,7 @@
 						 <?php 
 						 if ($sum_duplikat > 0 ) { // jika ada duplikat 
 					
-							if ($sum_duplikat <= 100 ) { // tampilkan duplikat hanya 100 ?>
+						if ($sum_duplikat <= 100 ) { // tampilkan duplikat hanya 100 ?>
 								<h5>Data tusbung harian yang duplikat </h5>
 						<table class="table table-bordered">	
 							<tr>
@@ -51,7 +51,7 @@
 								<th>Gol</th>
 								<th>Alamat</th>
 								<th>KDDK</th>
-								<th>No.HP</th>
+								<th>Status</th>
 								<th>Evidence</th>
 								<th>Tgl. Tusbung</th>
 								<th>ID Jenis Kendala</th>

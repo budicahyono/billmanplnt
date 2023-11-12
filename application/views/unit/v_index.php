@@ -31,10 +31,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  
                   <?php  $no=1;
                     foreach ($unit->result() as $r) {
-                  ?>	
+                  ?>
+                    <tr>
                     <td><?=$no?></td>
                     <td><?=$r->nama_unit?></td>
                     <td style="width:200px">

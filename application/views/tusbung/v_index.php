@@ -35,7 +35,7 @@
                  <?php }} ?>
                  </select> 
                </div> 
-               
+                
                  
                  <table id="data_tusbung" class="table table-bordered table-hover ">
                   <thead class="text-center">
@@ -61,10 +61,10 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  
                   <?php  $no=1;
                     foreach ($petugas->result() as $r) {
-                    if ($r->is_petugas_khusus == 0) {
+                    
                     
                     //ambil semua tul per petugas, kebetulan LBR / tagihannya hanya 1 bulan
                     $sum_tul =  $this->M_Tusbung->get_tul_petugas($r->id_petugas, $id_unit)->num_rows(); 
@@ -108,10 +108,12 @@
                     }
                     
                   ?>	
-                    <td><?=$no++?></td>
-                    <td style="width:200px"><?=$r->nama_petugas?></td>
+                    <tr>
+                    <td><?=$no?></td>
+                    <td style="width:200px"><a href="javascript:void(0)" id="nama_petugas_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_tul?>"><?=$r->nama_petugas?></a> 
+                    </td>
                     
-                    <td><?=$sum_tul?></td>
+                    <td><a href="javascript:void(0)" id="tul_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_tul?>" ><?=$sum_tul?></a></td>
                     <td><?="Rp ".number_format($sum_tul_rp)?></td>
                     
                     <td><?=$sum_lunas?></td>
@@ -120,15 +122,17 @@
                     <td><?=$sum_blm?></td>
                     <td><?="Rp ".number_format($sum_blm_rp)?></td>
                     
-                    <th><?=$persen_tul?>%</td>
-                    <th><?=$persen_tul_rp?>%</td>
+                    <th><?=$persen_tul?>%</th>
+                    <th><?=$persen_tul_rp?>%</th>
                    
                   </tr>
-                  <tr>
+                  
+                  
+                 
                   <?php  
-                    }}
+                    $no = $no + 1;}
                     foreach ($non_petugas->result() as $r) {
-                    if ($r->is_petugas_khusus == 0) {
+                    
                     
                      //ambil semua tul per petugas, kebetulan LBR / tagihannya hanya 1 bulan
                     $sum_tul2 =  $this->M_Tusbung->get_tul_petugas($r->id_petugas, $id_unit)->num_rows(); 
@@ -170,7 +174,8 @@
                     } else {
                         $persen_tul_rp2 = 0;
                     }
-                  ?>	
+                  ?>
+                    <tr>
                     <td><?=$no?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
                     
@@ -183,18 +188,18 @@
                     <td><?=$sum_blm2?></td>
                     <td><?="Rp ".number_format($sum_blm_rp2)?></td>
                     
-                     <th><?=$persen_tul2?>%</td>
-                    <th><?=$persen_tul_rp2?>%</td>
+                     <th><?=$persen_tul2?>%</th>
+                    <th><?=$persen_tul_rp2?>%</th>
                     
                   </tr>
-                  <?php $no++;}} if (count($petugas->result()) == 0) { ?>
+                  <?php $no++;} if (count($petugas->result()) == 0) { ?>
                     <tr>
                       <td colspan="6" class="text-center"><b>TIDAK ADA DATA</b></td>
                     </tr>	
                   <?php } ?>	
                   </tbody>
                    <tfoot> 
-                  <tr >
+                  
                   <?php 
                   
                 $total_tul = $this->M_Tusbung->get_by_unit($id_unit)->num_rows(); //tul total
@@ -228,6 +233,7 @@
                     $persen_total_rp = 0;
                 } 
                   ?>
+                    <tr >
                     <th class="text-center" colspan=2 style="vertical-align:middle">TOTAL</th> 
                     
                     <th ><?=$total_tul?></th>
@@ -256,3 +262,4 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    

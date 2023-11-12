@@ -46,11 +46,12 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  
                   <?php  $no=1;
                     foreach ($petugas->result() as $r) {
                     if ($r->id_unit > 0) { 
-                  ?>	
+                  ?>
+                  <tr>
                     <td><?=$no?></td>
                     <td><?=$r->nama_petugas?></td>
                     <td><?=$r->username?></td>

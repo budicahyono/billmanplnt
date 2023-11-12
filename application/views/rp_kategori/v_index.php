@@ -34,10 +34,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  
                   <?php  $no=1;
                     foreach ($rp_kategori->result() as $r) {
-                  ?>	
+                  ?>
+                  <tr>
                     <td><?=$no?></td>
                     <td><?=$r->nama_rp_kategori?></td>
                     <td><?="Rp ".number_format($r->rp_bawah)?></td>

@@ -14,6 +14,26 @@
  
  /*Custom Theme*/
 
+.auto {
+    position:absolute;
+}
+
+
+
+.auto_input, .auto {
+    width:50%;
+}
+
+
+.auto .list-group-item{
+    padding:5px;
+    color:#444444;
+}
+
+.auto .list-group-item:hover, .auto .list-group-item:focus, .auto .list-group-item:active{
+    color:#fff;
+    background:#007BFF;
+}
 
 .text-href:hover{
   color: #bf2f2b !important; 

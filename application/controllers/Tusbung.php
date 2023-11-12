@@ -75,6 +75,108 @@ class Tusbung extends CI_Controller {
 		$this->template->load('template','tusbung/v_index',$data);
 	}
 	
+	public function petugas($id_petugas)
+	{
+		if (isset($_GET['id_unit'])) {
+			$id_unit = $_GET['id_unit'];
+		} else {
+			$id_unit = 1;
+			
+		}
+		
+		if (isset($_GET['limit'])) {
+			$limit = $_GET['limit'];
+		} else {
+			$limit = 10;
+			
+		}
+		
+		if (isset($_GET['q'])) {
+			$q = $_GET['q'];
+		} else {
+			$q = null;
+			
+		}
+		$no = 1;
+		
+		$tusbung = $this->M_Tusbung->get_tul_petugas($id_petugas, $id_unit, $no, $limit, $q);
+		
+		$output = "";
+		foreach ($tusbung->result() as $r) {
+			$output .='<tr>'; 
+			$output .='<td>'.$no.'</td>'; 
+			$output .='<td>'.$r->id_pelanggan.'</td>'; 
+			$output .='<td>'.$r->nama_pelanggan.'</td>'; 
+			$output .='<td>'.$r->tarif.'</td>'; 
+			$output .='<td>'.$r->daya.'</td>'; 
+			$output .='<td>'.$r->gol.'</td>'; 
+			$output .='<td>'.$r->alamat.'</td>'; 
+			$output .='<td>'.$r->kddk.'</td>'; 
+			$output .='<td>'.$r->no_hp.'</td>'; 
+			$output .='<td>Rp '.number_format($r->rptag).'</td>'; 
+			$output .='<td>'.$r->rbk.'</td>'; 
+			 
+			if ($r->is_lunas == 1) {
+				$lunas = "lunas";	
+			} else {
+				$lunas = "blm lunas";
+			}
+			$output .='<td>'.$lunas.'</td>'; 
+			
+				if ($r->tgl_lunas != "0000-00-00") {
+					$output .='<td>'.tgl_indo($r->tgl_lunas).'</td>'; 
+				} else {
+					$output .='<td>Tidak ada</td>'; 
+				}
+			
+			
+			$output .='</tr>'; 
+			$no = $no + 1;	
+		}
+		
+		echo $output;
+	}
+	
+	public function search($id_petugas)
+	{
+		if (isset($_GET['id_unit'])) {
+			$id_unit = $_GET['id_unit'];
+			} else { 
+			$id_unit = 1; 
+			 
+		}
+		if (isset($_GET['no'])) {
+			$no_list = $_GET['no'];
+			} else { 
+			$no_list = 1; 
+			 
+		}
+		
+		
+		if (isset($_GET['q'])) {
+			$q = $_GET['q'];
+			$no = 1;
+			$limit = 10;
+			$tusbung = $this->M_Tusbung->get_tul_petugas($id_petugas, $id_unit, $no, $limit, $q);
+			$data['no_list'] = $no_list;
+			$data['id_petugas'] = $id_petugas;
+			$data['limit'] = $limit;
+			$data['data_rows'] = array();
+			
+			foreach ($tusbung->result() as $row)
+			{
+				array_push($data['data_rows'], [          
+					'id_pelanggan' 			=> $row->id_pelanggan,
+					'nama_pelanggan' 		=> $row->nama_pelanggan,
+				]);
+				
+			}
+			
+			echo json_encode($data);
+			//$this->load->view('tusbung/v_auto',$data);
+		}
+	}
+	
 	public function detail($id)
 	{
 		if (isset($_GET['id_unit'])) {
@@ -312,7 +414,7 @@ class Tusbung extends CI_Controller {
 				
 				$data = array(
 					'app' => 'Billman PLN-T',
-					'title' => "Hasil Import Tusbung $nama_unit",
+					'title' => "Hasil Import Tusbung",
 					'id_unit' => $id_unit,
 					'nama_unit' => $nama_unit,
 					'sum_pelanggan' => $sum_pelanggan,
@@ -356,7 +458,7 @@ class Tusbung extends CI_Controller {
 		redirect("tusbung?id_unit=$id_unit"); 
 	}
 	
-	public function jadwal()
+	public function baca()
 	{
 		if (isset($_GET['id_unit'])) {
 			$id_unit = $_GET['id_unit'];
@@ -366,7 +468,7 @@ class Tusbung extends CI_Controller {
 		}
 		
 		$data['app'] 	= "Billman PLN-T";
-		$data['title'] 	= "Jadwal Tusbung";
+		$data['title'] 	= "Hari Baca Tusbung";
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
 		
@@ -378,7 +480,7 @@ class Tusbung extends CI_Controller {
 			$data['petugas'] 	= $this->M_Petugas->by_unit($id_unit);
 			$data['id_unit'] 	= $id_unit;
 		}
-		$this->template->load('template','tusbung/v_jadwal',$data);
+		$this->template->load('template','tusbung/v_baca',$data);
 	}
 	
 	public function rp_baca()
@@ -391,7 +493,7 @@ class Tusbung extends CI_Controller {
 		}
 		
 		$data['app'] 	= "Billman PLN-T";
-		$data['title'] 	= "Jadwal Tusbung";
+		$data['title'] 	= "Hari Baca Tusbung";
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
 		

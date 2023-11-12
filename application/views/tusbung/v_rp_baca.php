@@ -15,7 +15,7 @@
                 <div class="card-tools">
                   <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=base_url()?>tusbung/jadwal" >Hari Baca</a>
+                        <a class="nav-link" href="<?=base_url()?>tusbung/baca" >Hari Baca</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link active" href="<?=base_url()?>tusbung/rp_baca" >Rupiah Baca</a>
@@ -61,7 +61,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  
                   <?php  $no=1;
                       $total_A = 0;
                       $total_B = 0;
@@ -123,6 +123,7 @@
                       $total_I = $total_I + $rp_I;
                       $grand_total = $total_A+$total_B+$total_C+$total_D+$total_E+$total_F+$total_G+$total_H+$total_I;
                   ?>	
+					<tr>
                     <td><?=$no++?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
                     
@@ -139,7 +140,7 @@
                     
                    
                   </tr>
-                  <tr>
+                  
                   <?php  
                     }}
                     foreach ($non_petugas->result() as $r) {
@@ -191,7 +192,8 @@
                       $total_H = $total_H + $rp_H;
                       $total_I = $total_I + $rp_I;
                       $grand_total = $total_A+$total_B+$total_C+$total_D+$total_E+$total_F+$total_G+$total_H+$total_I;
-                  ?>	
+                  ?>
+					<tr>
                     <td><?=$no++?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
                     
@@ -215,10 +217,6 @@
                   </tbody>
                   <tfoot> 
                   <tr >
-                  <?php 
-                  
-               
-                  ?>
                     <th class="text-center" colspan=2>TOTAL</th> 
                     
                     <td style="white-space: nowrap;"><?="Rp ".number_format($total_A)?></td>

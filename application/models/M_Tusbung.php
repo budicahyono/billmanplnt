@@ -57,10 +57,21 @@ class M_Tusbung extends CI_Model {
 	
 	
 	
-	function get_tul_petugas($key, $id_unit) // ambil semua data pelanggan / tul per petugas
+	function get_tul_petugas($key, $id_unit, $start = null, $limit = null, $q = null) // ambil semua data pelanggan / tul per petugas
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		return $this->db->get_where($this->tb, array("pelanggan.id_unit" => $id_unit, "id_petugas" => $key, "bulan" => $_SESSION['bulan_sess'], "tahun" => $_SESSION['tahun_sess'] ));
+		if ($start != null && $limit != null) {
+			$this->db->limit($limit, $start);
+		}
+		if ($q != null ) {
+			$this->db->like("pelanggan.id_pelanggan", $q);
+			$this->db->or_like("pelanggan.nama_pelanggan", $q);
+		}
+		$this->db->where("pelanggan.id_unit", $id_unit);
+		$this->db->where("id_petugas", $key);
+		$this->db->where("bulan", $_SESSION['bulan_sess']);
+		$this->db->where("tahun", $_SESSION['tahun_sess']);
+		return $this->db->get($this->tb);
 	}
 	
 	function get_tul_petugas_rp($key, $id_unit) // ambil semua data pelanggan / tul per petugas dan hitung rupiahnya
@@ -137,6 +148,14 @@ class M_Tusbung extends CI_Model {
 	}
 	
 	function edit_lunas($data, $key, $bulan, $tahun)
+	{
+		$this->db->where("id_pelanggan", $key);
+		$this->db->where("bulan", $bulan);
+		$this->db->where("tahun", $tahun);
+		$this->db->update($this->tb, $data);
+	}
+	
+	function edit_petugas_khusus($data, $key, $bulan, $tahun)
 	{
 		$this->db->where("id_pelanggan", $key);
 		$this->db->where("bulan", $bulan);

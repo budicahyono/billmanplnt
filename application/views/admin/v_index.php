@@ -35,10 +35,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                  <?php  $no=1;
+                  
+					  <?php  $no=1;
                     foreach ($admin->result() as $r) {
-                  ?>	
+                  ?>
+                  <tr>
                     <td><?=$no?></td>
                     <td><?=$r->nama_admin?></td>
                     <td><?=$r->username?></td>

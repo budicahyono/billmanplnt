@@ -32,10 +32,10 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
                   <?php  $no=1;
                     foreach ($unit->result() as $r) {
                   ?>	
+                  <tr>
                     <td><?=$no?></td>
                     <td><?=$r->nama_unit?></td>
                     <td style="width:200px">
@@ -51,7 +51,7 @@ $no++;
 <td colspan="6" class="text-center"><b>TIDAK ADA DATA</b></td>
 </tr>	
 <?php } ?>	
-                  </tbody>
+</tbody>
                 </table>  
               </div>
             </div>

@@ -34,10 +34,16 @@
 		}
 		
 		
-		function by_unit($key)
+		function by_unit($key, $is_petugas_khusus = null)
 		{
 			$this->db->join('unit', 'unit.id_unit = petugas.id_unit');
-			return $this->db->get_where($this->tb, array("unit.id_unit" => $key));
+			$this->db->where("unit.id_unit", $key);
+			if ($is_petugas_khusus == null) {
+				$this->db->where("is_petugas_khusus", 0);
+			} else {
+				$this->db->where("is_petugas_khusus", $is_petugas_khusus);
+			}
+			return $this->db->get($this->tb);
 		}
 		function edit($data, $key)
 		{

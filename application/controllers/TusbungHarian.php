@@ -152,8 +152,16 @@ class TusbungHarian extends CI_Controller {
 						$id_pelanggan = $row['A'];
 						$pelanggan_harian = $this->M_Tusbungharian->cek($id_pelanggan, $tgl_tusbung)->num_rows();
 						
+						//cek petugas sudah sesuai dengan di data petugas 
+						$nama_petugas = $row['J'];
+						$petugas = $this->M_Petugas->cek($nama_petugas);
+						if ($petugas->num_rows() == 0) {
+							$this->session->set_flashdata('error', "Tidak ada petugas dengan nama <b>$nama_petugas</b> pada data master");
+							redirect("tusbungharian/import"); 
+						} 	
 						
 						
+							
 						
 						if ($pelanggan_harian == 0) { // kalau kosong
 							//cek lagi di pelanggan dan tusbung kumulatif
@@ -165,7 +173,23 @@ class TusbungHarian extends CI_Controller {
 							);
 							$tusbung = $this->M_Tusbung->cek($where)->num_rows();
 							if ($pelanggan != 0 && $tusbung != 0) {
-						
+								if ($petugas->num_rows() > 0) {
+									foreach ($petugas->result() as $r) {
+										if ($r->is_petugas_khusus == 1) { 
+										//jika petugas khusus ambil id_petugasnya
+										$id_petugas = $r->id_petugas;
+										
+										//update id_petugas_khusus di tusbung_kumulatif 
+										$edit = array('id_petugas_khusus'	=>$id_petugas);
+										$this->M_Tusbung->edit_petugas_khusus($edit, $id_pelanggan, $bulan, $tahun);	
+										} else {
+										//null kan id_petugas_khusus di tusbung_kumulatif 
+										$edit = array('id_petugas_khusus'	=>null);
+										$this->M_Tusbung->edit_petugas_khusus($edit, $id_pelanggan, $bulan, $tahun);	
+										}
+									} 
+								}	
+								
 								//input ke tabel tusbung_harian 
 								array_push($tusbung_harian, [          
 									'id_pelanggan' 		=>$id_pelanggan,    
@@ -239,7 +263,7 @@ class TusbungHarian extends CI_Controller {
 				
 				$data = array(
 					'app' => 'Billman PLN-T',
-					'title' => "Hasil Import Tusbung Harian $nama_unit",
+					'title' => "Hasil Import Tusbung Harian",
 					'id_unit' => $id_unit,
 					'nama_unit' => $nama_unit,
 					'sum_duplikat' => $sum_duplikat,
@@ -311,14 +335,16 @@ class TusbungHarian extends CI_Controller {
 			$data['nama_unit'] = $r->nama_unit;
 		}
 		
-		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
-		
 		if ($id_unit == null) {
-			$data['petugas'] 	= $this->M_Petugas->by_unit(1); // 1 = manokwari
+			$data['petugas'] 	= $this->M_Petugas->by_unit(1, 0); // 1 = manokwari
+			
+			//parameter kedua adalah isi dari is_petugas_khusus
+			$data['petugas_khusus'] 	= $this->M_Petugas->by_unit(1, 1); // 1 = petugas khusus
 			
 			$data['id_unit'] 	= $id_unit;
 		} else {
-			$data['petugas'] 	= $this->M_Petugas->by_unit($id_unit);
+			$data['petugas'] 	= $this->M_Petugas->by_unit($id_unit, 0);
+			$data['petugas_khusus'] 	= $this->M_Petugas->by_unit($id_unit, 1);
 			$data['id_unit'] 	= $id_unit;
 		}
 		

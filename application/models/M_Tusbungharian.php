@@ -17,11 +17,17 @@ class M_Tusbungharian extends CI_Model {
 	
 	
 	
-	function get_tul_petugas($key, $tgl) // ambil semua data pelanggan / tul per petugas
+	function get_tul_petugas($key, $tgl, $id_petugas_khusus = null) // ambil semua data pelanggan / tul per petugas
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
-				$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		
+		if ($id_petugas_khusus == null) {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
+			$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		} else {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", $id_petugas_khusus);
+		}	
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
 		$this->db->where("tgl_tusbung", $tanggal);
@@ -29,12 +35,18 @@ class M_Tusbungharian extends CI_Model {
 	}
 	
 	
-	function get_tul_petugas_rp($key, $tgl) // ambil semua data pelanggan / tul per petugas
+	function get_tul_petugas_rp($key, $tgl, $id_petugas_khusus = null) // ambil semua data pelanggan / tul per petugas
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
 		$this->db->select_sum('tusbung_kumulatif.rptag');
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
-		$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		
+		if ($id_petugas_khusus == null) {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
+			$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		} else {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", $id_petugas_khusus);
+		}
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
 		$this->db->where("tgl_tusbung", $tanggal);
@@ -42,11 +54,16 @@ class M_Tusbungharian extends CI_Model {
 	}
 	
 	
-	function get_lunas_petugas($key, $tgl) // ambil semua data pelanggan lunas
+	function get_lunas_petugas($key, $tgl, $id_petugas_khusus = null) // ambil semua data pelanggan lunas
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
-		$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		if ($id_petugas_khusus == null) {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
+			$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		} else {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", $id_petugas_khusus);
+		}
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
 		$this->db->where("tgl_tusbung", $tanggal);
@@ -55,12 +72,17 @@ class M_Tusbungharian extends CI_Model {
 	}
 	
 	
-	function get_lunas_petugas_rp($key, $tgl) // ambil semua data pelanggan lunas rp
+	function get_lunas_petugas_rp($key, $tgl, $id_petugas_khusus = null) // ambil semua data pelanggan lunas rp
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
 		$this->db->select_sum('tusbung_kumulatif.rptag');
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
+		if ($id_petugas_khusus == null) {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
 		$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		} else {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", $id_petugas_khusus);
+		}
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
 		$this->db->where("tgl_tusbung", $tanggal);
@@ -68,11 +90,17 @@ class M_Tusbungharian extends CI_Model {
 		return $this->db->get($this->tb);
 	}
 	
-	function get_evidence($key, $tgl) // ambil evidence
+	function get_evidence($key, $tgl, $id_petugas_khusus = null) // ambil evidence
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
-		$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		
+		if ($id_petugas_khusus == null) {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
+			$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		} else {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", $id_petugas_khusus);
+		}
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
 		$this->db->where("tgl_tusbung", $tanggal);
@@ -80,12 +108,17 @@ class M_Tusbungharian extends CI_Model {
 		return $this->db->get($this->tb);
 	}
 	
-	function get_kendala_harian($key, $tgl) // ambil kendala harian
+	function get_kendala_harian($key, $tgl, $id_petugas_khusus = null) // ambil kendala harian
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
 		$this->db->join('kendala_harian', 'kendala_harian.id_petugas = tusbung_kumulatif.id_petugas');
-		$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		if ($id_petugas_khusus == null) {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
+			$this->db->where("tusbung_kumulatif.id_petugas", $key);
+		} else {
+			$this->db->where("tusbung_kumulatif.id_petugas_khusus", $id_petugas_khusus);
+		}
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
 		$this->db->where("tgl_kendala", $tanggal);

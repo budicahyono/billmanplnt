@@ -32,10 +32,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  
                   <?php  $no=1;
                     foreach ($jenis_kendala->result() as $r) {
-                  ?>	
+						?>	
+                    <tr>    
                     <td><?=$no?></td>
                     <td><?=$r->nama_jenis_kendala?></td>
                     <td style="width:200px">
