@@ -39,7 +39,7 @@ class Admin extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' =>	ucfirst($this->uri->segment(1)),
 			'admin'	=>	$this->M_Admin->get_all(),
 		);
@@ -49,7 +49,7 @@ class Admin extends CI_Controller {
 	public function profil()
 	{
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => ucfirst($this->uri->segment(1)),
 		);
 		$this->template->load('template','v_profil',$data);
@@ -58,7 +58,7 @@ class Admin extends CI_Controller {
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' =>	ucfirst($this->uri->segment(1)),
 			'admin'	=>	$this->M_Admin->get_all(),
 			);
@@ -104,7 +104,7 @@ class Admin extends CI_Controller {
 		$cek = $admin->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman PLN-T',
+				'app' 	=> 'Billman SAYA',
 				'title' =>	ucfirst($this->uri->segment(1)),
 				'admin'	=>	$admin,
 			);
@@ -118,7 +118,7 @@ class Admin extends CI_Controller {
 	public function proses_edit()
 	{	
 		$data['title'] 	= ucfirst($this->uri->segment(1));
-		$data['app'] 	= 'Billman PLN-T';
+		$data['app'] 	= 'Billman SAYA';
 		if(isset($_POST['submit'])){
 			$id_admin       	 	=  $this->input->post('id_admin');
 			$nama_admin       	 	=  $this->input->post('nama_admin');

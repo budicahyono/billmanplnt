@@ -81,7 +81,7 @@ class TusbungHarian extends CI_Controller {
 	public function import()
 	{
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => "Tusbung Harian",
 			'unit'	=>	$this->M_Unit->get_all(),
 		);
@@ -262,7 +262,7 @@ class TusbungHarian extends CI_Controller {
 				}
 				
 				$data = array(
-					'app' => 'Billman PLN-T',
+					'app' => 'Billman SAYA',
 					'title' => "Hasil Import Tusbung Harian",
 					'id_unit' => $id_unit,
 					'nama_unit' => $nama_unit,
@@ -325,8 +325,8 @@ class TusbungHarian extends CI_Controller {
 		
 		$hari = date("l", strtotime($_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl_skrg));
 		
-		$data['app'] 	= "Billman PLN-T";
-		$data['title'] 	= "Update Kendala";
+		$data['app'] 	= "Billman SAYA";
+		$data['title'] 	= "Monitoring Harian";
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$data['tgl_skrg']   = $tgl_skrg;
 		$data['hari']   	= $hari;

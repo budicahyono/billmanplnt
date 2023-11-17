@@ -52,7 +52,7 @@ class Tusbung extends CI_Controller {
 			
 		}
 		
-		$data['app'] 	= "Billman PLN-T";
+		$data['app'] 	= "Billman SAYA";
 		$data['title'] 	= ucfirst($this->uri->segment(1));
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$unit = $this->M_Unit->get_one($id_unit);
@@ -186,7 +186,7 @@ class Tusbung extends CI_Controller {
 			
 		}
 		
-		$data['app'] 	= "Billman PLN-T";
+		$data['app'] 	= "Billman SAYA";
 		$data['title'] 	= ucfirst($this->uri->segment(1));
 		$data['id_unit']= $id_unit;
 		
@@ -197,7 +197,7 @@ class Tusbung extends CI_Controller {
 	public function import()
 	{
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => "Import Tusbung",
 			'unit'	=>	$this->M_Unit->get_all(),
 		);
@@ -291,6 +291,7 @@ class Tusbung extends CI_Controller {
 								'no_hp'				=>$row['M'], 
 								'is_new'			=>1, 
 								'id_unit'			=>$id_unit,
+								'id_petugas_khusus'	=>null,
 							]); 
 						} else { // kalau ada data masukkan dalam array duplikat
 							array_push($duplikat_pelanggan, [          
@@ -413,7 +414,7 @@ class Tusbung extends CI_Controller {
 				}
 				
 				$data = array(
-					'app' => 'Billman PLN-T',
+					'app' => 'Billman SAYA',
 					'title' => "Hasil Import Tusbung",
 					'id_unit' => $id_unit,
 					'nama_unit' => $nama_unit,
@@ -467,7 +468,7 @@ class Tusbung extends CI_Controller {
 			
 		}
 		
-		$data['app'] 	= "Billman PLN-T";
+		$data['app'] 	= "Billman SAYA";
 		$data['title'] 	= "Hari Baca Tusbung";
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
@@ -492,7 +493,7 @@ class Tusbung extends CI_Controller {
 			
 		}
 		
-		$data['app'] 	= "Billman PLN-T";
+		$data['app'] 	= "Billman SAYA";
 		$data['title'] 	= "Hari Baca Tusbung";
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
@@ -511,7 +512,7 @@ class Tusbung extends CI_Controller {
 	public function kendala()
 	{
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => "Kendala",
 		);
 		$this->template->load('template','tusbung/v_kendala',$data);

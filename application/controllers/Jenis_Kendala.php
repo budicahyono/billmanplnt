@@ -37,7 +37,7 @@ class Jenis_kendala extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' => 'Jenis Kendala',
 			'jenis_kendala'	=>	$this->M_Jenis_Kendala->get_all(),
 		);
@@ -49,7 +49,7 @@ class Jenis_kendala extends CI_Controller {
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' => 'Jenis Kendala',
 			'jenis_kendala'	=>	$this->M_Jenis_Kendala->get_all(),
 		);
@@ -80,7 +80,7 @@ class Jenis_kendala extends CI_Controller {
 		$cek = $jenis_kendala->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman PLN-T',
+				'app' 	=> 'Billman SAYA',
 				'title' => 'Jenis Kendala',
 				'jenis_kendala'	=>	$jenis_kendala,
 			);
@@ -94,7 +94,7 @@ class Jenis_kendala extends CI_Controller {
 	public function proses_edit()
 	{	
 		$data['title'] 	= 'Jenis Kendala';
-		$data['app'] 	= 'Billman PLN-T';
+		$data['app'] 	= 'Billman SAYA';
 		if(isset($_POST['submit'])){
 			$id_jenis_kendala    =  $this->input->post('id_jenis_kendala');
 			$nama_jenis_kendala	=  $this->input->post('nama_jenis_kendala');

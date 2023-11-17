@@ -211,7 +211,7 @@
                     $total_lunas = $total_lunas + $sum_lunas;
                     
                     $sum_lunas_rp = $this->M_Tusbungharian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg, $id_petugas_khusus);
-                    foreach ($sum_tul_rp->result() as $row) {
+                    foreach ($sum_lunas_rp->result() as $row) {
 						$lunas_rp = $row->rptag;
                     } 
                       

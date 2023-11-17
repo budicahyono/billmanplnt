@@ -29,7 +29,7 @@ class Login extends CI_Controller {
 		} 	
 		
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => 'Login',
 		);
 		$this->template->load('temp_home','v_login', $data);
@@ -109,7 +109,7 @@ class Login extends CI_Controller {
 			} 	
 		
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => 'Profil Admin',
 		);
 		$this->template->load('template','v_profil', $data);

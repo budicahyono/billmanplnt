@@ -1,7 +1,7 @@
 <div class="login-box">
   <div class="login-logo">
-  <img src="<?=base_url();?>img/Logo.png" width="100%">
-    <a href="<?=base_url();?>"><b>SITU - BILLMAN MNK</b></a>
+  <img src="<?=base_url();?>img/Logo2.png" width="100%">
+    <a href="<?=base_url();?>"><b>SITU - BILLMAN SAYA</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -73,7 +73,7 @@
                       ?>
                     </select>
                   </div>
-                </div>
+				  </div>
                 		
 		<button type="submit" name="submit" value="submit" class="btn btn-block btn-primary">
 			<i class="fas fa-sign-in-alt mr-2"></i> Login

@@ -37,7 +37,7 @@ class Rp_Kategori extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' => 'Rp Kategori',
 			'rp_kategori'	=>	$this->M_Rp_Kategori->get_all(),
 		);
@@ -49,7 +49,7 @@ class Rp_Kategori extends CI_Controller {
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' => 'Rp Kategori',
 			'rp_kategori'	=>	$this->M_Rp_Kategori->get_all(),
 		);
@@ -90,7 +90,7 @@ class Rp_Kategori extends CI_Controller {
 		$cek = $rp_kategori->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman PLN-T',
+				'app' 	=> 'Billman SAYA',
 				'title' => 'Rp Kategori',
 				'rp_kategori'	=>	$rp_kategori,
 			);
@@ -104,7 +104,7 @@ class Rp_Kategori extends CI_Controller {
 	public function proses_edit()
 	{	
 		$data['title'] 	= 'Rp Kategori';
-		$data['app'] 	= 'Billman PLN-T';
+		$data['app'] 	= 'Billman SAYA';
 		if(isset($_POST['submit'])){
 			$id_rp_kategori    =  $this->input->post('id_rp_kategori');
 			$nama_rp_kategori	=  $this->input->post('nama_rp_kategori');

@@ -37,7 +37,7 @@ class Unit extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' =>	ucfirst($this->uri->segment(1)),
 			'unit'	=>	$this->M_Unit->get_all(),
 		);
@@ -49,7 +49,7 @@ class Unit extends CI_Controller {
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' =>	ucfirst($this->uri->segment(1)),
 			'unit'	=>	$this->M_Unit->get_all(),
 		);
@@ -82,7 +82,7 @@ class Unit extends CI_Controller {
 		$cek = $unit->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman PLN-T',
+				'app' 	=> 'Billman SAYA',
 				'title' =>	ucfirst($this->uri->segment(1)),
 				'unit'	=>	$unit,
 			);
@@ -96,7 +96,7 @@ class Unit extends CI_Controller {
 	public function proses_edit()
 	{	
 		$data['title'] 	= ucfirst($this->uri->segment(1));
-		$data['app'] 	= 'Billman PLN-T';
+		$data['app'] 	= 'Billman SAYA';
 		if(isset($_POST['submit'])){
 			$id_unit    =  $this->input->post('id_unit');
 			$nama_unit	=  $this->input->post('nama_unit');

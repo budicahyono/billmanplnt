@@ -36,7 +36,7 @@ class Pelanggan extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => ucfirst($this->uri->segment(1)),
 		);
 		$this->template->load('template','pelanggan/v_index',$data);
@@ -45,7 +45,7 @@ class Pelanggan extends CI_Controller {
 	public function profil()
 	{
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => ucfirst($this->uri->segment(1)),
 		);
 		$this->template->load('template','v_profil',$data);

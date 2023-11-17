@@ -201,7 +201,7 @@ class Dashboard extends CI_Controller {
 		}
 		
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => ucfirst($this->uri->segment(1)),
 			'total_bintuni'	=>	$total_bintuni,
 			'total_manokwari'	=>	$total_manokwari,
@@ -257,7 +257,7 @@ class Dashboard extends CI_Controller {
 	public function home()
 	{
 		$data = array(
-			'app' => 'Billman PLN-T',
+			'app' => 'Billman SAYA',
 			'title' => 'Dashboard',
 		);
 		$this->template->load('template','admin/v_index',$data);

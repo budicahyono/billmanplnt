@@ -38,7 +38,7 @@ class Petugas extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' =>	ucfirst($this->uri->segment(1)),
 			'petugas'	=>	$this->M_Petugas->get_all(),
 			'unit'		=>	$this->M_Unit->get_all(),
@@ -51,7 +51,7 @@ class Petugas extends CI_Controller {
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman PLN-T',
+			'app' 	=> 'Billman SAYA',
 			'title' =>	ucfirst($this->uri->segment(1)),
 			'petugas'	=>	$this->M_Petugas->get_all(),
 			'unit'		=>	$this->M_Unit->get_all(),
@@ -106,7 +106,7 @@ class Petugas extends CI_Controller {
 			$cek = $petugas->num_rows();
 			if ($cek > 0) {
 				$data = array(
-					'app' 	=> 'Billman PLN-T',
+					'app' 	=> 'Billman SAYA',
 					'title' =>	ucfirst($this->uri->segment(1)),
 					'petugas'	=>	$petugas,
 					'unit'		=>	$this->M_Unit->get_all(),
@@ -127,7 +127,7 @@ class Petugas extends CI_Controller {
 		$cek = $petugas->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman PLN-T',
+				'app' 	=> 'Billman SAYA',
 				'title' =>	ucfirst($this->uri->segment(1)),
 				'petugas'	=>	$petugas,
 				'unit'		=>	$this->M_Unit->get_all(),
@@ -142,7 +142,7 @@ class Petugas extends CI_Controller {
 	public function proses_edit()
 	{	
 		$data['title'] 	= ucfirst($this->uri->segment(1));
-		$data['app'] 	= 'Billman PLN-T';
+		$data['app'] 	= 'Billman SAYA';
 		if(isset($_POST['submit'])){
 			$id_petugas    	=  $this->input->post('id_petugas');
 			$nama_petugas	=  $this->input->post('nama_petugas');
