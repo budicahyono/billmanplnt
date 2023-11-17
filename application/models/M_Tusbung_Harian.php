@@ -1,5 +1,5 @@
 <?php
-class M_Tusbungharian extends CI_Model {
+class M_Tusbung_Harian extends CI_Model {
     
 	var $tb = " tusbung_harian";
 	var $id = "id_tusbung_harian";

@@ -13,14 +13,14 @@
                 <h3 class="card-title"><i class=" fas fa-th-list mr-2"></i> Monitoring Tusbung Harian <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?></h3>
 
                 <div class="card-tools">
-                  <a onclick="return confirm('Apa anda yakin ingin menghapus tusbung <?=$nama_unit?> pada <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?>? ')" class="btn btn-danger btn-md" href="<?=base_url()?>tusbungharian/hapus/<?=$id_unit?>?tgl=<?=$tgl_skrg?>" ><i class="fa fa-trash"></i> Hapus Tusbung Harian</a>
+                  <a onclick="return confirm('Apa anda yakin ingin menghapus tusbung <?=$nama_unit?> pada <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?>? ')" class="btn btn-danger btn-md" href="<?=base_url()?>tusbung_harian/hapus/<?=$id_unit?>?tgl=<?=$tgl_skrg?>" ><i class="fa fa-trash"></i> Hapus Tusbung Harian</a>
                   <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                   </button>
                 </div>
                 <!-- /.card-tools -->
               </div>
               <div class="card-body">
-                 <form  action="<?=base_url('tusbungharian/post')?>" method="post" enctype="multipart/form-data">
+                 <form  action="<?=base_url('tusbung_harian/post')?>" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                   <div class="col-lg-4">
                   <label>Tanggal</label>
@@ -110,22 +110,22 @@
                   $total_sisa = 0;
                   foreach ($petugas->result() as $r) {
                   
-                    $sum_tul = $this->M_Tusbungharian->get_tul_petugas($r->id_petugas, $tgl_skrg)->num_rows();
+                    $sum_tul = $this->M_Tusbung_Harian->get_tul_petugas($r->id_petugas, $tgl_skrg)->num_rows();
                     
                     $total_tul = $total_tul + $sum_tul;
                     
-                     $sum_tul_rp = $this->M_Tusbungharian->get_tul_petugas_rp($r->id_petugas, $tgl_skrg);
+                     $sum_tul_rp = $this->M_Tusbung_Harian->get_tul_petugas_rp($r->id_petugas, $tgl_skrg);
                      foreach ($sum_tul_rp->result() as $row) {
 						$sum_rp = $row->rptag;
 					  } 
                       
                     $total_rp = $total_rp + $sum_rp;
                       
-                    $sum_lunas = $this->M_Tusbungharian->get_lunas_petugas($r->id_petugas, $tgl_skrg)->num_rows();
+                    $sum_lunas = $this->M_Tusbung_Harian->get_lunas_petugas($r->id_petugas, $tgl_skrg)->num_rows();
                     
                     $total_lunas = $total_lunas + $sum_lunas;
                     
-                    $sum_lunas_rp = $this->M_Tusbungharian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg);
+                    $sum_lunas_rp = $this->M_Tusbung_Harian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg);
                     foreach ($sum_lunas_rp->result() as $row) {
 						$lunas_rp = $row->rptag;
                     } 
@@ -148,7 +148,7 @@
                     
                     
                     
-                    $sum_evidence = $this->M_Tusbungharian->get_evidence($r->id_petugas, $tgl_skrg)->num_rows();
+                    $sum_evidence = $this->M_Tusbung_Harian->get_evidence($r->id_petugas, $tgl_skrg)->num_rows();
                     
                     $total_evidence = $total_evidence + $sum_evidence; 
                     
@@ -165,7 +165,7 @@
                     $total_sisa = $total_sisa + $sisa_evidence;
                       
                     $isi_kendala = "<i style='color:red'>Belum diisi</i>";
-                    $kendala_harian = $this->M_Tusbungharian->get_kendala_harian($r->id_petugas, $tgl_skrg);
+                    $kendala_harian = $this->M_Tusbung_Harian->get_kendala_harian($r->id_petugas, $tgl_skrg);
                     foreach ($kendala_harian->result() as $row) {
                       $isi_kendala = $row->isi_kendala;
                     } 
@@ -195,22 +195,22 @@
                   
                   <?php } foreach ($petugas_khusus->result() as $r) { 
                     $id_petugas_khusus = $r->id_petugas;
-                      $sum_tul = $this->M_Tusbungharian->get_tul_petugas($r->id_petugas, $tgl_skrg, $id_petugas_khusus)->num_rows();
+                      $sum_tul = $this->M_Tusbung_Harian->get_tul_petugas($r->id_petugas, $tgl_skrg, $id_petugas_khusus)->num_rows();
                     
                     $total_tul = $total_tul + $sum_tul;
                     
-                     $sum_tul_rp = $this->M_Tusbungharian->get_tul_petugas_rp($r->id_petugas, $tgl_skrg, $id_petugas_khusus);
+                     $sum_tul_rp = $this->M_Tusbung_Harian->get_tul_petugas_rp($r->id_petugas, $tgl_skrg, $id_petugas_khusus);
                      foreach ($sum_tul_rp->result() as $row) {
 						$sum_rp = $row->rptag;
 					  } 
                       
                     $total_rp = $total_rp + $sum_rp;
                       
-                    $sum_lunas = $this->M_Tusbungharian->get_lunas_petugas($r->id_petugas, $tgl_skrg, $id_petugas_khusus)->num_rows();
+                    $sum_lunas = $this->M_Tusbung_Harian->get_lunas_petugas($r->id_petugas, $tgl_skrg, $id_petugas_khusus)->num_rows();
                     
                     $total_lunas = $total_lunas + $sum_lunas;
                     
-                    $sum_lunas_rp = $this->M_Tusbungharian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg, $id_petugas_khusus);
+                    $sum_lunas_rp = $this->M_Tusbung_Harian->get_lunas_petugas_rp($r->id_petugas, $tgl_skrg, $id_petugas_khusus);
                     foreach ($sum_lunas_rp->result() as $row) {
 						$lunas_rp = $row->rptag;
                     } 
@@ -233,7 +233,7 @@
                     
                     
                     
-                    $sum_evidence = $this->M_Tusbungharian->get_evidence($r->id_petugas, $tgl_skrg, $id_petugas_khusus)->num_rows();
+                    $sum_evidence = $this->M_Tusbung_Harian->get_evidence($r->id_petugas, $tgl_skrg, $id_petugas_khusus)->num_rows();
                     
                     $total_evidence = $total_evidence + $sum_evidence; 
                     
@@ -250,7 +250,7 @@
                     $total_sisa = $total_sisa + $sisa_evidence;
                       
                     $isi_kendala = "<i style='color:red'>Belum diisi</i>";
-                    $kendala_harian = $this->M_Tusbungharian->get_kendala_harian($r->id_petugas, $tgl_skrg);
+                    $kendala_harian = $this->M_Tusbung_Harian->get_kendala_harian($r->id_petugas, $tgl_skrg);
                     foreach ($kendala_harian->result() as $row) {
                       $isi_kendala = $row->isi_kendala;
                     }   

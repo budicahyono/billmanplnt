@@ -8,38 +8,13 @@ class Petugas extends CI_Controller {
 				$this->load->model('M_Admin');
 				$this->load->model('M_Petugas');
 				$this->load->model('M_Unit');
-				if (!$this->M_Admin->is_login()) { // jika belum login (tanda ! didepan) maka dilempar ke halaman awal
-					redirect(".");		
-				} 
-				function tgl_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-					$tahun = substr($date, 0, 4);
-					$bulan = substr($date, 5, 2);
-					$tgl   = substr($date, 8, 2);
-					$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;		
-					return $result;
-				}
-				
-				
-				 function bln_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+				is_login("yes");
 				 
-					
-					$bulan = $date;
-					 
-				 
-					$result =   $BulanIndo[(int)$bulan-1] ;		
-					return($result);
-				} 
 		}
 		
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman SAYA',
-			'title' =>	ucfirst($this->uri->segment(1)),
 			'petugas'	=>	$this->M_Petugas->get_all(),
 			'unit'		=>	$this->M_Unit->get_all(),
 		);
@@ -51,8 +26,6 @@ class Petugas extends CI_Controller {
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman SAYA',
-			'title' =>	ucfirst($this->uri->segment(1)),
 			'petugas'	=>	$this->M_Petugas->get_all(),
 			'unit'		=>	$this->M_Unit->get_all(),
 		);
@@ -106,8 +79,6 @@ class Petugas extends CI_Controller {
 			$cek = $petugas->num_rows();
 			if ($cek > 0) {
 				$data = array(
-					'app' 	=> 'Billman SAYA',
-					'title' =>	ucfirst($this->uri->segment(1)),
 					'petugas'	=>	$petugas,
 					'unit'		=>	$this->M_Unit->get_all(),
 					'id_unit'	=>	$id,
@@ -127,8 +98,6 @@ class Petugas extends CI_Controller {
 		$cek = $petugas->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman SAYA',
-				'title' =>	ucfirst($this->uri->segment(1)),
 				'petugas'	=>	$petugas,
 				'unit'		=>	$this->M_Unit->get_all(),
 			);
@@ -141,8 +110,7 @@ class Petugas extends CI_Controller {
 	
 	public function proses_edit()
 	{	
-		$data['title'] 	= ucfirst($this->uri->segment(1));
-		$data['app'] 	= 'Billman SAYA';
+		
 		if(isset($_POST['submit'])){
 			$id_petugas    	=  $this->input->post('id_petugas');
 			$nama_petugas	=  $this->input->post('nama_petugas');

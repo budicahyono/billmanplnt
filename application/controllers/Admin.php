@@ -6,60 +6,23 @@ class Admin extends CI_Controller {
 				parent::__construct();
 						
 				$this->load->model('M_Admin');
-				if (!$this->M_Admin->is_login()) { // jika belum login (tanda ! didepan) maka dilempar ke halaman awal
-					redirect(".");		
-				} 
-				function tgl_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-					$tahun = substr($date, 0, 4);
-					$bulan = substr($date, 5, 2);
-					$tgl   = substr($date, 8, 2);
-					$j   = substr($date, 11, 2);
-					$m   = substr($date, 14, 2);
-					$d   = substr($date, 17, 2);
-					$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun . " " . $j.":".$m.":".$d ;		
-					return $result;
-				}
+				is_login('yes'); 
 				
-				
-				function bln_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-				 
-					
-					$bulan = $date;
-					 
-				 
-					$result =   $BulanIndo[(int)$bulan-1] ;		
-					return($result);
-				} 
 		}
 		
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman SAYA',
-			'title' =>	ucfirst($this->uri->segment(1)),
 			'admin'	=>	$this->M_Admin->get_all(),
 		);
 		$this->template->load('template','admin/v_index',$data);
 	}
 	
-	public function profil()
-	{
-		$data = array(
-			'app' => 'Billman SAYA',
-			'title' => ucfirst($this->uri->segment(1)),
-		);
-		$this->template->load('template','v_profil',$data);
-	}
+	
 	
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman SAYA',
-			'title' =>	ucfirst($this->uri->segment(1)),
 			'admin'	=>	$this->M_Admin->get_all(),
 			);
 		$this->template->load('template','admin/v_tambah',$data);
@@ -104,8 +67,6 @@ class Admin extends CI_Controller {
 		$cek = $admin->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman SAYA',
-				'title' =>	ucfirst($this->uri->segment(1)),
 				'admin'	=>	$admin,
 			);
 			$this->template->load('template','admin/v_edit',$data);
@@ -117,8 +78,7 @@ class Admin extends CI_Controller {
 	
 	public function proses_edit()
 	{	
-		$data['title'] 	= ucfirst($this->uri->segment(1));
-		$data['app'] 	= 'Billman SAYA';
+		
 		if(isset($_POST['submit'])){
 			$id_admin       	 	=  $this->input->post('id_admin');
 			$nama_admin       	 	=  $this->input->post('nama_admin');

@@ -5,7 +5,7 @@
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
 	//use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class TusbungHarian extends CI_Controller {
+class Tusbung_Harian extends CI_Controller {
 	function __construct(){
 				parent::__construct();
 						
@@ -15,62 +15,8 @@ class TusbungHarian extends CI_Controller {
 				$this->load->model('M_Pelanggan');
 				$this->load->model('M_Tusbung');
 				$this->load->model('M_Jenis_Kendala');
-				$this->load->model('M_Tusbungharian');
-				if (!$this->M_Admin->is_login()) { // jika belum login (tanda ! didepan) maka dilempar ke halaman awal
-					redirect(".");		
-				} 
-				function tgl_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-					$tahun = substr($date, 0, 4);
-					$bulan = substr($date, 5, 2);
-					$tgl   = substr($date, 8, 2);
-					$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;		
-					return $result;
-				}
-				
-				
-				 function bln_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-				 
-					
-					$bulan = $date;
-					 
-				 
-					$result =   $BulanIndo[(int)$bulan-1] ;		
-					return($result);
-				} 
-				
-				 function hari($day) // hari bhs inggris
-				{
-					switch ($day) {
-					  case "Monday":
-						$hari = "Senin";
-						break;
-					  case "Tuesday":
-						$hari = "Selasa";
-						break;
-					  case "Wednesday":
-						$hari = "Rabu";
-						break;
-					  case "Thursday":
-						$hari = "Kamis";
-						break;
-					  case "Friday":
-						$hari = "Jumat";
-						break;	
-					  case "Saturday":
-						$hari = "Sabtu";
-						break;	
-					  case "Sunday":
-						$hari = "Minggu";
-						break;		
-					  default:
-						echo "Hari Kiamat";
-					}
-					return($hari);
-				} 
+				$this->load->model('M_Tusbung_Harian');
+				is_login("yes");
 		}
 		
 	
@@ -88,7 +34,7 @@ class TusbungHarian extends CI_Controller {
 		$this->template->load('template','tusbung_harian/v_import',$data);
 	}
 	
-	public function post()
+	public function hasil_import()
 	{	
 		
 		
@@ -140,7 +86,7 @@ class TusbungHarian extends CI_Controller {
 							$is_evidence = 1; // jika ada data jadikan evidence 1
 						} else {
 							//$this->session->set_flashdata('error', "Tidak ada jenis kendala dengan nama <b>$kendala</b> pada data master");
-							//redirect("tusbungharian/import"); 
+							//redirect("tusbung_harian/import"); 
 							$id_jenis_kendala = 0;
 							$is_evidence = 0;
 						}	
@@ -150,14 +96,14 @@ class TusbungHarian extends CI_Controller {
 						
 						//cek dulu idpelanggan dan tanggal yg sama
 						$id_pelanggan = $row['A'];
-						$pelanggan_harian = $this->M_Tusbungharian->cek($id_pelanggan, $tgl_tusbung)->num_rows();
+						$pelanggan_harian = $this->M_Tusbung_Harian->cek($id_pelanggan, $tgl_tusbung)->num_rows();
 						
 						//cek petugas sudah sesuai dengan di data petugas 
 						$nama_petugas = $row['J'];
 						$petugas = $this->M_Petugas->cek($nama_petugas);
 						if ($petugas->num_rows() == 0) {
 							$this->session->set_flashdata('error', "Tidak ada petugas dengan nama <b>$nama_petugas</b> pada data master");
-							redirect("tusbungharian/import"); 
+							redirect("tusbung_harian/import"); 
 						} 	
 						
 						
@@ -204,7 +150,7 @@ class TusbungHarian extends CI_Controller {
 								if ($tusbung == 0) {
 									$this->session->set_flashdata('error', "Tidak ada data tusbung kumulatif dengan ID pelanggan <b>$id_pelanggan</b> pada bulan <b>$bulan</b> dan tahun <b>$tahun</b>");
 								}
-								redirect("tusbungharian/import"); 
+								redirect("tusbung_harian/import"); 
 							}	
 						} else { // kalau ada data masukkan dalam array duplikat
 							array_push($duplikat_pelanggan, [          
@@ -245,14 +191,14 @@ class TusbungHarian extends CI_Controller {
 				$sum_duplikat = count($duplikat_pelanggan);
 				//masukkan dalam proses query tapi dicek dulu jumlah array dalam data
 				if ($sum_tusbung_harian > 0) {
-					$this->M_Tusbungharian->insert_multiple($tusbung_harian);  
+					$this->M_Tusbung_Harian->insert_multiple($tusbung_harian);  
 				}
 				$total = $sum_tusbung_harian + $sum_duplikat;	
 				
 				
 				if (count($duplikat_pelanggan) > 100 ) { 
 					$this->session->set_flashdata('error', "Terlalu banyak data Tusbung Harian yang <b>Duplikat</b>");
-					redirect("tusbungharian/import"); 
+					redirect("tusbung_harian/import"); 
 				}
 				
 				if ($sum_duplikat > 0 ) { 
@@ -281,7 +227,7 @@ class TusbungHarian extends CI_Controller {
 			}else{ 
 				$error =  $this->upload->display_errors();   
 				$this->session->set_flashdata('error', "Data Tusbung Harian <b>Gagal</b>  diimport. Error :" . $error);echo "gagal";
-				redirect("tusbungharian/import"); 
+				redirect("tusbung_harian/import"); 
 			}  
 			
 			
@@ -291,7 +237,7 @@ class TusbungHarian extends CI_Controller {
 	
 	public function back()
 	{
-		redirect("tusbungharian/import"); 
+		redirect("tusbung_harian/import"); 
 	}
 	
 	public function next()
@@ -302,7 +248,7 @@ class TusbungHarian extends CI_Controller {
 			$id_unit = 1;
 			
 		}
-		redirect("tusbungharian?id_unit=$id_unit"); 
+		redirect("tusbung_harian?id_unit=$id_unit"); 
 	}
 	
 	
@@ -363,7 +309,7 @@ class TusbungHarian extends CI_Controller {
 		
 		$cek = $this->M_Unit->get_one($id)->num_rows();
 		if ($cek > 0) {
-			$tusbung = $this->M_Tusbungharian->hapus($id, $tgl_skrg);
+			$tusbung = $this->M_Tusbung_Harian->hapus($id, $tgl_skrg);
 			$error = $this->db->error();
 			if ($error['code'] == null) {
 				$this->session->set_flashdata('success', "Data Tusbung Harian <b>Berhasil</b>  dihapus");
@@ -371,17 +317,17 @@ class TusbungHarian extends CI_Controller {
 				$this->session->set_flashdata('error', "Data Tusbung Harian <b>Gagal</b> dihapus. <br>Error:".$error['message']);
 			}
 			if ($id == 1) {
-				redirect('tusbungharian');
+				redirect('tusbung_harian');
 			} else {
-				redirect('tusbungharian?id_unit='.$id);
+				redirect('tusbung_harian?id_unit='.$id);
 			}	
 		} else {
 			$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
 			echo "error";
 			if ($id == 1) {
-				redirect('tusbungharian');
+				redirect('tusbung_harian');
 			} else {
-				redirect('tusbungharian?id_unit='.$id);
+				redirect('tusbung_harian?id_unit='.$id);
 			}
 		}		
 	}

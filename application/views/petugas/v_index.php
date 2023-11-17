@@ -62,7 +62,7 @@
                     </td>
                     <td><?=$r->nama_unit ?></td>
                    <td ><?php 
-                        if ($r->last_login != "0000-00-00 00:00:00") {
+                        if ($r->last_login != null ) {
                           echo tgl_indo($r->last_login);
                         } else {
                           echo "Belum Login";

@@ -53,8 +53,15 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	//meload ENV BUATAN SAYA
+	file_exists("env.php") ? include "env.php": header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+	
+	//atur waktu ke zona WIT
 	date_default_timezone_set('Asia/Jayapura');
+	
+	
+	define('ENVIRONMENT', defined('MY_ENV') ? MY_ENV : 'development');
+	
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

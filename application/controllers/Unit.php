@@ -7,38 +7,12 @@ class Unit extends CI_Controller {
 						
 				$this->load->model('M_Admin');
 				$this->load->model('M_Unit');
-				if (!$this->M_Admin->is_login()) { // jika belum login (tanda ! didepan) maka dilempar ke halaman awal
-					redirect(".");		
-				} 
-				function tgl_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-					$tahun = substr($date, 0, 4);
-					$bulan = substr($date, 5, 2);
-					$tgl   = substr($date, 8, 2);
-					$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;		
-					return $result;
-				}
-				
-				
-				 function bln_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-				 
-					
-					$bulan = $date;
-					 
-				 
-					$result =   $BulanIndo[(int)$bulan-1] ;		
-					return($result);
-				} 
+				is_login("yes");
 		}
 		
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman SAYA',
-			'title' =>	ucfirst($this->uri->segment(1)),
 			'unit'	=>	$this->M_Unit->get_all(),
 		);
 		$this->template->load('template','unit/v_index',$data);
@@ -49,8 +23,6 @@ class Unit extends CI_Controller {
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman SAYA',
-			'title' =>	ucfirst($this->uri->segment(1)),
 			'unit'	=>	$this->M_Unit->get_all(),
 		);
 		$this->template->load('template','unit/v_tambah',$data);
@@ -82,8 +54,6 @@ class Unit extends CI_Controller {
 		$cek = $unit->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman SAYA',
-				'title' =>	ucfirst($this->uri->segment(1)),
 				'unit'	=>	$unit,
 			);
 			$this->template->load('template','unit/v_edit',$data);
@@ -95,8 +65,7 @@ class Unit extends CI_Controller {
 	
 	public function proses_edit()
 	{	
-		$data['title'] 	= ucfirst($this->uri->segment(1));
-		$data['app'] 	= 'Billman SAYA';
+		
 		if(isset($_POST['submit'])){
 			$id_unit    =  $this->input->post('id_unit');
 			$nama_unit	=  $this->input->post('nama_unit');

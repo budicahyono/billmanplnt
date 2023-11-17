@@ -73,17 +73,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+ 
+
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'db_billmanplnt',
-	//'database' => 'billmanplnt2',
-	'dbdriver' => 'mysqli',
+	'hostname' => defined('MY_HOST') ? MY_HOST : FALSE,
+	'username' => defined('MY_USER') ? MY_USER : FALSE,
+	'password' => defined('MY_PASS') ? MY_PASS : FALSE,
+	'database' => defined('MY_DATABASE') ? MY_DATABASE : FALSE,
+	'dbdriver' => defined('MY_DBDRIVER') ? MY_DBDRIVER : FALSE,
 	'dbprefix' => '',
 	'pconnect' => FALSE,
-	'db_debug' => TRUE,
+	'db_debug' => (ENVIRONMENT == 'production') ? FALSE : TRUE,
 	'cache_on' => FALSE,
 	'cachedir' => '',
 	'char_set' => 'utf8',

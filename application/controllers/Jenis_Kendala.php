@@ -7,38 +7,13 @@ class Jenis_kendala extends CI_Controller {
 						
 				$this->load->model('M_Admin');
 				$this->load->model('M_Jenis_Kendala');
-				if (!$this->M_Admin->is_login()) { // jika belum login (tanda ! didepan) maka dilempar ke halaman awal
-					redirect(".");		
-				} 
-				function tgl_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-					$tahun = substr($date, 0, 4);
-					$bulan = substr($date, 5, 2);
-					$tgl   = substr($date, 8, 2);
-					$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;		
-					return $result;
-				}
+				is_login("yes");
 				
-				
-				function bln_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-				 
-					
-					$bulan = $date;
-					 
-				 
-					$result =   $BulanIndo[(int)$bulan-1] ;		
-					return($result);
-				} 
 		}
 		
 	public function index()
 	{
 		$data = array(
-			'app' 	=> 'Billman SAYA',
-			'title' => 'Jenis Kendala',
 			'jenis_kendala'	=>	$this->M_Jenis_Kendala->get_all(),
 		);
 		$this->template->load('template','jenis_kendala/v_index',$data);
@@ -49,8 +24,6 @@ class Jenis_kendala extends CI_Controller {
 	public function tambah()
 	{
 		$data = array(
-			'app' 	=> 'Billman SAYA',
-			'title' => 'Jenis Kendala',
 			'jenis_kendala'	=>	$this->M_Jenis_Kendala->get_all(),
 		);
 		$this->template->load('template','jenis_kendala/v_tambah',$data);
@@ -80,8 +53,6 @@ class Jenis_kendala extends CI_Controller {
 		$cek = $jenis_kendala->num_rows();
 		if ($cek > 0) {
 			$data = array(
-				'app' 	=> 'Billman SAYA',
-				'title' => 'Jenis Kendala',
 				'jenis_kendala'	=>	$jenis_kendala,
 			);
 			$this->template->load('template','jenis_kendala/v_edit',$data);
@@ -93,8 +64,7 @@ class Jenis_kendala extends CI_Controller {
 	
 	public function proses_edit()
 	{	
-		$data['title'] 	= 'Jenis Kendala';
-		$data['app'] 	= 'Billman SAYA';
+		
 		if(isset($_POST['submit'])){
 			$id_jenis_kendala    =  $this->input->post('id_jenis_kendala');
 			$nama_jenis_kendala	=  $this->input->post('nama_jenis_kendala');

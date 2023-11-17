@@ -8,31 +8,15 @@ class Login extends CI_Controller {
 		parent::__construct();
 		$this->load->model('M_Admin'); // panggil model admin
 		
-		function bln_indo($date)
-		{
-			$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-		 
-			
-			$bulan = $date;
-			 
-		 
-			$result =   $BulanIndo[(int)$bulan-1] ;		
-			return($result);
-		}
+		
 	}
 		
 		
 	public function index() // method default dari controller ini 
 	{
-		if ($this->M_Admin->is_login()) { // jika sudah login maka dilempar ke halaman dashboard
-				redirect("dashboard");		
-		} 	
+		is_login("no");
 		
-		$data = array(
-			'app' => 'Billman SAYA',
-			'title' => 'Login',
-		);
-		$this->template->load('temp_home','v_login', $data);
+		$this->template->load('temp_home','v_login');
 	}
 	
 	public function check()
@@ -108,11 +92,8 @@ class Login extends CI_Controller {
 				redirect(".");		
 			} 	
 		
-		$data = array(
-			'app' => 'Billman SAYA',
-			'title' => 'Profil Admin',
-		);
-		$this->template->load('template','v_profil', $data);
+		
+		$this->template->load('template','v_profil');
 	}
 		
 		

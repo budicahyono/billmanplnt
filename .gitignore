@@ -1,5 +1,8 @@
 .DS_Store
 
+# MY ENV FILE
+env.php
+
 application/cache/*
 !application/cache/index.html
 

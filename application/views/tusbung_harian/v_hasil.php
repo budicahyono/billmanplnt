@@ -96,8 +96,8 @@
 					
 					
 						<div class="form-group ">
-							<a href="<?=base_url('tusbungharian/back')?>" class="btn btn-info"><i class="fa fa-arrow-left"></i> Kembali</a>
-							<a href="<?=base_url('tusbungharian/next?id_unit='.$id_unit)?>" class="btn btn-success"><i class="fa fa-arrow-right"></i> Monitoring</a>
+							<a href="<?=base_url('tusbung_harian/back')?>" class="btn btn-info"><i class="fa fa-arrow-left"></i> Kembali</a>
+							<a href="<?=base_url('tusbung_harian/next?id_unit='.$id_unit)?>" class="btn btn-success"><i class="fa fa-arrow-right"></i> Monitoring</a>
 						</div> 
 						 
 					 

@@ -15,10 +15,10 @@
                 <div class="card-tools">
                   <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=base_url()?>tusbung/baca" >Hari Baca</a>
+                        <a class="nav-link" href="<?=base_url()?>tusbung/hari_baca" >Hari Baca</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link active" href="<?=base_url()?>tusbung/rp_baca" >Rupiah Baca</a>
+                      <a class="nav-link active" href="<?=base_url()?>tusbung/rupiah_baca" >Rupiah Baca</a>
                     </li>
                     <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                   </button>

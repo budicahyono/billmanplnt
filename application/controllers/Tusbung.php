@@ -16,30 +16,7 @@ class Tusbung extends CI_Controller {
 				$this->load->model('M_Pelanggan');
 				$this->load->model('M_Petugas');
 				$this->load->model('M_Tusbung');
-				if (!$this->M_Admin->is_login()) { // jika belum login (tanda ! didepan) maka dilempar ke halaman awal
-					redirect(".");		
-				} 
-				function tgl_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-					$tahun = substr($date, 0, 4);
-					$bulan = substr($date, 5, 2);
-					$tgl   = substr($date, 8, 2);
-					$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;		
-					return $result;
-				}
-				
-				function bln_indo($date)
-				{
-					$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-				 
-					
-					$bulan = $date;
-					 
-				 
-					$result =   $BulanIndo[(int)$bulan-1] ;		
-					return($result);
-				}
+				is_login("yes");
 				 
 		}
 		
@@ -47,13 +24,15 @@ class Tusbung extends CI_Controller {
 	{
 		if (isset($_GET['id_unit'])) {
 			$id_unit = $_GET['id_unit'];
+			if ($id_unit == 1) {
+				redirect('tusbung');
+			}
 		} else {
 			$id_unit = 1;
 			
 		}
 		
-		$data['app'] 	= "Billman SAYA";
-		$data['title'] 	= ucfirst($this->uri->segment(1));
+		
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$unit = $this->M_Unit->get_one($id_unit);
 		foreach ($unit->result() as $r) {
@@ -87,7 +66,7 @@ class Tusbung extends CI_Controller {
 		if (isset($_GET['limit'])) {
 			$limit = $_GET['limit'];
 		} else {
-			$limit = 10;
+			$limit = null;
 			
 		}
 		
@@ -98,9 +77,11 @@ class Tusbung extends CI_Controller {
 			
 		}
 		$no = 1;
-		
-		$tusbung = $this->M_Tusbung->get_tul_petugas($id_petugas, $id_unit, $no, $limit, $q);
-		
+		if (isset($_GET['q'])) {
+			$tusbung = $this->M_Tusbung->get_tul_petugas($id_petugas, $id_unit, $no, null, $q);
+		} else {
+			$tusbung = $this->M_Tusbung->get_tul_petugas($id_petugas, $id_unit, $no, $limit, null);
+		}
 		$output = "";
 		foreach ($tusbung->result() as $r) {
 			$output .='<tr>'; 
@@ -124,7 +105,7 @@ class Tusbung extends CI_Controller {
 			$output .='<td>'.$lunas.'</td>'; 
 			
 				if ($r->tgl_lunas != "0000-00-00") {
-					$output .='<td>'.tgl_indo($r->tgl_lunas).'</td>'; 
+					$output .='<td>'.tgl($r->tgl_lunas).'</td>'; 
 				} else {
 					$output .='<td>Tidak ada</td>'; 
 				}
@@ -155,9 +136,8 @@ class Tusbung extends CI_Controller {
 		
 		if (isset($_GET['q'])) {
 			$q = $_GET['q'];
-			$no = 1;
 			$limit = 10;
-			$tusbung = $this->M_Tusbung->get_tul_petugas($id_petugas, $id_unit, $no, $limit, $q);
+			$tusbung = $this->M_Tusbung->get_tul_petugas($id_petugas, $id_unit, null, $limit, $q);
 			$data['no_list'] = $no_list;
 			$data['id_petugas'] = $id_petugas;
 			$data['limit'] = $limit;
@@ -186,8 +166,7 @@ class Tusbung extends CI_Controller {
 			
 		}
 		
-		$data['app'] 	= "Billman SAYA";
-		$data['title'] 	= ucfirst($this->uri->segment(1));
+		
 		$data['id_unit']= $id_unit;
 		
 		
@@ -197,8 +176,6 @@ class Tusbung extends CI_Controller {
 	public function import()
 	{
 		$data = array(
-			'app' => 'Billman SAYA',
-			'title' => "Import Tusbung",
 			'unit'	=>	$this->M_Unit->get_all(),
 		);
 		$this->template->load('template','tusbung/v_import',$data);
@@ -218,7 +195,7 @@ class Tusbung extends CI_Controller {
 		//echo print_r($rp_kategori);
 	}
 	
-	public function post()
+	public function hasil_import()
 	{	
 		
 		
@@ -459,7 +436,7 @@ class Tusbung extends CI_Controller {
 		redirect("tusbung?id_unit=$id_unit"); 
 	}
 	
-	public function baca()
+	public function hari_baca()
 	{
 		if (isset($_GET['id_unit'])) {
 			$id_unit = $_GET['id_unit'];
@@ -484,7 +461,7 @@ class Tusbung extends CI_Controller {
 		$this->template->load('template','tusbung/v_baca',$data);
 	}
 	
-	public function rp_baca()
+	public function rupiah_baca()
 	{
 		if (isset($_GET['id_unit'])) {
 			$id_unit = $_GET['id_unit'];
@@ -493,8 +470,7 @@ class Tusbung extends CI_Controller {
 			
 		}
 		
-		$data['app'] 	= "Billman SAYA";
-		$data['title'] 	= "Hari Baca Tusbung";
+		
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
 		
@@ -512,45 +488,13 @@ class Tusbung extends CI_Controller {
 	public function kendala()
 	{
 		$data = array(
-			'app' => 'Billman SAYA',
-			'title' => "Kendala",
+			'kendala' => '',
 		);
 		$this->template->load('template','tusbung/v_kendala',$data);
 	}
 	
 	
-	public function excel()
-    {
-        
-		
-		
-		 // Panggil class PHPExcel nya
-		    $spreadsheet = new Spreadsheet();    
-			$sheet = $spreadsheet->getActiveSheet();
-		
-		$nama_File = "Coba.xlsx";
-        $judul = "Coba";
-		// Buat sebuah variabel untuk menampung pengaturan style dari header tabel
-		
-		
-		 $sheet->setCellValue('A1', $judul); // Set kolom A1 dengan tulisan "DATA SISWA"
-		
-    // Set orientasi kertas jadi LANDSCAPE
-    $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-
-    // Set judul file excel nya
-    $sheet->setTitle($judul);
-
-    // Proses file excel
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="'.$nama_File.'"'); // Set nama file excel nya
-    header('Cache-Control: max-age=0');
-
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('php://output');
-		
-		
-    }
+	
 	
 	
 	public function hapus($id)

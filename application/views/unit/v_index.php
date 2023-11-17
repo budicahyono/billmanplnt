@@ -34,6 +34,7 @@
                   
                   <?php  $no=1;
                     foreach ($unit->result() as $r) {
+                    if ($r->id_unit > 0) {
                   ?>
                     <tr>
                     <td><?=$no?></td>
@@ -46,7 +47,7 @@
                   </tr>
                   <?php 
 $no++;
-} if (count($unit->result()) == 0) { ?>
+                    }} if (count($unit->result()) == 0) { ?>
 <tr>
 <td colspan="6" class="text-center"><b>TIDAK ADA DATA</b></td>
 </tr>	

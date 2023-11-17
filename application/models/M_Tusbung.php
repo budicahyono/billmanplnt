@@ -60,6 +60,9 @@ class M_Tusbung extends CI_Model {
 	function get_tul_petugas($key, $id_unit, $start = null, $limit = null, $q = null) // ambil semua data pelanggan / tul per petugas
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		if ($limit != null) {
+			$this->db->limit($limit);
+		}
 		if ($start != null && $limit != null) {
 			$this->db->limit($limit, $start);
 		}

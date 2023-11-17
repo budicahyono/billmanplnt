@@ -28,7 +28,7 @@
                   Harap mengikuti format excel berikut agar data Tusbung dapat berhasil di import. Silahkan download <a class="text-href" href="<?=base_url('import/Format Import Tusbung Harian.xlsx')?>">disini</a>
                 </div>
                
-                <form  action="<?=base_url('tusbungharian/post')?>" method="post" enctype="multipart/form-data">
+                <form  action="<?=base_url('tusbung_harian/hasil_import')?>" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                   <div class="col-lg-4">
                   <label>Tanggal</label>
