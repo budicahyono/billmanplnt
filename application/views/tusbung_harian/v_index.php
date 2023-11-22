@@ -13,7 +13,7 @@
                 <h3 class="card-title"><i class=" fas fa-th-list mr-2"></i> Monitoring Tusbung Harian <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?></h3>
 
                 <div class="card-tools">
-                  <a onclick="return confirm('Apa anda yakin ingin menghapus tusbung <?=$nama_unit?> pada <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?>? ')" class="btn btn-danger btn-md" href="<?=base_url()?>tusbung_harian/hapus/<?=$id_unit?>?tgl=<?=$tgl_skrg?>" ><i class="fa fa-trash"></i> Hapus Tusbung Harian</a>
+                  <a onclick="return confirm('Apa anda yakin ingin menghapus tusbung harian <?=$nama_unit?> pada <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?> beserta kendala hariannya? ')" class="btn btn-danger btn-md" href="<?=base_url()?>tusbung_harian/hapus/<?=$id_unit?>?tgl=<?=$tgl_skrg?>" ><i class="fa fa-trash"></i> Hapus Tusbung Harian</a>
                   <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                   </button>
                 </div>
@@ -32,12 +32,16 @@
                       $bln_skrg = $_SESSION['bulan_sess'];
 					  $thn_skrg = $_SESSION['tahun_sess'];
                       
+                      
+                      
+                      
                      $jumlah_tanggal = cal_days_in_month(CAL_GREGORIAN, $bln_skrg, $thn_skrg);
                       for ($i=1;$i<=$jumlah_tanggal;$i++){
+                        $sum_tgl = $this->M_Tusbung_Harian->get_tul($i)->num_rows();
                         if ($tgl_skrg == $i) {
-                          echo '<option value="'.$i.'" selected>'.$i.'</option>';
+                          echo '<option value="'.$i.'" selected>'.$i.' &nbsp;&nbsp;&nbsp;(Data: '.$sum_tgl.')</option>';
                         } else {
-                          echo '<option value="'.$i.'">'.$i.'</option>';
+                          echo '<option value="'.$i.'">'.$i.' &nbsp;&nbsp;&nbsp;(Data: '.$sum_tgl.')</option>';
                         }
                       }
                       ?>
@@ -82,7 +86,7 @@
                     <th rowspan=2 style="vertical-align:middle">EVIDENCE</th>
                     <th rowspan=2 style="vertical-align:middle">TUL DIBAGIKAN</th>
                     <th rowspan=2 style="vertical-align:middle">SISA TUL</th>
-                    <th rowspan=2 style="vertical-align:middle">KENDALA</th>
+                    <th rowspan=2 style="vertical-align:middle">KENDALA HARIAN</th>
                   </tr>
                   <tr >
                     <th >TUL</th> 
@@ -164,11 +168,22 @@
                     
                     $total_sisa = $total_sisa + $sisa_evidence;
                       
-                    $isi_kendala = "<i style='color:red'>Belum diisi</i>";
-                    $kendala_harian = $this->M_Tusbung_Harian->get_kendala_harian($r->id_petugas, $tgl_skrg);
-                    foreach ($kendala_harian->result() as $row) {
-                      $isi_kendala = $row->isi_kendala;
-                    } 
+                    
+                    $kendala_harian = $this->M_Kendala_Harian->get_kendala_harian($r->id_petugas, $tgl_skrg);
+                    if ($kendala_harian->num_rows() > 0) {
+                      foreach ($kendala_harian->result() as $row) {
+                          $isi_kendala = $row->isi_kendala;
+                          $id_kendala_harian = $row->id_kendala_harian;
+                          $text_kendala = $row->isi_kendala;
+                          
+                      } 
+                    } else {
+                      $isi_kendala = null;
+                      $id_kendala_harian = null;
+                      $text_kendala = "<i style='color:red'>Belum diisi</i>";
+                    }  
+                    
+                    
                     
                     
                     
@@ -189,8 +204,18 @@
                     <td><?=$sum_evidence?></td>
                     <td><?=$persen_evidence?>%</td>
                     <td><?=$sisa_evidence?></td>
-                    <td><?=$isi_kendala?> 
-                    <a  href="javascript:void(0)" id="edit_kendala_<?=$r->id_petugas?>"   data-id="<?=$r->id_petugas?>" data-name="<?=$r->nama_petugas?>" class="btn btn-default " style="margin-left:10px"><i class="fa fa-edit" ></i></a>    
+                    <td>
+                    <?php 
+                    if ($sisa_evidence > 0) {
+                      echo $text_kendala;
+                      if ($isi_kendala == "") { ?>
+                    <a  href="javascript:void(0)" id="save_kendala_<?=$r->id_petugas?>"   data-id="<?=$r->id_petugas?>" data-name="<?=$r->nama_petugas?>" data-edit="null" class="btn btn-danger " style="margin-left:10px"><i class="fa fa-edit"></i></a>   
+                    
+                    <?php } else { ?>
+                    <a  href="javascript:void(0)" id="edit_kendala_<?=$r->id_petugas?>"   data-id="<?=$r->id_petugas?>" data-name="<?=$r->nama_petugas?>" data-edit="<?=$id_kendala_harian?>" class="btn btn-default " style="margin-left:10px"><i class="fa fa-edit"></i></a>   
+                    
+                    <?php }
+                    } ?>
                     </td>
                    
                   </tr>
@@ -251,11 +276,16 @@
                     
                     $total_sisa = $total_sisa + $sisa_evidence;
                       
-                    $isi_kendala = "<i style='color:red'>Belum diisi</i>";
-                    $kendala_harian = $this->M_Tusbung_Harian->get_kendala_harian($r->id_petugas, $tgl_skrg);
+                    $kendala_harian = $this->M_Kendala_Harian->get_kendala_harian($r->id_petugas, $tgl_skrg);
                     foreach ($kendala_harian->result() as $row) {
-                      $isi_kendala = $row->isi_kendala;
-                    }   
+                        $isi_kendala = $row->isi_kendala;
+                        $id_kendala_harian = $row->id_kendala_harian;
+                        if ($isi_kendala == "") {
+                          $text_kendala = "<i style='color:red'>Belum diisi</i>";
+                        } else {
+                          $text_kendala = $row->isi_kendala;
+                        }
+                    } 
                       
                   ?>
                   <tr>
@@ -274,8 +304,18 @@
                     <td><?=$sum_evidence?></td>
                     <td><?=$persen_evidence?>%</td>
                     <td><?=$sisa_evidence?></td>
-                    <td><?=$isi_kendala?>
-                    <a  href="javascript:void(0)" id="edit_kendala_<?=$r->id_petugas?>"   data-id="<?=$r->id_petugas?>" data-name="<?=$r->nama_petugas?>" class="btn btn-default " style="margin-left:10px"><i class="fa fa-edit"></i></a>        
+                    <td>
+                    <?php 
+                    if ($sisa_evidence > 0) {
+                      echo $text_kendala;
+                      if ($isi_kendala == "") { ?>
+                    <a  href="javascript:void(0)" id="save_kendala_<?=$r->id_petugas?>"   data-id="<?=$r->id_petugas?>" data-name="<?=$r->nama_petugas?>" data-edit="null" class="btn btn-danger " style="margin-left:10px"><i class="fa fa-edit"></i></a>   
+                    
+                    <?php } else { ?>
+                    <a  href="javascript:void(0)" id="edit_kendala_<?=$r->id_petugas?>"   data-id="<?=$r->id_petugas?>" data-name="<?=$r->nama_petugas?>" data-edit="<?=$id_kendala_harian?>" class="btn btn-default " style="margin-left:10px"><i class="fa fa-edit"></i></a>   
+                    
+                    <?php }
+                    } ?>
                     </td>
                    
                   </tr>

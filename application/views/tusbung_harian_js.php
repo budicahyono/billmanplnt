@@ -9,8 +9,8 @@
 	?>   
 	
 	<!-- Modal -->
-     <div class="modal fade" id="modal_edit_<?=$id?>" role="dialog" style="scroll-behavior: smooth;"> 
-    <div class="modal-dialog modal-xl animate_margin" id="margin_<?=$id?>" style="margin:28px calc(20%)"> 	
+     <div class="modal fade" id="modal_edit_<?=$id?>" role="dialog" > 
+    <div class="modal-dialog modal-xl " id="margin_<?=$id?>" > 	
       
       <!-- Modal Edit-->
      <div class="modal-content animate_modal" id="content_edit_<?=$id?>">
@@ -20,8 +20,7 @@
               
               <div class="form-group" style="float:right">
                 
-                <button type="button" class="btn btn-tool" id="maximize_<?=$id?>"><i class="fas fa-expand"></i>
-                  </button>
+                
                  <button type="button" class="btn btn-tool" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i>
                   </button>  
               </div> 
@@ -32,15 +31,17 @@
             <div class="modal-body">
              <div class="form-group">
                 <label>Apa Kendala Hari Ini?</label>
-                <input value="" required name="kendala_harian_<?=$id?>" id="kendala_harian_<?=$id?>" type="text" class="form-control" >
+                <input  required name="kendala_harian_<?=$id?>" id="kendala_harian_<?=$id?>" type="text" class="form-control" >
                 <input value="<?=$id?>" required name="id_petugas_kendala_<?=$id?>" id="id_petugas_kendala_<?=$id?>" type="hidden"  >
+                <input  required name="tgl_<?=$id?>" id="tgl_<?=$id?>" type="hidden"  >
+                <input  required name="id_kendala_harian_<?=$id?>" id="id_kendala_harian_<?=$id?>" type="hidden"  >
                 </div>
               
               
             </div>
             <div class="modal-footer justify-content-between" id="bawah_modal_<?=$id?>">
               <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
-			  <button id="save_kendala_<?=$id?>" class="btn btn-primary"><i class="fa fa-check"></i> Simpan</button>
+			  <button id="post_kendala_<?=$id?>" class="btn btn-primary"><i class="fa fa-check"></i> Simpan</button>
               </div>
             </div>
             
@@ -56,11 +57,28 @@ $(document).ready(function() {
     
    
   //jquery ketika user klik edit kendala
-  $("#edit_kendala_<?=$r->id_petugas?>").click(function(){
+  $("#edit_kendala_<?=$id?>, #save_kendala_<?=$id?>").click(function(){
     var nama_petugas = $(this).data("name");
     var id_petugas = $(this).data("id");
+    if ($(this).data("edit") != null) {
+        var id_kendala_harian = $(this).data("edit");
+        $("#id_kendala_harian_<?=$id?>").val(id_kendala_harian);
+    } else {
+        $("#id_kendala_harian_<?=$id?>").val(0);
+    }
+     if ($(this).data("isi") != null) {
+        var isi_kendala = $(this).data("isi");
+        $("#kendala_harian_<?=$id?>").val(isi_kendala);
+    } else {
+        $("#kendala_harian_<?=$id?>").val("");
+    }
+    var id_petugas = $(this).data("edit");
+    var tgl = $("#tanggal_harian").val();
     
     $("#id_petugas_<?=$id?>").val(id_petugas);
+    $("#tgl_<?=$id?>").val(tgl);
+    
+    
     var nama = nama_petugas.toLowerCase();
     
     $("#modal_edit_<?=$id?>").modal();
@@ -112,25 +130,33 @@ $(document).ready(function() {
   
   
    //jquery ketika user klik simpan
-  $("#save_kendala_<?=$id?>").click(function(){
+  $("#post_kendala_<?=$id?>").click(function(){
 	var kendala_harian = $("#kendala_harian_<?=$id?>").val(); 
 	var id_petugas_kendala = $("#id_petugas_kendala_<?=$id?>").val(); 
+	var id_kendala_harian = $("#id_kendala_harian_<?=$id?>").val(); 
+	var tgl = $("#tgl_<?=$id?>").val(); 
+    
+    if (id_kendala_harian == 0) {
+        var isi_data =  {kendala_harian:kendala_harian, 
+                         id_petugas_kendala:id_petugas_kendala,
+                         tgl:tgl};
+        var isi_url  =  "<?php echo base_url(); ?>tusbung_harian/save";              
+    } else {
+        var isi_data =  {kendala_harian:kendala_harian, 
+                         id_petugas_kendala:id_petugas_kendala,
+                         tgl:tgl,
+                         id_kendala_harian:id_kendala_harian};
+        var isi_url  =  "<?php echo base_url(); ?>tusbung_harian/edit";                 
+    }
 	$.ajax({
-			type: 'POST',
-			data: {kendala_harian:kendala_harian, id_petugas_kendala:id_petugas_kendala},
-			url: "<?php echo base_url(); ?>tusbung_harian/save",
-			success: function(data) {
-                $(document).Toasts('create', {
-					class: 'bg-success',
-					title: 'Success',
-					subtitle: '',
-					autohide: true,
-					delay: 5000,
-					body: "Kendala Harian telah disimpan"
-				  })
-                
-			}
-		});
+        type: 'POST',
+            data: isi_data,
+            url: isi_url,
+        success: function(data) {
+            window.location.replace("<?=base_url()?>tusbung_harian");    
+            
+        }
+    });
       
   
   })

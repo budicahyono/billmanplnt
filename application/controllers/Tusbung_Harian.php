@@ -16,6 +16,7 @@ class Tusbung_Harian extends CI_Controller {
 				$this->load->model('M_Tusbung');
 				$this->load->model('M_Jenis_Kendala');
 				$this->load->model('M_Tusbung_Harian');
+				$this->load->model('M_Kendala_Harian');
 				is_login("yes");
 		}
 		
@@ -27,8 +28,6 @@ class Tusbung_Harian extends CI_Controller {
 	public function import()
 	{
 		$data = array(
-			'app' => 'Billman SAYA',
-			'title' => "Tusbung Harian",
 			'unit'	=>	$this->M_Unit->get_all(),
 		);
 		$this->template->load('template','tusbung_harian/v_import',$data);
@@ -37,13 +36,41 @@ class Tusbung_Harian extends CI_Controller {
 	
 	public function save()
 	{	
+		$tgl = $this->input->post('tgl',TRUE);
+		$tgl_kendala = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
+		
 		$isi_kendala = $this->input->post('kendala_harian',TRUE);
 		$id_petugas = $this->input->post('id_petugas_kendala',TRUE);
 		$data   =  array('id_petugas'  =>$id_petugas,
-						 'isi_kendala' =>$isi_kendala,
+						 'isi_kendala' =>strtoupper($isi_kendala),
 						 'tgl_kendala' =>$tgl_kendala);
-		$tusbung = $this->M_Tusbung->post($data);
-		 
+		$kendala_harian = $this->M_Kendala_Harian->post($data);
+		$error = $this->db->error();
+		if ($error['code'] == null) {
+			$this->session->set_flashdata('success', "Data Kendala Harian <b>Berhasil</b>  disimpan");
+		} else {
+			$this->session->set_flashdata('error', "Data Kendala Harian <b>Gagal</b> disimpan. <br>Error:".$error['message']);
+		}	 
+	}	
+	
+	public function edit()
+	{	
+		$tgl = $this->input->post('tgl',TRUE);
+		$tgl_kendala = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
+		
+		$isi_kendala = $this->input->post('kendala_harian',TRUE);
+		$id_petugas = $this->input->post('id_petugas_kendala',TRUE);
+		$id_kendala_harian = $this->input->post('id_kendala_harian',TRUE);
+		$data   =  array('id_petugas'  =>$id_petugas,
+						 'isi_kendala' =>strtoupper($isi_kendala),
+						 'tgl_kendala' =>$tgl_kendala);
+		$kendala_harian = $this->M_Kendala_Harian->edit($data, $id_kendala_harian);
+		$error = $this->db->error();
+		if ($error['code'] == null) {
+			$this->session->set_flashdata('success', "Data Kendala Harian <b>Berhasil</b>  disimpan");
+		} else {
+			$this->session->set_flashdata('error', "Data Kendala Harian <b>Gagal</b> disimpan. <br>Error:".$error['message']);
+		}	 
 	}	
 	
 	
@@ -320,13 +347,14 @@ class Tusbung_Harian extends CI_Controller {
 		if (isset($_GET['tgl'])) {
 			$tgl_skrg = $_GET['tgl'];
 		} else {
-		$tgl_skrg = date("d");
+			$tgl_skrg = date("d");
 		}
 		
 		
 		$cek = $this->M_Unit->get_one($id)->num_rows();
 		if ($cek > 0) {
 			$tusbung = $this->M_Tusbung_Harian->hapus($id, $tgl_skrg);
+			$kendala_harian = $this->M_Kendala_Harian->hapus($tgl_skrg);
 			$error = $this->db->error();
 			if ($error['code'] == null) {
 				$this->session->set_flashdata('success', "Data Tusbung Harian <b>Berhasil</b>  dihapus");
@@ -352,7 +380,11 @@ class Tusbung_Harian extends CI_Controller {
 	
 	public function update_lunas()
 	{
-		$this->template->load('template','tusbung_harian/v_update');
+		$data = array(
+			'unit'	=>	$this->M_Unit->get_all(),
+		);
+		
+		$this->template->load('template','tusbung_harian/v_update', $data);
 	}
 	
 }
