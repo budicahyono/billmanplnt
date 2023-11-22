@@ -337,7 +337,18 @@ class Tusbung extends CI_Controller {
 								'id_unit'			=>$id_unit,
 							]); 
 							//ubah data yg di database jadi 0 karena sudah bukan data baru
-							$this->M_Pelanggan->edit(array('is_new'	=>0), $id_pelanggan);	
+							//dan update data di pelanggan meskipun duplikat krn bisa saja ada perubahan data (misal: kddk salah ketik, alamat, dll)
+							$data_edit =array('nama_pelanggan'  =>$row['B'],   
+											  'tarif'     		=>$row['C'], 
+											  'daya'     		=>$row['D'],   
+											  'gol'				=>$row['E'],  
+											  'alamat'			=>$row['F'],  
+											  'kddk'			=>$row['G'],  
+											  'no_hp'			=>$row['M'], 
+											  'id_unit'			=>$id_unit,
+											  'is_new'			=>0);
+							
+							$this->M_Pelanggan->edit($data_edit, $id_pelanggan);	
 						}
 						
 						
@@ -434,16 +445,9 @@ class Tusbung extends CI_Controller {
 				
 				
 				
-				if (count($duplikat_pelanggan) > 100 && count($duplikat_tusbung) > 100) { 
-					$this->session->set_flashdata('error', "Terlalu banyak Data pelanggan dan tusbung yang <b>Duplikat</b>");
-					redirect("tusbung/import"); 
-				}
 				
-				if ($sum_duplikat > 0 && $sum_tus_duplikat > 0) { 
-					$this->session->set_flashdata('error', "Data Tusbung dan Pelanggan ada yang <b>Duplikat</b>!! gagal diimport");
-				} else {
-					$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  diimport");
-				}
+				
+				
 				
 				$data = array(
 					'app' => 'Billman SAYA',
@@ -571,7 +575,9 @@ class Tusbung extends CI_Controller {
 	{
 		$cek = $this->M_Unit->get_one($id)->num_rows();
 		if ($cek > 0) {
+			//hapus dulu di tusbung
 			$tusbung = $this->M_Tusbung->hapus($id);
+			
 			$error = $this->db->error();
 			if ($error['code'] == null) {
 				$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  dihapus");

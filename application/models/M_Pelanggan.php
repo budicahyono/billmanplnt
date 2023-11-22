@@ -28,6 +28,12 @@ class M_Pelanggan extends CI_Model {
 	}
 	
 	
+	function hapus_by_unit($key) // hapus data pelanggan by unit
+	{
+		$this->db->delete($this->tb, array('id_unit' => $key)); 
+	}
+	
+	
     //cek id pelanggan 
 	function cek($id_pelanggan)
 	{

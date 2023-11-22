@@ -28,10 +28,11 @@
                 <div class="form-group">
                      <label>Unit</label> 
                 <select id="id_unit" class="form-control" name="id_unit">
-                <option value="1" selected >MANOKWARI</option>
                  <?php foreach ($unit->result() as $r) { 
-                     if ($r->id_unit > 1) { ?>
-                    <option value="<?=$r->id_unit?>" <?php if ($id_unit == $r->id_unit) echo "selected" ;?>><?=$r->nama_unit?></option>
+                     if ($r->id_unit > 0) { 
+                         $sum_tul =  $this->M_Tusbung->get_by_unit($r->id_unit)->num_rows();   
+                    ?>
+                    <option value="<?=$r->id_unit?>" <?php if ($id_unit == $r->id_unit) echo "selected" ;?>><?=$r->nama_unit.'&nbsp;&nbsp;&nbsp;(Data: '.$sum_tul.')'?></option>
                  <?php }} ?>
                  </select> 
                </div> 

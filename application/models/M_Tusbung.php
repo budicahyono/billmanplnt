@@ -10,7 +10,7 @@ class M_Tusbung extends CI_Model {
 	}
     
 	
-	function get_by_idpel($key) // ambil semua data pelanggan per unit 
+	function get_by_idpel($key) // ambil semua data pelanggan per idpelanggan
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
 		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
