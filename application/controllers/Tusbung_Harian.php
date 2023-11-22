@@ -34,6 +34,19 @@ class Tusbung_Harian extends CI_Controller {
 		$this->template->load('template','tusbung_harian/v_import',$data);
 	}
 	
+	
+	public function save()
+	{	
+		$isi_kendala = $this->input->post('kendala_harian',TRUE);
+		$id_petugas = $this->input->post('id_petugas_kendala',TRUE);
+		$data   =  array('id_petugas'  =>$id_petugas,
+						 'isi_kendala' =>$isi_kendala,
+						 'tgl_kendala' =>$tgl_kendala);
+		$tusbung = $this->M_Tusbung->post($data);
+		 
+	}	
+	
+	
 	public function hasil_import()
 	{	
 		
@@ -176,8 +189,9 @@ class Tusbung_Harian extends CI_Controller {
 						} else {
 							$is_lunas = 0;
 						}
-						$edit = array('is_lunas'	=>$is_lunas, 
-									  'tgl_lunas' => $tgl_tusbung);
+						$edit = array('is_lunas'		 =>$is_lunas, 
+									  'tgl_lunas' 		 => $tgl_tusbung,
+									  'id_jenis_kendala' => $id_jenis_kendala);
 						
 						$this->M_Tusbung->edit_lunas($edit, $id_pelanggan, $bulan, $tahun);	
 						//echo $lunas;
@@ -233,7 +247,7 @@ class Tusbung_Harian extends CI_Controller {
 			
 			
 		}	
-		}
+	}
 	
 	public function back()
 	{
@@ -298,6 +312,9 @@ class Tusbung_Harian extends CI_Controller {
 	}
 	
 	
+	
+	
+	
 	public function hapus($id)
 	{
 		if (isset($_GET['tgl'])) {
@@ -330,6 +347,12 @@ class Tusbung_Harian extends CI_Controller {
 				redirect('tusbung_harian?id_unit='.$id);
 			}
 		}		
+	}
+	
+	
+	public function update_lunas()
+	{
+		$this->template->load('template','tusbung_harian/v_update');
 	}
 	
 }

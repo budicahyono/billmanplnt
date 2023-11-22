@@ -275,7 +275,7 @@
           </li>
          
 		 
-		 <li class="nav-item menu <?php if (menu('child') == "Tusbung Harian"  || menu('child') == "Import Tusbung Harian" || menu('child') == "Hasil Import Tusbung Harian" ) echo 'menu-is-opening menu-open' ; ?>">
+		 <li class="nav-item menu <?php if (menu('child') == "Tusbung Harian"  || menu('child') == "Import Tusbung Harian" || menu('child') == "Hasil Import Tusbung Harian" || menu('child') == "Update Lunas Tusbung Harian" ) echo 'menu-is-opening menu-open' ; ?>">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
@@ -294,6 +294,12 @@
                 <a href="<?=base_url()?>tusbung_harian" class="nav-link <?php if (menu('child') == "Tusbung Harian") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
                   <p>Monitoring Harian</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?=base_url()?>tusbung_harian/update_lunas" class="nav-link <?php if (menu('child') == "Update Lunas Tusbung Harian") echo 'active'; ?>">
+                  <i class="fas fa-chevron-circle-right nav-icon"></i>
+                  <p>Update Lunas</p>
                 </a>
               </li>
              
@@ -341,7 +347,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Aplikasi ini dibuat oleh <?=myapp('dev_name');?> dari <a href="<?=myapp('link_dev');?>"><?=myapp('office_name');?></a> </strong>
+    <strong>Aplikasi ini dibuat oleh <?=myapp('dev_name');?> dari <a target="blank" href="<?=myapp('link_dev');?>"><?=myapp('office_name');?></a> </strong>
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> <?=myapp('version');?>
     </div>
@@ -356,6 +362,7 @@
 
 
 <?php include "tusbung_js.php"; ?>
+<?php include "tusbung_harian_js.php"; ?>
 
 
 <?php include "plugin_js.php"; ?>

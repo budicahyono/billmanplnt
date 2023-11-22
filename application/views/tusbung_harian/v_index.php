@@ -189,7 +189,9 @@
                     <td><?=$sum_evidence?></td>
                     <td><?=$persen_evidence?>%</td>
                     <td><?=$sisa_evidence?></td>
-                    <td><?=$isi_kendala?></td>
+                    <td><?=$isi_kendala?> 
+                    <a  href="javascript:void(0)" id="edit_kendala_<?=$r->id_petugas?>"   data-id="<?=$r->id_petugas?>" data-name="<?=$r->nama_petugas?>" class="btn btn-default " style="margin-left:10px"><i class="fa fa-edit" ></i></a>    
+                    </td>
                    
                   </tr>
                   
@@ -272,7 +274,9 @@
                     <td><?=$sum_evidence?></td>
                     <td><?=$persen_evidence?>%</td>
                     <td><?=$sisa_evidence?></td>
-                    <td><?=$isi_kendala?></td>
+                    <td><?=$isi_kendala?>
+                    <a  href="javascript:void(0)" id="edit_kendala_<?=$r->id_petugas?>"   data-id="<?=$r->id_petugas?>" data-name="<?=$r->nama_petugas?>" class="btn btn-default " style="margin-left:10px"><i class="fa fa-edit"></i></a>        
+                    </td>
                    
                   </tr>
                   <?php } if (count($petugas->result()) == 0 and count($petugas_khusus->result()) == 0) { ?>

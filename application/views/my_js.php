@@ -133,14 +133,14 @@
 </script>
 <?php } ?>
 
-<!--  javascript pilih unit di jadwal tusbung  -->
+<!--  javascript pilih unit di hari_baca tusbung  -->
 <script>
  $('#id_unit_jadwal').change(function () {
     var id_unit = $(this).val();
     if (id_unit == 1) {
-       window.location.replace("<?=base_url()?>tusbung/jadwal");
+       window.location.replace("<?=base_url()?>tusbung/hari_baca");
     } else {
-       window.location.replace("<?=base_url()?>tusbung/jadwal?id_unit=" + id_unit);
+       window.location.replace("<?=base_url()?>tusbung/hari_baca?id_unit=" + id_unit);
     } 
    
  });  
@@ -151,15 +151,15 @@
  $('#id_unit_rp_baca').change(function () {
     var id_unit = $(this).val();
     if (id_unit == 1) {
-       window.location.replace("<?=base_url()?>tusbung/rp_baca");
+       window.location.replace("<?=base_url()?>tusbung/rupiah_baca");
     } else {
-       window.location.replace("<?=base_url()?>tusbung/rp_baca?id_unit=" + id_unit);
+       window.location.replace("<?=base_url()?>tusbung/rupiah_baca?id_unit=" + id_unit);
     } 
    
  });  
 </script>
 
-<!--  javascript pilih unit dan tanggal di update kendala  -->
+<!--  javascript pilih unit dan tanggal di tusbung_harian  -->
 <script>
 $(document).ready(function() {       
   function ganti_tgl_unit() {
@@ -179,6 +179,20 @@ $(document).ready(function() {
   $("#tanggal_harian, #id_unit_harian").on("change", ganti_tgl_unit); 
 }) 
 </script>
+
+<!--  javascript pilih unit di kendala  -->
+<script>
+    $('#id_unit_kendala').change(function () {
+    var id_unit = $(this).val();
+    if (id_unit == 1) {
+       window.location.replace("<?=base_url()?>tusbung/kendala");
+    } else {
+       window.location.replace("<?=base_url()?>tusbung/kendala?id_unit=" + id_unit);
+    } 
+   
+ });  
+</script>
+
 
 <!--  javascript bulan tahun di menu atas  -->
 <script>

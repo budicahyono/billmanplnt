@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?=myapp('app_name')?> | <?=menu()?></title>
+  <title><?=myapp('app_name')?> | <?= (menu() == '')? "Login" : menu(); ?></title>
   <link rel="icon" href="<?=base_url(myapp('icon'));?>">	
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

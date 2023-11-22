@@ -110,16 +110,16 @@
                   ?>	
                     <tr>
                     <td><?=$no?></td>
-                    <td style="width:200px"><a href="javascript:void(0)" id="nama_petugas_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_tul?>"><?=$r->nama_petugas?></a> 
+                    <td style="width:200px"><?=$r->nama_petugas?>
                     </td>
                     
-                    <td><a href="javascript:void(0)" id="tul_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_tul?>" ><?=$sum_tul?></a></td>
+                    <td><a href="javascript:void(0)" id="tul_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_tul?>" data-jenis="tul" ><?=$sum_tul?></a></td>
                     <td><?="Rp ".number_format($sum_tul_rp)?></td>
                     
-                    <td><?=$sum_lunas?></td>
+                    <td><a href="javascript:void(0)" id="lunas_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_lunas?>" data-jenis="lunas" ><?=$sum_lunas?></a></td>
                     <td><?="Rp ".number_format($sum_lunas_rp)?></td>
                     
-                    <td><?=$sum_blm?></td>
+                    <td><a href="javascript:void(0)" id="blm_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_blm?>" data-jenis="blm" ><?=$sum_blm?></a></td>
                     <td><?="Rp ".number_format($sum_blm_rp)?></td>
                     
                     <th><?=$persen_tul?>%</th>
@@ -179,13 +179,13 @@
                     <td><?=$no?></td>
                     <td style="width:200px"><?=$r->nama_petugas?></td>
                     
-                    <td><?=$sum_tul2?></td>
+                    <td><a href="javascript:void(0)" id="tul_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_tul2?>" data-jenis="tul" ><?=$sum_tul2?></a></td>
                     <td><?="Rp ".number_format($sum_tul_rp2)?></td>
                     
-                    <td><?=$sum_lunas2?></td>
+                    <td><a href="javascript:void(0)" id="lunas_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_lunas2?>" data-jenis="lunas" ><?=$sum_lunas2?></a></td>
                     <td><?="Rp ".number_format($sum_lunas_rp2)?></td>
                     
-                    <td><?=$sum_blm2?></td>
+                    <td><a href="javascript:void(0)" id="blm_<?=$no?>" data-name="<?=$r->nama_petugas?>" data-id="<?=$r->id_petugas?>" data-sum="<?=$sum_blm2?>" data-jenis="blm" ><?=$sum_blm2?></a></td>
                     <td><?="Rp ".number_format($sum_blm_rp2)?></td>
                     
                      <th><?=$persen_tul2?>%</th>
@@ -236,13 +236,13 @@
                     <tr >
                     <th class="text-center" colspan=2 style="vertical-align:middle">TOTAL</th> 
                     
-                    <th ><?=$total_tul?></th>
+                    <th ><a href="javascript:void(0)" id="tul_total"   data-sum="<?=$total_tul?>" data-jenis="tul" ><?=$total_tul?></a></th>
                     <th><?="Rp ".number_format($total_rp)?></th>
                     
-                    <th ><?=$lunas_tul?></th>
+                    <th ><a href="javascript:void(0)" id="lunas_total"  data-sum="<?=$lunas_tul?>" data-jenis="lunas" ><?=$lunas_tul?></a></th>
                     <th><?="Rp ".number_format($total_lunas_rp)?></th>
                     
-                    <th ><?=$blm_tul?></th>
+                    <th ><a href="javascript:void(0)" id="blm_total"     data-sum="<?=$blm_tul?>" data-jenis="blm" ><?=$blm_tul?></a></th>
                     <th><?="Rp ".number_format($total_blm_rp)?></th>
                     
                     <th><?=$persen_tul_total?>%</th>

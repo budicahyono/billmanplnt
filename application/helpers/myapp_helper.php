@@ -2,7 +2,8 @@
 	if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-
+	//LIST COMMON FUNCTIONS
+	
 	
 
 	// informasi aplikasi
@@ -180,3 +181,26 @@
 	
 	
 	
+	
+	
+	
+	//LIST COMMON QUERY FUNCTION (fungsi yg dibuat untuk menangani setelah data di view muncul tapi butuh akses data lagi)
+	
+	
+	// jenis_kendala pelanggan yg blm lunas
+	function jenis_kendala($id_jenis_kendala, $id_unit, $format){ //format (sum = jumlah plg, rp = hitung rupiahnya)
+		$ci =& get_instance();
+		$ci->load->model('M_Tusbung');
+		
+		
+		if ($format == 'sum') {
+			$query = $ci->M_Tusbung->get_by_jenis_kendala($id_jenis_kendala, $id_unit)->num_rows();
+		} else {
+			$cek_query = $ci->M_Tusbung->get_by_jenis_kendala_rp($id_jenis_kendala, $id_unit);
+			foreach ($cek_query->result() as $row) {
+				$query = $row->rptag;
+			}
+		}
+		
+		return $query;
+	} 
