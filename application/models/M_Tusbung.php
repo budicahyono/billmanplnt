@@ -20,7 +20,9 @@ class M_Tusbung extends CI_Model {
 	
 	function get_by_unit($key, $limit = null, $q = null) // ambil semua data pelanggan per unit 
 	{
+		
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
 		if ($limit != null) {
 			$this->db->limit($limit);
 		}
@@ -37,6 +39,7 @@ class M_Tusbung extends CI_Model {
     function get_lunas($key, $limit = null, $q = null) // ambil semua data pelanggan lunas 
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
 		if ($limit != null) {
 			$this->db->limit($limit);
 		}
@@ -53,6 +56,7 @@ class M_Tusbung extends CI_Model {
 	function get_blm($key, $limit = null, $q = null) // ambil semua data pelanggan blm lunas 
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
 		if ($limit != null) {
 			$this->db->limit($limit);
 		}
@@ -100,7 +104,7 @@ class M_Tusbung extends CI_Model {
 		
 		
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
-		
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
 		if ($limit != null) {
 			$this->db->limit($limit);
 		}
@@ -124,6 +128,7 @@ class M_Tusbung extends CI_Model {
 	function get_tul_lunas($key, $id_unit, $limit = null, $q = null) // ambil semua data pelanggan / tul per petugas yg lunas
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
 		if ($limit != null) {
 			$this->db->limit($limit);
 		}
@@ -148,6 +153,7 @@ class M_Tusbung extends CI_Model {
 	function get_tul_blm($key, $id_unit, $limit = null, $q = null) // ambil semua data pelanggan / tul per petugas yg belum
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
 		if ($limit != null) {
 			$this->db->limit($limit);
 		}

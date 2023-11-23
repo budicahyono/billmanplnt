@@ -131,6 +131,7 @@ class Tusbung extends CI_Controller {
 					'rbk' 					=> $row->rbk,
 					'is_lunas' 				=> $row->is_lunas,
 					'tgl_lunas' 			=> $tgl_lunas,
+					'nama_jenis_kendala' 	=> $row->nama_jenis_kendala,
 				]);
 		
 		}
@@ -575,7 +576,6 @@ class Tusbung extends CI_Controller {
 	{
 		$cek = $this->M_Unit->get_one($id)->num_rows();
 		if ($cek > 0) {
-			//hapus dulu di tusbung
 			$tusbung = $this->M_Tusbung->hapus($id);
 			
 			$error = $this->db->error();

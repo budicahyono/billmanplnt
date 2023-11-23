@@ -94,6 +94,7 @@
                       <th>RBK</th>
                       <th>Lunas?</th>
                       <th>Tgl.Lunas</th>
+                      <th>Jenis Kendala</th>
                     </tr>
                     </thead>
                     <tbody id="tabel_isi_<?=$no?>" >
@@ -111,6 +112,7 @@
                         <td>RBK</td>
                         <td>Lunas?</td>
                         <td>Tgl.Lunas</td>
+                        <td>Jenis Kendala</td>
                     </tr>
                   </table>
               </div>
@@ -226,6 +228,7 @@ $(document).ready(function() {
                     }
                     row += '<td>'+lunas+'</td>';
                     row += '<td>'+data_rows.tgl_lunas+'</td>';
+                    row += '<td>'+data_rows.nama_jenis_kendala+'</td>';
                     row += '</tr>';
                     
                     
@@ -609,6 +612,7 @@ $(document).ready(function() {
                     <th>RBK</th>
                     <th>Lunas?</th>
                     <th>Tgl.Lunas</th>
+                    <th>Jenis Kendala</th>
                   </tr>
                   </thead>
                   <tbody id="tabel_isi_<?=$no?>" >
@@ -626,6 +630,7 @@ $(document).ready(function() {
                       <td>RBK</td>
                       <td>Lunas?</td>
                       <td>Tgl.Lunas</td>
+                      <th>Jenis Kendala</th>
                   </tr>
                 </table>
             </div>
@@ -741,6 +746,7 @@ $(document).ready(function() {
                     }
                     row += '<td>'+lunas+'</td>';
                     row += '<td>'+data_rows.tgl_lunas+'</td>';
+                    row += '<td>'+data_rows.nama_jenis_kendala+'</td>';
                     row += '</tr>';
                     
                     
@@ -1125,6 +1131,7 @@ $(document).ready(function() {
                     <th>RBK</th>
                     <th>Lunas?</th>
                     <th>Tgl.Lunas</th>
+                    <th>Jenis Kendala</th>
                   </tr>
                   </thead>
                   <tbody id="tabel_isi_total" >
@@ -1142,6 +1149,7 @@ $(document).ready(function() {
                       <td>RBK</td>
                       <td>Lunas?</td>
                       <td>Tgl.Lunas</td>
+                      <th>Jenis Kendala</th>
                   </tr>
                 </table>
             </div>
@@ -1257,6 +1265,7 @@ $(document).ready(function() {
                     }
                     row += '<td>'+lunas+'</td>';
                     row += '<td>'+data_rows.tgl_lunas+'</td>';
+                    row += '<td>'+data_rows.nama_jenis_kendala+'</td>';
                     row += '</tr>';
                     
                     
