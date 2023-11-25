@@ -19,22 +19,68 @@ class M_Tusbung_Harian extends CI_Model {
 	}
 	
 	
-	function get_tul($tgl) // ambil semua data pelanggan / tul per petugas
+	function get_tul($tgl,  $limit = null, $q = null) // ambil semua data pelanggan 
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_harian.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_harian.id_jenis_kendala');
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
+		
+		$this->db->join('petugas p', 'p.id_petugas = tusbung_kumulatif.id_petugas');
+		
+		if ($limit != null) {
+			$this->db->limit($limit);
+		}
+		if ($q != null ) {
+			$this->db->where("(tusbung_kumulatif.id_pelanggan LIKE '%".$q."%' OR pelanggan.nama_pelanggan LIKE '%".$q."%')");
+		}
 		$this->db->where("bulan", $_SESSION['bulan_sess']);
 		$this->db->where("tahun", $_SESSION['tahun_sess']);
 		$this->db->where("tgl_tusbung", $tanggal);
 		return $this->db->get($this->tb);
 	}
 	
-	
-	function get_tul_petugas($key, $tgl, $id_petugas_khusus = null) // ambil semua data pelanggan / tul per petugas
+	function get_lunas($tgl,  $limit = null, $q = null) // ambil semua data pelanggan yg lunas
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_harian.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_harian.id_jenis_kendala');
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
+		$this->db->join('petugas p', 'p.id_petugas = tusbung_kumulatif.id_petugas');
+		if ($limit != null) {
+			$this->db->limit($limit);
+		}
+		if ($q != null ) {
+			$this->db->where("(tusbung_kumulatif.id_pelanggan LIKE '%".$q."%' OR pelanggan.nama_pelanggan LIKE '%".$q."%')");
+		}
+		$this->db->where("bulan", $_SESSION['bulan_sess']);
+		$this->db->where("tahun", $_SESSION['tahun_sess']);
+		$this->db->where("tgl_tusbung", $tanggal);
+		$this->db->where("tusbung_kumulatif.is_lunas", 1);
+		return $this->db->get($this->tb);
+	}
+	
+	
+	
+	
+	function get_tul_petugas($key = null, $tgl, $id_petugas_khusus = null, $limit = null, $q = null) // ambil semua data pelanggan / tul per petugas
+	{
+		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
 		
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_harian.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_harian.id_jenis_kendala');
+		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
+		if ($id_petugas_khusus != null) {
+			$this->db->join('petugas pk', 'pk.id_petugas = tusbung_kumulatif.id_petugas_khusus');
+		} else {
+			$this->db->join('petugas p', 'p.id_petugas = tusbung_kumulatif.id_petugas');
+		}
+		if ($limit != null) {
+			$this->db->limit($limit);
+		}
+		if ($q != null ) {
+			$this->db->where("(tusbung_kumulatif.id_pelanggan LIKE '%".$q."%' OR pelanggan.nama_pelanggan LIKE '%".$q."%')");
+		}
 		if ($id_petugas_khusus == null) {
 			$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
 			$this->db->where("tusbung_kumulatif.id_petugas", $key);
@@ -67,10 +113,24 @@ class M_Tusbung_Harian extends CI_Model {
 	}
 	
 	
-	function get_lunas_petugas($key, $tgl, $id_petugas_khusus = null) // ambil semua data pelanggan lunas
+	function get_lunas_petugas($key, $tgl, $id_petugas_khusus = null, $limit = null, $q = null) // ambil semua data pelanggan lunas
 	{
 		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_harian.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_harian.id_jenis_kendala');
 		$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
+		
+		if ($id_petugas_khusus != null) {
+			$this->db->join('petugas pk', 'pk.id_petugas = tusbung_kumulatif.id_petugas_khusus');
+		} else {
+			$this->db->join('petugas p', 'p.id_petugas = tusbung_kumulatif.id_petugas');
+		}
+		if ($limit != null) {
+			$this->db->limit($limit);
+		}
+		if ($q != null ) {
+			$this->db->where("(tusbung_kumulatif.id_pelanggan LIKE '%".$q."%' OR pelanggan.nama_pelanggan LIKE '%".$q."%')");
+		}
 		if ($id_petugas_khusus == null) {
 			$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
 			$this->db->where("tusbung_kumulatif.id_petugas", $key);

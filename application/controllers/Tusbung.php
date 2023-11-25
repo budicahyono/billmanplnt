@@ -153,7 +153,7 @@ class Tusbung extends CI_Controller {
 		
 		if ($q != null) {
 			$limit = 10;
-			if ($total == null) {
+			if ($total == null) {	
 				if ($jenis == "tul") {
 					$tusbung = $this->M_Tusbung->get_tul_petugas($id_petugas, $id_unit, $limit, $q);
 				} else if ($jenis == "lunas") {

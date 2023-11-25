@@ -10,7 +10,7 @@
             <div class="card card-primary card-outline">
               
 			  <div class="card-header">
-                <h3 class="card-title"><i class=" fas fa-th-list mr-2"></i> Monitoring Petugas Tusbung Harian <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?></h3>
+                <h3 class="card-title"><i class=" fas fa-th-list mr-2"></i> Monitoring Tusbung Harian <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?></h3>
 
                 <div class="card-tools">
                   <a onclick="return confirm('Apa anda yakin ingin menghapus tusbung harian <?=$nama_unit?> pada <?=hari($hari).", ".$tgl_skrg?> <?=bln_indo($_SESSION['bulan_sess'])?> <?=$_SESSION['tahun_sess']?> beserta kendala hariannya? ')" class="btn btn-danger btn-md" href="<?=base_url()?>tusbung_harian/hapus/<?=$id_unit?>?tgl=<?=$tgl_skrg?>" ><i class="fa fa-trash"></i> Hapus Tusbung Harian</a>
@@ -25,7 +25,7 @@
                   <div class="col-lg-4">
                   <label>Tanggal</label>
                     <br/>
-                    <select name="tanggal" id="tanggal_petugas" class="form-control"  >
+                    <select name="tanggal" id="tanggal_harian" class="form-control"  >
                       <option value="<?=$tgl_skrg?>">--Pilih Tanggal--</option>
                       <?php
                       
@@ -37,7 +37,7 @@
                       
                      $jumlah_tanggal = cal_days_in_month(CAL_GREGORIAN, $bln_skrg, $thn_skrg);
                       for ($i=1;$i<=$jumlah_tanggal;$i++){
-                        $sum_tgl = $this->M_Tusbung_Harian->get_tul($i)->num_rows();
+                        $sum_tgl = $this->M_Tusbung->get_by_tgl($id_unit, $i)->num_rows();
                         if ($tgl_skrg == $i) {
                           echo '<option value="'.$i.'" selected>'.$i.' &nbsp;&nbsp;&nbsp;(Data: '.$sum_tgl.')</option>';
                         } else {
@@ -65,7 +65,7 @@
                 
                 <div class="form-group">
                      <label>Unit</label> 
-                <select class="form-control" name="id_unit" id="id_unit_petugas">
+                <select class="form-control" name="id_unit" id="id_unit_harian">
                  <?php foreach ($unit->result() as $r) { 
                      if (!$r->id_unit == 0) { ?>
                     <option value="<?=$r->id_unit?>" <?php if ($id_unit == $r->id_unit) echo "selected" ;?>><?=$r->nama_unit?></option>
@@ -114,7 +114,7 @@
                   $total_sisa = 0;
                   foreach ($petugas->result() as $r) {
                   
-                    $sum_tul = $this->M_Tusbung_Harian->get_tul_petugas($r->id_petugas, $tgl_skrg)->num_rows();
+                    $sum_tul = $this->M_Tusbung->get_by_tgl_petugas($r->id_petugas, $id_unit, $tgl_skrg)->num_rows();
                     
                     $total_tul = $total_tul + $sum_tul;
                     

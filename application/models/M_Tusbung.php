@@ -13,8 +13,42 @@ class M_Tusbung extends CI_Model {
 	function get_by_idpel($key) // ambil semua data pelanggan per idpelanggan
 	{
 		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->join('petugas', 'petugas.id_petugas = tusbung_kumulatif.id_petugas');
 		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
 		$this->db->where("pelanggan.id_pelanggan", $key);
+		return $this->db->get($this->tb);
+	}
+	
+	function get_by_tgl($key, $tgl, $limit = null, $q = null) // ambil semua data pelanggan per unit 
+	{
+		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
+		if ($limit != null) {
+			$this->db->limit($limit);
+		}
+		if ($q != null ) {
+			$this->db->where("(tusbung_kumulatif.id_pelanggan LIKE '%".$q."%' OR pelanggan.nama_pelanggan LIKE '%".$q."%')");
+		}
+		$this->db->where("pelanggan.id_unit", $key);
+		$this->db->where("tgl_lunas", $tanggal);
+		return $this->db->get($this->tb);
+	}
+	
+	function get_by_tgl_petugas($key, $id_unit, $tgl, $limit = null, $q = null) // ambil semua data pelanggan per unit 
+	{
+		$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
+		$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_kumulatif.id_pelanggan');
+		$this->db->join('jenis_kendala', 'jenis_kendala.id_jenis_kendala = tusbung_kumulatif.id_jenis_kendala');
+		if ($limit != null) {
+			$this->db->limit($limit);
+		}
+		if ($q != null ) {
+			$this->db->where("(tusbung_kumulatif.id_pelanggan LIKE '%".$q."%' OR pelanggan.nama_pelanggan LIKE '%".$q."%')");
+		}
+		$this->db->where("pelanggan.id_unit", $id_unit);
+		$this->db->where("id_petugas", $key);
+		$this->db->where("tgl_lunas", $tanggal);
 		return $this->db->get($this->tb);
 	}
 	

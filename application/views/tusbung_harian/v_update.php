@@ -23,8 +23,11 @@
                 <div class="alert alert-warning alert-dismissible">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                   <h5><i class="icon fas fa-exclamation-triangle"></i> Perhatian!</h5>
-                  Ini adalah halaman import untuk update lunas tusbung yang dilakukan oleh pelanggan sendiri.
-                  Harap mengikuti format excel berikut agar data Tusbung dapat berhasil di import. Silahkan download <a class="text-href" href="<?=base_url('import/Format Import Tusbung.xlsx')?>">disini</a>
+                  Ini adalah halaman import untuk update lunas tusbung yang dilakukan oleh pelanggan sendiri. Pastikan kolom yang diinput sesuai sbb:<br> 
+                  PETUGAS :<b>NON PETUGAS</b><br>
+                  STATUS BARU :<b>LUNAS</b><br>
+                  LUNAS : <b>lunas</b><br>
+                  Harap mengikuti format excel berikut agar data Tusbung dapat berhasil di import. Silahkan download <a class="text-href" href="<?=base_url('import/Format Import Tusbung Lunas.xlsx')?>">disini</a>
                 </div>
                
                 <form  action="<?=base_url('tusbung_harian/hasil_update')?>" method="post" enctype="multipart/form-data">

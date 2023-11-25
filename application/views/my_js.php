@@ -163,14 +163,34 @@
 <script>
 $(document).ready(function() {       
   function ganti_tgl_unit() {
-    var tgl_skrg = $("#tanggal_harian").val();
-    var id_unit = $("#id_unit_harian").val();
-    
+    var tgl_skrg = $("#tanggal_petugas").val();
+    var id_unit = $("#id_unit_petugas").val();
     
     if (id_unit == 1 && tgl_skrg == <?=date("d")?>) {
        window.location.replace("<?=base_url()?>tusbung_harian");
     } else {
        window.location.replace("<?=base_url()?>tusbung_harian?id_unit=" + id_unit + "&tgl_skrg=" + tgl_skrg);
+    } 
+    
+  }    
+
+    
+  $("#tanggal_petugas, #id_unit_petugas").on("change", ganti_tgl_unit); 
+}) 
+</script>
+
+<!--  javascript pilih unit dan tanggal di tusbung_harian di perhari -->
+<script>
+$(document).ready(function() {       
+  function ganti_tgl_unit() {
+    var tgl_skrg = $("#tanggal_harian").val();
+    var id_unit = $("#id_unit_harian").val();
+    
+    
+    if (id_unit == 1 && tgl_skrg == <?=date("d")?>) {
+       window.location.replace("<?=base_url()?>tusbung_harian/perhari");
+    } else {
+       window.location.replace("<?=base_url()?>tusbung_harian/perhari?id_unit=" + id_unit + "&tgl_skrg=" + tgl_skrg);
     } 
     
   }    

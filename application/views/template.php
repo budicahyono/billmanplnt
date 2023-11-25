@@ -275,7 +275,7 @@
           </li>
          
 		 
-		 <li class="nav-item menu <?php if (menu('child') == "Tusbung Harian"  || menu('child') == "Import Tusbung Harian" || menu('child') == "Hasil Import Tusbung Harian" || menu('child') == "Update Lunas Tusbung Harian" ) echo 'menu-is-opening menu-open' ; ?>">
+		 <li class="nav-item menu <?php if (menu('child') == "Tusbung Harian"  || menu('child') == "Import Tusbung Harian" || menu('child') == "Hasil Import Tusbung Harian" || menu('child') == "Update Lunas Tusbung Harian" || menu('child') == "Perhari Tusbung Harian" ) echo 'menu-is-opening menu-open' ; ?>">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
@@ -293,7 +293,7 @@
               <li class="nav-item">
                 <a href="<?=base_url()?>tusbung_harian" class="nav-link <?php if (menu('child') == "Tusbung Harian") echo 'active'; ?>">
                   <i class="fas fa-chevron-circle-right nav-icon"></i>
-                  <p>Monitoring Harian</p>
+                  <p>Monitoring Petugas</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -302,7 +302,12 @@
                   <p>Update Lunas</p>
                 </a>
               </li>
-             
+              <li class="nav-item">
+                <a href="<?=base_url()?>tusbung_harian/perhari" class="nav-link <?php if (menu('child') == "Perhari Tusbung Harian") echo 'active'; ?>">
+                  <i class="fas fa-chevron-circle-right nav-icon"></i>
+                  <p>Monitoring Harian</p>
+                </a>
+              </li> 
             </ul>
           </li>
 		   <li class="nav-header">PANDUAN APLIKASI</li>
@@ -362,7 +367,9 @@
 
 
 <?php include "tusbung_js.php"; ?>
-<?php include "tusbung_harian_js.php"; ?>
+<?php include "tusbung_harian_js.php"; 
+    ?>
+<?php include "tusbung_harian_modals_js.php"; ?>
 
 
 <?php include "plugin_js.php"; ?>

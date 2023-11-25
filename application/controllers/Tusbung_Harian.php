@@ -213,11 +213,13 @@ class Tusbung_Harian extends CI_Controller {
 						$lunas = $row['P'];
 						if ($lunas == "lunas") {
 							$is_lunas = 1;
+							$tgl_lunas = $tgl_tusbung;
 						} else {
 							$is_lunas = 0;
+							$tgl_lunas = "0000-00-00";
 						}
 						$edit = array('is_lunas'		 =>$is_lunas, 
-									  'tgl_lunas' 		 => $tgl_tusbung,
+									  'tgl_lunas' 		 => $tgl_lunas,
 									  'id_jenis_kendala' => $id_jenis_kendala);
 						
 						$this->M_Tusbung->edit_lunas($edit, $id_pelanggan, $bulan, $tahun);	
@@ -276,9 +278,13 @@ class Tusbung_Harian extends CI_Controller {
 		}	
 	}
 	
-	public function back()
+	public function back($opsi = null)
 	{
-		redirect("tusbung_harian/import"); 
+		if ($opsi == null) { 
+			redirect("tusbung_harian/import"); 
+		} else {
+			redirect("tusbung_harian/update_lunas"); 
+		}	
 	}
 	
 	public function next()
@@ -291,6 +297,330 @@ class Tusbung_Harian extends CI_Controller {
 		}
 		redirect("tusbung_harian?id_unit=$id_unit"); 
 	}
+	
+	
+	public function petugas($id_petugas = null)
+	{
+		
+		(isset($_GET['tgl'])) 		? $tgl = $_GET['tgl'] 			: $tgl = null;
+		(isset($_GET['limit'])) 	? $limit = $_GET['limit'] 		: $limit = null;
+		(isset($_GET['q'])) 		? $q = $_GET['q'] 				: $q = null;
+		(isset($_GET['jenis'])) 	? $jenis = $_GET['jenis'] 		: $jenis = null;
+		(isset($_GET['total'])) 	? $total = $_GET['total'] 		: $total = null;
+		(isset($_GET['id_k'])) 		? $id_petugas_khusus = $_GET['id_k'] 		: $id_petugas_khusus = null;
+		
+		
+		if ($total == null) {
+			if ($jenis == "tul") {
+				if ($q != null) {
+					$tusbung = $this->M_Tusbung_Harian->get_tul_petugas($id_petugas, $tgl, $id_petugas_khusus, null, $q);
+				} else {
+					$tusbung = $this->M_Tusbung_Harian->get_tul_petugas($id_petugas, $tgl, $id_petugas_khusus, $limit, null);
+				}
+			} else if ($jenis == "lunas") {
+				if ($q != null) {
+					$tusbung = $this->M_Tusbung_Harian->get_lunas_petugas($id_petugas, $tgl, $id_petugas_khusus, null, $q);
+				} else {
+					$tusbung = $this->M_Tusbung_Harian->get_lunas_petugas($id_petugas, $tgl, $id_petugas_khusus, $limit, null);
+				}
+			} else {
+				if ($q != null) {
+					$tusbung = $this->M_Tusbung_Harian->get_tul_blm($id_petugas, $tgl, $id_petugas_khusus, null, $q);
+				} else {
+					$tusbung = $this->M_Tusbung_Harian->get_tul_blm($id_petugas, $tgl, $id_petugas_khusus, $limit, null);
+				}
+			}
+		} else {	
+			if ($jenis == "tul") {
+				if ($q != null) {
+					$tusbung = $this->M_Tusbung_Harian->get_tul($tgl, null, $q);
+				} else {
+					$tusbung = $this->M_Tusbung_Harian->get_tul($tgl, $limit, null);
+				}
+			} else if ($jenis == "lunas") {
+				if ($q != null) {
+					$tusbung = $this->M_Tusbung_Harian->get_lunas($tgl, null, $q);
+				} else {
+					$tusbung = $this->M_Tusbung_Harian->get_lunas($tgl, $limit, null);
+				}
+			} else {
+				if ($q != null) {
+					$tusbung = $this->M_Tusbung_Harian->get_blm($tgl, null, $q);
+				} else {
+					$tusbung = $this->M_Tusbung_Harian->get_blm($tgl, $limit, null);
+				}
+			}
+		}	
+		
+		$data['data_rows'] = array();
+		$data['total'] = $total;
+		$data['total_rows'] = $tusbung->num_rows();
+		foreach ($tusbung->result() as $row) {
+		
+			if ($row->tgl_lunas != "0000-00-00") {
+				$tgl_lunas = tgl($row->tgl_lunas); 
+			} else {
+				$tgl_lunas = "Tidak ada"; 
+			}
+			
+			array_push($data['data_rows'], [          
+					'id_pelanggan' 			=> $row->id_pelanggan,
+					'nama_pelanggan' 		=> $row->nama_pelanggan,
+					'tarif' 				=> $row->tarif,
+					'daya' 					=> $row->daya,
+					'gol' 					=> $row->gol,
+					'alamat' 				=> $row->alamat,
+					'kddk' 					=> $row->kddk,
+					'no_hp' 				=> $row->no_hp,
+					'rptag' 				=> 'Rp '.number_format($row->rptag),
+					'rbk' 					=> $row->rbk,
+					'is_lunas' 				=> $row->is_lunas,
+					'tgl_lunas' 			=> $tgl_lunas,
+					'nama_jenis_kendala' 	=> $row->nama_jenis_kendala,
+					'nama_petugas' 			=> $row->nama_petugas,
+				]);
+		
+		}
+		
+		
+		echo json_encode($data);
+	}
+	
+	public function search($id_petugas = null)
+	{
+		
+		
+		(isset($_GET['tgl'])) 		? $tgl = $_GET['tgl'] 			: $tgl = null;
+		(isset($_GET['limit'])) 	? $limit = $_GET['limit'] 		: $limit = null;
+		(isset($_GET['q'])) 		? $q = $_GET['q'] 				: $q = null;
+		(isset($_GET['jenis'])) 	? $jenis = $_GET['jenis'] 		: $jenis = null;
+		(isset($_GET['total'])) 	? $total = $_GET['total'] 		: $total = null;
+		(isset($_GET['id_k'])) 		? $id_petugas_khusus = $_GET['id_k'] 		: $id_petugas_khusus = null;
+		
+		
+		if ($q != null) {
+			$limit = 10;
+			if ($total == null) {	
+				if ($jenis == "tul") {
+					$tusbung = $this->M_Tusbung_Harian->get_tul_petugas($id_petugas, $tgl, $id_petugas_khusus, $limit, $q);
+				} else if ($jenis == "lunas") {
+					$tusbung = $this->M_Tusbung_Harian->get_lunas_petugas($id_petugas, $tgl, $id_petugas_khusus, $limit, $q);
+				} else {
+					$tusbung = $this->M_Tusbung_Harian->get_tul_blm($id_petugas, $tgl, $id_petugas_khusus, $limit, $q);
+				}
+			} else {
+				if ($jenis == "tul") {
+					$tusbung = $this->M_Tusbung_Harian->get_tul($tgl, $limit, $q);
+				} else if ($jenis == "lunas") {
+					$tusbung = $this->M_Tusbung_Harian->get_lunas($tgl, $limit, $q);
+				} else {
+					$tusbung = $this->M_Tusbung_Harian->get_blm($tgl, $limit, $q);
+				}
+			}	
+			$data['id_petugas'] = $id_petugas;
+			$data['id_petugas_khusus'] = $id_petugas_khusus;
+			$data['limit'] = $limit;
+			$data['total_rows'] = $tusbung->num_rows();
+			$data['data_rows'] = array();
+			foreach ($tusbung->result() as $row)
+			{
+				array_push($data['data_rows'], [          
+					'id_pelanggan' 			=> $row->id_pelanggan,
+					'nama_pelanggan' 		=> $row->nama_pelanggan,
+				]);
+				
+			}
+			
+			echo json_encode($data);
+		}
+	}
+	
+	public function detail($id_pelanggan)
+	{
+		$tusbung = $this->M_Tusbung->get_by_idpel($id_pelanggan);
+				
+		
+		$data['data_rows'] = array();
+		$data['total_rows'] = $tusbung->num_rows();
+		foreach ($tusbung->result() as $row) {
+		
+			if ($row->tgl_lunas != "0000-00-00") {
+				$tgl_lunas = tgl($row->tgl_lunas); 
+			} else {
+				$tgl_lunas = "Tidak ada"; 
+			}
+			
+			array_push($data['data_rows'], [          
+					'id_pelanggan' 			=> $row->id_pelanggan,
+					'nama_pelanggan' 		=> $row->nama_pelanggan,
+					'tarif' 				=> $row->tarif,
+					'daya' 					=> $row->daya,
+					'gol' 					=> $row->gol,
+					'alamat' 				=> $row->alamat,
+					'kddk' 					=> $row->kddk,
+					'no_hp' 				=> $row->no_hp,
+					'rptag' 				=> 'Rp '.number_format($row->rptag),
+					'rbk' 					=> $row->rbk,
+					'is_lunas' 				=> $row->is_lunas,
+					'tgl_lunas' 			=> $tgl_lunas,
+					'bulan' 				=> bln_indo($row->bulan),
+					'tahun' 				=> $row->tahun,
+					'nama_jenis_kendala' 	=> $row->nama_jenis_kendala,
+					'nama_petugas' 			=> $row->nama_petugas,
+				]);
+		
+		}
+		
+		
+		echo json_encode($data);
+		
+		
+	}
+	
+	
+	
+	public function hasil_update()
+	{	
+		
+		
+		if(isset($_POST['submit'])){
+			
+			
+			$namafile = "import_tusbung_lunas";
+			
+			$bulan   		 =  $_SESSION['bulan_sess'];
+			$tahun   		 =  $_SESSION['tahun_sess'];
+			$id_unit   		 =  $this->input->post('id_unit');
+			$tanggal   		 =  $this->input->post('tanggal');
+			
+			$tgl_lunas = $tahun."-".$bulan."-".$tanggal; //satukan inputan dlm tanggal yg utuh
+			
+			$unit = $this->M_Unit->get_one($id_unit);
+			foreach ($unit->result() as $r) {
+				$nama_unit = ucfirst(strtolower($r->nama_unit));
+			}
+			
+			$this->load->library('upload'); 
+			$config['upload_path'] = './import/';    
+			$config['allowed_types'] = 'xlsx';    
+			$config['max_size']  = '10000';    
+			$config['overwrite'] = true;    
+			$config['file_name'] = $namafile;      
+			$this->upload->initialize($config); 		
+			
+			if($this->upload->do_upload('file')){ 
+				$tusbung_harian = array(); 
+			   
+			   
+			   // Panggil class PHPExcel nya
+				$spreadsheet = new  \PhpOffice\PhpSpreadsheet\Reader\Xlsx();    
+				$loadexcel = $spreadsheet->load('import/'.$namafile.'.xlsx'); 
+				$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);    
+				       
+				$numrow = 1;    
+				foreach($sheet as $row){      
+					if($numrow > 1){     
+						
+						$kendala = $row['M'];
+						$jenis_kendala = $this->M_Jenis_Kendala->get_by_nama($kendala);
+						if ($jenis_kendala->num_rows() > 0) {
+							foreach ($jenis_kendala->result() as $r) {
+								$id_jenis_kendala = $r->id_jenis_kendala;
+								if ($id_jenis_kendala != 28) { //28 = LUNAS
+									$this->session->set_flashdata('error', "Tidak boleh menginput status baru selain <b>LUNAS</b> pada excel");
+									redirect("tusbung_harian/update_lunas"); 
+								}
+							}
+							
+						} else {
+							$this->session->set_flashdata('error', "Tidak ada jenis kendala dengan nama <b>$kendala</b> pada data master");
+							redirect("tusbung_harian/update_lunas"); 
+							
+						}	
+						
+						//cek petugas sudah sesuai dengan di data petugas 
+						$nama_petugas = $row['J'];
+						$petugas = $this->M_Petugas->cek($nama_petugas);
+						if ($petugas->num_rows() == 0) {
+							$this->session->set_flashdata('error', "Tidak ada petugas dengan nama <b>$nama_petugas</b> pada data master");
+							redirect("tusbung_harian/update_lunas"); 
+						} else {
+							foreach ($petugas->result() as $r) {
+								$id_petugas = $r->id_petugas;
+								
+							}
+						}
+						
+						
+						//cek dulu idpelanggan, bulan, dan tahun di tusbung
+						$id_pelanggan = $row['A'];
+						$where = array(
+								'id_pelanggan' => $id_pelanggan,
+								'bulan' => $bulan,
+								'tahun' => $tahun,
+							);
+						$tusbung = $this->M_Tusbung->cek($where)->num_rows();
+							
+						if ($tusbung == 0) { // kalau kosong maka error
+							$this->session->set_flashdata('error', "Tidak ada data tusbung kumulatif dengan ID pelanggan <b>$id_pelanggan</b> pada bulan <b>$bulan</b> dan tahun <b>$tahun</b>");
+							redirect("tusbung_harian/update_lunas"); 
+						} else {
+							// jika ada datanya 
+							// ubah status jadi lunas, beserta tgl lunasnya 
+							$lunas = $row['P'];
+							if ($lunas == "lunas") {
+								$is_lunas = 1;
+								$tgl_lunas_fix = $tgl_lunas;
+							} else {
+								$is_lunas = 0;
+								$tgl_lunas_fix = "0000-00-00";
+							}
+							
+							$edit = array('is_lunas'	 => $is_lunas, 
+									  'tgl_lunas' 		 => $tgl_lunas_fix,
+									  'id_jenis_kendala' => $id_jenis_kendala);
+							$this->M_Tusbung->edit_lunas($edit, $id_pelanggan, $bulan, $tahun);	
+							
+							//masukkan dalam array
+							array_push($tusbung_harian, [          
+								'id_pelanggan' 		=>$id_pelanggan,    
+								'tgl_lunas'    		=>$tgl_lunas_fix,   
+								'lunas'  			=>$lunas
+							]);
+						}
+					}            
+					
+					$numrow++;    
+				} 
+				
+				
+				$sum_tusbung_harian = count($tusbung_harian);
+				$this->session->set_flashdata('success', "Data Update Lunas <b>Berhasil</b>  diimport");
+				
+				$data = array(
+					'app' => 'Billman SAYA',
+					'title' => "Hasil Import Tusbung Harian",
+					'id_unit' => $id_unit,
+					'nama_unit' => $nama_unit,
+					'sum_tusbung_harian' => $sum_tusbung_harian,
+				);
+				
+				
+				
+				$this->template->load('template','tusbung_harian/v_hasil_update',$data);
+				unlink("import/$namafile.xlsx");
+				
+			}else{ 
+				$error =  $this->upload->display_errors();   
+				$this->session->set_flashdata('error', "Data Update Lunas <b>Gagal</b>  diimport. Error :" . $error);echo "gagal";
+				redirect("tusbung_harian/update_lunas"); 
+			}  
+			
+			
+			
+		}	
+	}
+	
 	
 	
 	public function index()
@@ -339,7 +669,50 @@ class Tusbung_Harian extends CI_Controller {
 	}
 	
 	
-	
+	public function perhari()
+	{
+		if (isset($_GET['id_unit'])) {
+			$id_unit = $_GET['id_unit'];
+		} else {
+			$id_unit = 1;
+			
+		}
+		
+		if (isset($_GET['tgl_skrg'])) {
+			$tgl_skrg = $_GET['tgl_skrg'];
+		} else {
+			$tgl_skrg = date("d");
+			
+			
+		}
+		
+		$hari = date("l", strtotime($_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl_skrg));
+		
+		$data['app'] 	= "Billman SAYA";
+		$data['title'] 	= "Monitoring Harian";
+		$data['unit'] 		= $this->M_Unit->get_all();
+		$data['tgl_skrg']   = $tgl_skrg;
+		$data['hari']   	= $hari;
+		$unit = $this->M_Unit->get_one($id_unit);
+		foreach ($unit->result() as $r) {
+			$data['nama_unit'] = $r->nama_unit;
+		}
+		
+		if ($id_unit == null) {
+			$data['petugas'] 	= $this->M_Petugas->by_unit(1, 0); // 1 = manokwari
+			
+			//parameter kedua adalah isi dari is_petugas_khusus
+			$data['petugas_khusus'] 	= $this->M_Petugas->by_unit(1, 1); // 1 = petugas khusus
+			
+			$data['id_unit'] 	= $id_unit;
+		} else {
+			$data['petugas'] 	= $this->M_Petugas->by_unit($id_unit, 0);
+			$data['petugas_khusus'] 	= $this->M_Petugas->by_unit($id_unit, 1);
+			$data['id_unit'] 	= $id_unit;
+		}
+		
+		$this->template->load('template','tusbung_harian/v_perhari',$data);
+	}
 	
 	
 	public function hapus($id)
