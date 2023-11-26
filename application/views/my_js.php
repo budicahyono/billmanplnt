@@ -46,7 +46,7 @@
   //datatable pencarian  
      $('#data_search').DataTable({
       "paging": true,
-     "lengthMenu": [[20, 50, 100], [20, 50, 100]],
+     "lengthMenu": [[50, 100], [50, 100]],
       "searching": true,
       "ordering": true,
      columnDefs: [
@@ -118,46 +118,30 @@
 </script>
 <?php } ?>
 
-<?php if ($this->uri->segment(1) == "tusbung") { ?>
+<?php 
+  if ($this->uri->segment(1) == "tusbung") {
+    $uri = $this->uri->segment(2);
+    if ($uri == true) {
+      $url_text = "/".$uri; 
+    } else {
+      $url_text = "";
+    }
+?>
 <!--  javascript pilih unit di tusbung  -->
 <script>
  $('#id_unit').change(function () {
     var id_unit = $(this).val();
     if (id_unit == 1) {
-       window.location.replace("<?=base_url()?>tusbung");
+       window.location.replace("<?=base_url()?>tusbung<?=$url_text?>");
     } else {
-       window.location.replace("<?=base_url()?>tusbung?id_unit=" + id_unit);
+       window.location.replace("<?=base_url()?>tusbung<?=$url_text?>?id_unit=" + id_unit);
     } 
    
  });  
 </script>
 <?php } ?>
 
-<!--  javascript pilih unit di hari_baca tusbung  -->
-<script>
- $('#id_unit_jadwal').change(function () {
-    var id_unit = $(this).val();
-    if (id_unit == 1) {
-       window.location.replace("<?=base_url()?>tusbung/hari_baca");
-    } else {
-       window.location.replace("<?=base_url()?>tusbung/hari_baca?id_unit=" + id_unit);
-    } 
-   
- });  
-</script>
 
-<!--  javascript pilih unit di rupiah baca tusbung  -->
-<script>
- $('#id_unit_rp_baca').change(function () {
-    var id_unit = $(this).val();
-    if (id_unit == 1) {
-       window.location.replace("<?=base_url()?>tusbung/rupiah_baca");
-    } else {
-       window.location.replace("<?=base_url()?>tusbung/rupiah_baca?id_unit=" + id_unit);
-    } 
-   
- });  
-</script>
 
 <!--  javascript pilih unit dan tanggal di tusbung_harian  -->
 <script>
@@ -200,18 +184,7 @@ $(document).ready(function() {
 }) 
 </script>
 
-<!--  javascript pilih unit di kendala  -->
-<script>
-    $('#id_unit_kendala').change(function () {
-    var id_unit = $(this).val();
-    if (id_unit == 1) {
-       window.location.replace("<?=base_url()?>tusbung/kendala");
-    } else {
-       window.location.replace("<?=base_url()?>tusbung/kendala?id_unit=" + id_unit);
-    } 
-   
- });  
-</script>
+
 
 
 <!--  javascript bulan tahun di menu atas  -->

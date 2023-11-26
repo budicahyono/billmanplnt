@@ -87,7 +87,7 @@
 									foreach ($duplikat_tusbung as $t) {
 										if ($t['id_pelanggan'] == $r['id_pelanggan']) { ?>
 										<td><?=$t['lbr']?></td>
-										<td><?=$t['rptag']?></td>
+										<td><?=rp($t['rptag'])?></td>
 										<td><?=$t['id_jenis_kendala']?></td>
 										<td><?=$t['id_rp_kategori']?></td>
 										<td><?=$t['bulan']?></td>

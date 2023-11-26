@@ -38,7 +38,9 @@ class Rp_Kategori extends CI_Controller {
 			
 			if ($rp_bawah < $rp_atas) {
 			
-				$data  		=  array('nama_rp_kategori'=>ucwords($nama_rp_kategori));
+				$data  		=  array('nama_rp_kategori'=>ucwords($nama_rp_kategori),
+									 'rp_bawah'	=> $rp_bawah,
+									 'rp_atas'=> $rp_atas);
 					$rp_kategori = $this->M_Rp_Kategori->post($data);	
 					$error = $this->db->error();
 					if ($error['code'] == null) {
@@ -76,10 +78,14 @@ class Rp_Kategori extends CI_Controller {
 	{	
 		
 		if(isset($_POST['submit'])){
-			$id_rp_kategori    =  $this->input->post('id_rp_kategori');
-			$nama_rp_kategori	=  $this->input->post('nama_rp_kategori');
+			$id_rp_kategori  =  $this->input->post('id_rp_kategori');
+			$nama_rp_kategori=  $this->input->post('nama_rp_kategori');
+			$rp_bawah	=  $this->input->post('rp_bawah');
+			$rp_atas	=  $this->input->post('rp_atas');
 			
-			$data       =  array('nama_rp_kategori'=>ucwords($nama_rp_kategori));
+			$data  		=  array('nama_rp_kategori'=>ucwords($nama_rp_kategori),
+								 'rp_bawah'	=> $rp_bawah,
+								 'rp_atas'	=> $rp_atas);
 			$rp_kategori = $this->M_Rp_Kategori->edit($data, $id_rp_kategori);	
 			$error = $this->db->error();
 			if ($error['code'] == null) {

@@ -17,7 +17,7 @@
                   </button>
                 </div>
                 <!-- /.card-tools -->
-              </div>
+				</div> 
               <div class="card-body">
 
                 <div class="form-group">
@@ -49,7 +49,7 @@
                   
                   <?php  $no=1;
                     foreach ($petugas->result() as $r) {
-                    if ($r->id_unit > 0) { 
+                      if ($r->id_unit > 0) { 
                   ?>
                   <tr>
                     <td><?=$no?></td>

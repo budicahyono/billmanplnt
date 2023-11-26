@@ -57,9 +57,10 @@
                 <div class="form-group">
                 <label>Unit</label>
                 <select class="form-control" name="id_unit">
-                 <?php foreach ($unit->result() as $r_unit) {  ?>
+                 <?php foreach ($unit->result() as $r_unit) { 
+                     if ($r_unit->id_unit > 0) {?>
                     <option value="<?=$r_unit->id_unit?>" <?php if ($r->id_unit == $r_unit->id_unit) echo "selected"; ?>><?=$r_unit->nama_unit?></option>
-                 <?php } ?>
+                 <?php }} ?>
                  </select>
                </div>
                

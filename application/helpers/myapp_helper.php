@@ -2,13 +2,11 @@
 	if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-	//LIST COMMON FUNCTIONS
-	
-	
 
-	// informasi aplikasi
-	function myapp($item = "") {
-	$ci =& get_instance();
+
+	function myapp($item = "") 
+	{	// informasi aplikasi
+		$ci =& get_instance();
 	
 		$myapp = "";
 		switch ($item) {
@@ -46,8 +44,10 @@
 		return $myapp;
 	}
 	
-	// informasi menu dan laman
-	function menu($child = null) {
+	
+	
+	function menu($child = null) 
+	{	// informasi menu dan laman
 		$ci =& get_instance();
 		$menu = "";
 		if ($child != null) {
@@ -66,9 +66,10 @@
 		return $menu;
 	}
 	
-	// tgl indo
+	
+	
 	function tgl_indo($date)
-	{
+	{	// tgl and jam indo
 		$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 		
 		$tahun = substr($date, 0, 4);
@@ -82,8 +83,10 @@
 		return $result;
 	}
 	
+	
+	
 	function tgl($date)
-	{
+	{	// tgl indo
 		$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 		
 		$tahun = substr($date, 0, 4);
@@ -95,9 +98,10 @@
 		return $result;
 	}
 	
-	// bln indo
+	
+	
 	function bln_indo($date)
-	{
+	{	// bln indo
 		$BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
 	 
 		
@@ -108,39 +112,42 @@
 		return($result);
 	}
 	
-	//hari inggris ubah ke indo	
-	 function hari($day) // hari bhs inggris
-				{
-					switch ($day) {
-					  case "Monday":
-						$hari = "Senin";
-						break;
-					  case "Tuesday":
-						$hari = "Selasa";
-						break;
-					  case "Wednesday":
-						$hari = "Rabu";
-						break;
-					  case "Thursday":
-						$hari = "Kamis";
-						break;
-					  case "Friday":
-						$hari = "Jumat";
-						break;	
-					  case "Saturday":
-						$hari = "Sabtu";
-						break;	
-					  case "Sunday":
-						$hari = "Minggu";
-						break;		
-					  default:
-						echo "Hari Kiamat";
-					}
-					return($hari);
-				} 
 	
-	// human_readable_to_bytes
-	function human_readable_to_bytes(string $amount): int {
+	
+	function hari($day) 
+	{	//hari inggris ubah ke indo	
+		switch ($day) {
+		  case "Monday":
+			$hari = "Senin";
+			break;
+		  case "Tuesday":
+			$hari = "Selasa";
+			break;
+		  case "Wednesday":
+			$hari = "Rabu";
+			break;
+		  case "Thursday":
+			$hari = "Kamis";
+			break;
+		  case "Friday":
+			$hari = "Jumat";
+			break;	
+		  case "Saturday":
+			$hari = "Sabtu";
+			break;	
+		  case "Sunday":
+			$hari = "Minggu";
+			break;		
+		  default:
+			echo "Hari Kiamat";
+		}
+		return($hari);
+	} 
+	
+	
+	
+	function human_readable_to_bytes(string $amount): int 
+	{	// human_readable_to_bytes
 		$units = ['', 'K', 'M', 'G'];
 		
 		preg_match('/(\d+)\s?([KMG]?)/', $amount, $matches);
@@ -149,8 +156,10 @@
 		return (int)$nr * 1024; //mb = 40mb, kb=40.000
 	} 
 	
-	// is_login
-	function is_login($status = ""){
+	
+	
+	function is_login($status = "")
+	{	// is_login
 		$ci =& get_instance();
 		$ci->load->model('M_Admin');
 	
@@ -166,41 +175,23 @@
 		
 	} 
 	
-	// check_level
-	function check_level($level){
-		
+	
+	
+	function check_level($level)
+	{	// check_level	
 		if ($level != $_SESSION['level']) {
-				redirect("dashboard");		
-			
+				redirect("dashboard");			
 		} 
-		
+	} 
+	
+	
+	
+	function rp($value)
+	{	// rupiah number_format	
+		return "Rp ".number_format($value);
 	} 
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	//LIST COMMON QUERY FUNCTION (fungsi yg dibuat untuk menangani setelah data di view muncul tapi butuh akses data lagi)
-	
-	
-	// jenis_kendala pelanggan yg blm lunas
-	function jenis_kendala($id_jenis_kendala, $id_unit, $format){ //format (sum = jumlah plg, rp = hitung rupiahnya)
-		$ci =& get_instance();
-		$ci->load->model('M_Tusbung');
-		
-		
-		if ($format == 'sum') {
-			$query = $ci->M_Tusbung->get_by_jenis_kendala($id_jenis_kendala, $id_unit)->num_rows();
-		} else {
-			$cek_query = $ci->M_Tusbung->get_by_jenis_kendala_rp($id_jenis_kendala, $id_unit);
-			foreach ($cek_query->result() as $row) {
-				$query = $row->rptag;
-			}
-		}
-		
-		return $query;
-	} 

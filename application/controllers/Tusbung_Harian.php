@@ -167,11 +167,11 @@ class Tusbung_Harian extends CI_Controller {
 										
 										//update id_petugas_khusus di tusbung_kumulatif 
 										$edit = array('id_petugas_khusus'	=>$id_petugas);
-										$this->M_Tusbung->edit_petugas_khusus($edit, $id_pelanggan, $bulan, $tahun);	
+										$this->M_Tusbung->edit_by_bln_thn($edit, $id_pelanggan, $bulan, $tahun);	
 										} else {
 										//null kan id_petugas_khusus di tusbung_kumulatif 
 										$edit = array('id_petugas_khusus'	=>null);
-										$this->M_Tusbung->edit_petugas_khusus($edit, $id_pelanggan, $bulan, $tahun);	
+										$this->M_Tusbung->edit_by_bln_thn($edit, $id_pelanggan, $bulan, $tahun);	
 										}
 									} 
 								}	
@@ -209,21 +209,20 @@ class Tusbung_Harian extends CI_Controller {
 							]); 
 						}
 						
-						//update di tusbung kumulatif
+						//update di tusbung kumulatif utk yg belum lunas
 						$lunas = $row['P'];
 						if ($lunas == "lunas") {
 							$is_lunas = 1;
 							$tgl_lunas = $tgl_tusbung;
+							$edit = array('is_lunas'	 	=> $is_lunas, 
+										  'tgl_lunas' 	 	=> $tgl_lunas,
+										  'id_jenis_kendala'=> $id_jenis_kendala);	  
 						} else {
-							$is_lunas = 0;
-							$tgl_lunas = "0000-00-00";
+							$edit = array('id_jenis_kendala'=> $id_jenis_kendala);	  
 						}
-						$edit = array('is_lunas'		 =>$is_lunas, 
-									  'tgl_lunas' 		 => $tgl_lunas,
-									  'id_jenis_kendala' => $id_jenis_kendala);
 						
-						$this->M_Tusbung->edit_lunas($edit, $id_pelanggan, $bulan, $tahun);	
-						//echo $lunas;
+						$this->M_Tusbung->edit_by_bln_thn($edit, $id_pelanggan, $bulan, $tahun);
+							
 					}            
 					
 					$numrow++;    
@@ -372,7 +371,7 @@ class Tusbung_Harian extends CI_Controller {
 					'alamat' 				=> $row->alamat,
 					'kddk' 					=> $row->kddk,
 					'no_hp' 				=> $row->no_hp,
-					'rptag' 				=> 'Rp '.number_format($row->rptag),
+					'rptag' 				=> rp($row->rptag),
 					'rbk' 					=> $row->rbk,
 					'is_lunas' 				=> $row->is_lunas,
 					'tgl_lunas' 			=> $tgl_lunas,
@@ -459,7 +458,7 @@ class Tusbung_Harian extends CI_Controller {
 					'alamat' 				=> $row->alamat,
 					'kddk' 					=> $row->kddk,
 					'no_hp' 				=> $row->no_hp,
-					'rptag' 				=> 'Rp '.number_format($row->rptag),
+					'rptag' 				=> rp($row->rptag),
 					'rbk' 					=> $row->rbk,
 					'is_lunas' 				=> $row->is_lunas,
 					'tgl_lunas' 			=> $tgl_lunas,
@@ -571,15 +570,16 @@ class Tusbung_Harian extends CI_Controller {
 							if ($lunas == "lunas") {
 								$is_lunas = 1;
 								$tgl_lunas_fix = $tgl_lunas;
-							} else {
-								$is_lunas = 0;
-								$tgl_lunas_fix = "0000-00-00";
-							}
-							
-							$edit = array('is_lunas'	 => $is_lunas, 
+								$edit = array('is_lunas' => $is_lunas, 
 									  'tgl_lunas' 		 => $tgl_lunas_fix,
 									  'id_jenis_kendala' => $id_jenis_kendala);
-							$this->M_Tusbung->edit_lunas($edit, $id_pelanggan, $bulan, $tahun);	
+							
+							} else {
+								$edit = array('id_jenis_kendala' => $id_jenis_kendala);
+							} 
+							
+							$this->M_Tusbung->edit_by_bln_thn($edit, $id_pelanggan, $bulan, $tahun);	
+							
 							
 							//masukkan dalam array
 							array_push($tusbung_harian, [          
@@ -629,7 +629,6 @@ class Tusbung_Harian extends CI_Controller {
 			$id_unit = $_GET['id_unit'];
 		} else {
 			$id_unit = 1;
-			
 		}
 		
 		if (isset($_GET['tgl_skrg'])) {
@@ -642,8 +641,20 @@ class Tusbung_Harian extends CI_Controller {
 		
 		$hari = date("l", strtotime($_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl_skrg));
 		
-		$data['app'] 	= "Billman SAYA";
-		$data['title'] 	= "Monitoring Harian";
+		$bln_skrg = $_SESSION['bulan_sess'];
+		$thn_skrg = $_SESSION['tahun_sess'];
+		$jumlah_tanggal = cal_days_in_month(CAL_GREGORIAN, $bln_skrg, $thn_skrg);
+		
+		$tgl_rows = array();
+		for ($i=1;$i<=$jumlah_tanggal;$i++){
+			$sum_tgl = $this->M_Tusbung_Harian->get_tul(array('tgl' => $i))->num_rows();
+			
+			array_push($tgl_rows, [          
+				'sum_tgl' 	=>$sum_tgl,    
+				'tgl'    	=>$i
+			]); 
+		}
+		$data['tgl_rows']	= $tgl_rows;
 		$data['unit'] 		= $this->M_Unit->get_all();
 		$data['tgl_skrg']   = $tgl_skrg;
 		$data['hari']   	= $hari;
@@ -653,17 +664,16 @@ class Tusbung_Harian extends CI_Controller {
 		}
 		
 		if ($id_unit == null) {
-			$data['petugas'] 	= $this->M_Petugas->by_unit(1, 0); // 1 = manokwari
-			
-			//parameter kedua adalah isi dari is_petugas_khusus
-			$data['petugas_khusus'] 	= $this->M_Petugas->by_unit(1, 1); // 1 = petugas khusus
-			
-			$data['id_unit'] 	= $id_unit;
+			$id = 1;
 		} else {
-			$data['petugas'] 	= $this->M_Petugas->by_unit($id_unit, 0);
-			$data['petugas_khusus'] 	= $this->M_Petugas->by_unit($id_unit, 1);
-			$data['id_unit'] 	= $id_unit;
+			$id = $id_unit;
 		}
+		
+		$data['petugas'] 	= $this->M_Tusbung_Harian->by_unit($id, $id, $tgl_skrg); 
+			
+		//parameter kedua adalah isi dari is_petugas_khusus
+		$data['petugas_khusus'] 	= $this->M_Tusbung_Harian->by_unit($id, $id, $tgl_skrg, 1); 
+		$data['id_unit'] 	= $id_unit;
 		
 		$this->template->load('template','tusbung_harian/v_index',$data);
 	}
@@ -697,6 +707,8 @@ class Tusbung_Harian extends CI_Controller {
 		foreach ($unit->result() as $r) {
 			$data['nama_unit'] = $r->nama_unit;
 		}
+		
+		$data['non_petugas'] 	= $this->M_Petugas->by_unit(0); // 0 = all 
 		
 		if ($id_unit == null) {
 			$data['petugas'] 	= $this->M_Petugas->by_unit(1, 0); // 1 = manokwari

@@ -159,36 +159,36 @@
                             <td>BINTUNI</td>
                             <td><?=$total_bintuni?></td>
                             <td><?=$lunas_bintuni?></td>
-                            <td><?="Rp ".number_format($total_bintuni_rp)?></td>
-                            <td><?="Rp ".number_format($lunas_bintuni_rp)?></td>
+                            <td><?=rp($total_bintuni_rp)?></td>
+                            <td><?=rp($lunas_bintuni_rp)?></td>
                           </tr>
                           <tr>
                             <td>MANOKWARI</td>
                             <td><?=$total_manokwari?></td>
                             <td><?=$lunas_manokwari?></td>
-                            <td><?="Rp ".number_format($total_manokwari_rp)?></td>
-                            <td><?="Rp ".number_format($lunas_manokwari_rp)?></td>
+                            <td><?=rp($total_manokwari_rp)?></td>
+                            <td><?=rp($lunas_manokwari_rp)?></td>
                           </tr>
                           <tr>
                             <td>WASIOR</td>
                             <td><?=$total_wasior?></td>
                             <td><?=$lunas_wasior?></td>
-                            <td><?="Rp ".number_format($total_wasior_rp)?></td>
-                            <td><?="Rp ".number_format($lunas_wasior_rp)?></td>
+                            <td><?=rp($total_wasior_rp)?></td>
+                            <td><?=rp($lunas_wasior_rp)?></td>
                           </tr>
                           <tr>
                             <td>PRAFI</td>
                             <td><?=$total_prafi?></td>
                             <td><?=$lunas_prafi?></td>
-                            <td><?="Rp ".number_format($total_prafi_rp)?></td>
-                            <td><?="Rp ".number_format($lunas_prafi_rp)?></td>
+                            <td><?=rp($total_prafi_rp)?></td>
+                            <td><?=rp($lunas_prafi_rp)?></td>
                           </tr>
                           <tr>
                             <td>UP3</td>
                             <td><?=$total_up3?></td>
                             <td><?=$lunas_up3?></td>
-                            <td><?="Rp ".number_format($total_up3_rp)?></td>
-                            <td><?="Rp ".number_format($lunas_up3_rp)?></td>
+                            <td><?=rp($total_up3_rp)?></td>
+                            <td><?=rp($lunas_up3_rp)?></td>
                           </tr>
                         </table>  
                       </div>
@@ -217,27 +217,27 @@
                           <tr>
                             <td>BINTUNI</td>
                             <td><?=$blm_bintuni?></td>
-                            <td><?="Rp ".number_format($blm_bintuni_rp)?></td>
+                            <td><?=rp($blm_bintuni_rp)?></td>
                           </tr>
                           <tr>
                             <td>MANOKWARI</td>
                             <td><?=$blm_manokwari?></td>
-                            <td><?="Rp ".number_format($blm_manokwari_rp)?></td>
+                            <td><?=rp($blm_manokwari_rp)?></td>
                           </tr>
                           <tr>
                             <td>WASIOR</td>
                             <td><?=$blm_wasior?></td>
-                            <td><?="Rp ".number_format($blm_wasior_rp)?></td>
+                            <td><?=rp($blm_wasior_rp)?></td>
                           </tr>
                           <tr>
                             <td>PRAFI</td>
                             <td><?=$blm_prafi?></td>
-                            <td><?="Rp ".number_format($blm_prafi_rp)?></td>
+                            <td><?=rp($blm_prafi_rp)?></td>
                           </tr>
                           <tr>
                             <td>UP3</td>
                             <td><?=$blm_up3?></td>
-                            <td><?="Rp ".number_format($blm_up3_rp)?></td>
+                            <td><?=rp($blm_up3_rp)?></td>
                           </tr>
                         </table>  
                       </div>
@@ -264,7 +264,7 @@
                           </tr>
                           <tr>
                             <td><?=$total_up3?></td>
-                            <td><?="Rp ".number_format($total_up3_rp)?></td>
+                            <td><?=rp($total_up3_rp)?></td>
                           </tr>
                           
                           <tr>
@@ -273,7 +273,7 @@
                           </tr>
                           <tr>
                             <td><?=$lunas_up3?></td>
-                            <td><?="Rp ".number_format($lunas_up3_rp)?></td>
+                            <td><?=rp($lunas_up3_rp)?></td>
                           </tr>
                           
                           <tr>
@@ -282,7 +282,7 @@
                           </tr>
                           <tr>
                             <td><?=$blm_up3?></td>
-                            <td><?="Rp ".number_format($blm_up3_rp)?></td>
+                            <td><?=rp($blm_up3_rp)?></td>
                           </tr>
                           
                         </table>  

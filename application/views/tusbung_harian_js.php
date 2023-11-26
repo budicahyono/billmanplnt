@@ -1,7 +1,7 @@
 <!-- Tusbung Custom Javascript -->
 
 <?php $no=1; 
- if (menu('child') == "Tusbung Harian") {   
+ if (menu() == "Tusbung Harian") {   
  
  // Data Petugas ================================================================== 
      foreach ($petugas->result() as $r) { ?>   

@@ -366,10 +366,9 @@
 <?php include "js.php"; ?>
 
 
-<?php include "tusbung_js.php"; ?>
-<?php include "tusbung_harian_js.php"; 
-    ?>
-<?php include "tusbung_harian_modals_js.php"; ?>
+<?php include VIEWPATH."tusbung/js.php"; ?>
+   
+
 
 
 <?php include "plugin_js.php"; ?>

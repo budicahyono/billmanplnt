@@ -44,32 +44,30 @@
                   </thead>
                   <tbody>
                    <?php  $no=1;
-                   $total_sum = 0;
-                   $total_rp = 0;
-                    foreach ($jenis_kendala->result() as $r) {
-                      if ($r->id_jenis_kendala != 28) {
+                    $total_sum  = 0;
+                    $total_rp   = 0;
+                    foreach ($jenis_kendala as $r) {
+                      if ($r['id_jenis_kendala'] != 28 && $r['id_jenis_kendala'] != 0) {
                       
-                      //ambil dari fungsi helper utk sum pelanggan
-                      $sum = jenis_kendala($r->id_jenis_kendala, $id_unit, 'sum');
-                      $total_sum = $total_sum + $sum;
+                      $sum_tul      = $r['sum_tul'];
+                      $total_sum    = $total_sum + $sum_tul;
                       
-                      //ambil dari fungsi helper utk jumlahkan rupiahnya
-                      $rp = jenis_kendala($r->id_jenis_kendala, $id_unit, 'rp');
-                      $total_rp = $total_rp + $rp;
+                      $sum_rp       = $r['sum_rp'];
+                      $total_rp     = $total_rp + $sum_rp;
 						?>	
                     <tr>    
                     <td style="width:10px"><?=$no?></td>
-                    <td style="width:200px"><?=$r->nama_jenis_kendala?></td>
-                    <td><?=$sum?></td>
-                    <td><?="Rp ".number_format($rp)?></td>
+                    <td style="width:200px"><?=$r['nama_jenis_kendala']?></td>
+                    <td><?=$sum_tul?></td>
+                    <td><?=rp($sum_rp)?></td>
                   </tr>
                   <?php 
-$no++;
-                    }} if (count($jenis_kendala->result()) == 0) { ?>
-<tr>
-<td colspan="4" class="text-center"><b>TIDAK ADA DATA</b></td>
-</tr>	
-<?php } ?>	
+                    $no++;
+                    }} if (count($jenis_kendala) == 0) { ?>
+                  <tr>
+                  <td colspan="4" class="text-center"><b>TIDAK ADA DATA</b></td>
+                  </tr>	
+                  <?php } ?>	
                   
                   </tbody>
                   <tfoot> 
@@ -78,7 +76,7 @@ $no++;
                     <th class="text-center" colspan=2 style="vertical-align:middle">TOTAL</th> 
                     
                     <th><?=$total_sum?></th>
-                    <th><?="Rp ".number_format($total_rp)?></th>
+                    <th><?=rp($total_rp)?></th>
                     
                   </tr>
                   </tfoot>
