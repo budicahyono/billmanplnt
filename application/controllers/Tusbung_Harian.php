@@ -647,7 +647,8 @@ class Tusbung_Harian extends CI_Controller {
 		
 		$tgl_rows = array();
 		for ($i=1;$i<=$jumlah_tanggal;$i++){
-			$sum_tgl = $this->M_Tusbung_Harian->get_tul(array('tgl' => $i))->num_rows();
+			$opsi = ['id_unit' => $id_unit,'opsi' => 'sum','jenis' => 'tul','tgl' => $i,'tgl_opsi' => true];
+			$sum_tgl = $this->M_Tusbung_Harian->get_tul($opsi)->num_rows();
 			
 			array_push($tgl_rows, [          
 				'sum_tgl' 	=>$sum_tgl,    

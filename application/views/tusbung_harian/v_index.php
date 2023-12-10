@@ -105,6 +105,7 @@
                   $total_persen_rp  = 0;
                   $total_evidence   = 0;
                   $total_sisa       = 0;
+                  $total_persen_evidence       = 0;
                   foreach ($petugas as $r) {
                     if ($r['is_petugas_khusus'] == 0) {
                         include VIEWPATH."tusbung_harian/v_list.php";

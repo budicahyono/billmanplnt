@@ -105,6 +105,7 @@
 			$khusus		= isset($options['khusus']) ? $options['khusus'] : null;
 			$tgl		= isset($options['tgl']) ? $options['tgl'] : null;
 			$evidence	= isset($options['evidence']) ? $options['evidence'] : null;
+			$tgl_opsi	= isset($options['tgl_opsi']) ? $options['tgl_opsi'] : null;
 			
 			//gabungin tanggal
 			$tanggal = $_SESSION['tahun_sess']."-".$_SESSION['bulan_sess']."-".$tgl;
@@ -137,8 +138,13 @@
 			}
 			
 			if ($khusus == null) {
-				$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
-				$this->db->where("tusbung_kumulatif.id_petugas", $id_petugas);
+				if ($tgl_opsi == null ) {	
+					$this->db->where("tusbung_kumulatif.id_petugas_khusus", null);
+				}
+				// jika ada parameter id_petugas
+				if ($id_petugas != null ) {	
+					$this->db->where("tusbung_kumulatif.id_petugas", $id_petugas);
+				}
 			} else {
 				$this->db->where("tusbung_kumulatif.id_petugas_khusus", $khusus);
 			}
