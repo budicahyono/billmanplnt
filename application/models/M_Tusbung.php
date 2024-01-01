@@ -226,6 +226,8 @@
 		
 		
 		
+		
+		
 		function insert_multiple($data)
 		{   // insert lebih dari 1 data tusbung 
 			$this->db->insert_batch($this->tb, $data);  

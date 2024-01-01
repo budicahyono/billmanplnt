@@ -11,7 +11,15 @@
 			return $this->db->get($this->tb);
 		}
 		
-		
+		function cek_by_unit($id_unit)
+		{	//cek data pelanggan by unit, bulan, tahun
+			$this->db->join('pelanggan', 'pelanggan.id_pelanggan = tusbung_harian.id_pelanggan');
+			$this->db->join('tusbung_kumulatif', 'tusbung_kumulatif.id_pelanggan = tusbung_harian.id_pelanggan');
+			$this->db->where("pelanggan.id_unit", $id_unit);
+			$this->db->where("MONTH(tgl_tusbung)", $_SESSION['bulan_sess']);
+			$this->db->where("YEAR(tgl_tusbung)", $_SESSION['tahun_sess']);
+			return $this->db->get($this->tb);
+		}
 		
 		function by_unit($id, $id_unit, $tgl, $khusus = null) 
 		{	// ambil data petugas per unit 

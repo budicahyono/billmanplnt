@@ -14,6 +14,7 @@
 			$this->load->model('M_Pelanggan');
 			$this->load->model('M_Petugas');
 			$this->load->model('M_Tusbung');
+			$this->load->model('M_Tusbung_Harian');
 			$this->load->model('M_Jenis_Kendala');
 			is_login("yes");
 		}
@@ -648,20 +649,26 @@
 		{
 			$cek = $this->M_Unit->get_one($id)->num_rows();
 			if ($cek > 0) {
-				$tusbung = $this->M_Tusbung->hapus($id);
-				
-				$error = $this->db->error();
-				if ($error['code'] == null) {
-					$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  dihapus");
-					} else {
-					$this->session->set_flashdata('error', "Data Tusbung <b>Gagal</b> dihapus. <br>Error:".$error['message']);
-				}
+				//cek dulu bulan, tahun, dan unit di tusbung harian
+				$cek_tusbung_harian = $this->M_Tusbung_Harian->cek_by_unit($id)->num_rows();
+				if ($cek_tusbung_harian > 0) {
+					$this->session->set_flashdata('error', "Data Tusbung <b>Gagal</b> dihapus karena masih ada data di Tusbung Harian");
+				} else {
+					$tusbung = $this->M_Tusbung->hapus($id);
+					$error = $this->db->error();
+					if ($error['code'] == null) {
+						$this->session->set_flashdata('success', "Data Tusbung <b>Berhasil</b>  dihapus");
+						} else {
+						$this->session->set_flashdata('error', "Data Tusbung <b>Gagal</b> dihapus. <br>Error:".$error['message']);
+					}
+						
+				}	
 				if ($id == 1) {
 					redirect('tusbung');
-					} else {
-					redirect('tusbung?id_unit='.$id);
-				}	
 				} else {
+					redirect('tusbung?id_unit='.$id);
+				}
+			} else {
 				$this->session->set_flashdata('error', "Data Unit <b>$id</b> tidak ada.");
 				echo "error";
 				if ($id == 1) {
