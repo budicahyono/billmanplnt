@@ -518,8 +518,9 @@ class Tusbung_Harian extends CI_Controller {
 				       
 				$numrow = 1;    
 				foreach($sheet as $row){      
-					if($numrow > 1){     
-						
+					if($numrow > 1){  
+					
+						/*
 						$kendala = $row['M'];
 						$jenis_kendala = $this->M_Jenis_Kendala->get_by_nama($kendala);
 						if ($jenis_kendala->num_rows() > 0) {
@@ -536,6 +537,7 @@ class Tusbung_Harian extends CI_Controller {
 							redirect("tusbung_harian/update_lunas"); 
 							
 						}	
+						*/
 						
 						//cek petugas sudah sesuai dengan di data petugas 
 						$nama_petugas = $row['J'];
@@ -566,16 +568,15 @@ class Tusbung_Harian extends CI_Controller {
 						} else {
 							// jika ada datanya 
 							// ubah status jadi lunas, beserta tgl lunasnya 
-							$lunas = $row['P'];
-							if ($lunas == "lunas") {
+							$lunas = $row['O'];
+							if ($lunas == "lunas") { //input di excel wajib lunas
 								$is_lunas = 1;
 								$tgl_lunas_fix = $tgl_lunas;
 								$edit = array('is_lunas' => $is_lunas, 
 									  'tgl_lunas' 		 => $tgl_lunas_fix,
-									  'id_jenis_kendala' => $id_jenis_kendala);
-							
+									  'id_jenis_kendala' => 28); //LUNAS
 							} else {
-								$edit = array('id_jenis_kendala' => $id_jenis_kendala);
+								$edit = array('id_jenis_kendala' => 28); //LUNAS
 							} 
 							
 							$this->M_Tusbung->edit_by_bln_thn($edit, $id_pelanggan, $bulan, $tahun);	
